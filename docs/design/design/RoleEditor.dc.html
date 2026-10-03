@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Role editor and user dialogs</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div style="{{tv}} width: 1440px; min-height: 1560px; box-sizing: border-box; padding: 48px; background: var(--overlay-solid); color: var(--foreground); font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif; display: grid; grid-template-columns: 720px minmax(0, 1fr); gap: 32px; align-items: start">
+
+  <div style="display: flex; flex-direction: column; gap: 12px">
+    <span style="font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #C9D6E6">Role editor</span>
+    <div role="dialog" aria-labelledby="re" style="display: flex; flex-direction: column; gap: 18px; padding: 24px; border-radius: 16px; background: var(--popover); border: 1px solid var(--border); box-shadow: var(--shadow-lg)">
+      <h2 id="re" style="margin: 0; font-size: 20px; font-weight: 800">Edit role · Camp Supervisor</h2>
+      <div style="display: grid; grid-template-columns: 1fr 1.4fr; gap: 12px">
+        <div style="display: flex; flex-direction: column; gap: 6px"><label for="rn" style="font-size: 13px; font-weight: 600">Name <span style="color: var(--destructive)">*</span></label><input id="rn" value="Camp Supervisor" style="height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px"></div>
+        <div style="display: flex; flex-direction: column; gap: 6px"><label for="rd" style="font-size: 13px; font-weight: 600">Description</label><input id="rd" value="Day-to-day bed moves and leave, in assigned camps only" style="height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px"></div>
+      </div>
+      <fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 8px">
+        <legend style="font-size: 13px; font-weight: 600; margin-bottom: 8px">Camp access</legend>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+          <label style="display: flex; align-items: flex-start; gap: 10px; padding: 12px; border-radius: 10px; border: 1px solid var(--border); font-size: 13.5px"><input type="radio" name="ca" style="margin: 2px 0 0; accent-color: var(--primary)"><span style="display: flex; flex-direction: column; gap: 2px"><strong>All camps</strong><span style="font-size: 12px; color: var(--muted-foreground)">Every current and future camp</span></span></label>
+          <label style="display: flex; align-items: flex-start; gap: 10px; padding: 12px; border-radius: 10px; border: 1.5px solid var(--primary); background: color-mix(in oklab, var(--primary) 7%, var(--card)); font-size: 13.5px"><input type="radio" name="ca" checked="checked" style="margin: 2px 0 0; accent-color: var(--primary)"><span style="display: flex; flex-direction: column; gap: 2px"><strong>Only camps assigned to each user</strong><span style="font-size: 12px; color: var(--muted-foreground)">Chosen per user on the Users page</span></span></label>
+        </div>
+      </fieldset>
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <div style="display: flex; align-items: baseline; justify-content: space-between"><span style="font-size: 13px; font-weight: 600">Permissions</span><span style="font-size: 12.5px; color: var(--muted-foreground)"><strong style="color: var(--foreground)">5</strong> of 14 selected</span></div>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+          <sc-for list="{{groups}}" as="g" hint-placeholder-count="4">
+            <fieldset style="margin: 0; padding: 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); display: flex; flex-direction: column; gap: 4px">
+              <legend style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">{{g.name}}</legend>
+              <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 6px; margin-bottom: 4px; border-bottom: 1px solid var(--border)"><strong style="font-size: 13px">{{g.name}}</strong><label style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--primary); cursor: pointer"><input type="checkbox" checked="{{g.all}}" style="margin: 0; accent-color: var(--primary)">Select all</label></div>
+              <sc-for list="{{g.perms}}" as="p" hint-placeholder-count="4">
+                <label style="display: flex; align-items: center; gap: 10px; min-height: 30px; font-size: 13px; cursor: pointer"><input type="checkbox" checked="{{p.on}}" style="width: 16px; height: 16px; margin: 0; accent-color: var(--primary)"><span style="{{p.style}}">{{p.label}}</span></label>
+              </sc-for>
+            </fieldset>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px"><span style="font-size: 12.5px; color: var(--muted-foreground)">3 users have this role. Changes apply at their next page load.</span><div style="display: flex; gap: 8px"><button type="button" style="height: 40px; padding: 0 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px; font-weight: 600">Cancel</button><button type="button" style="height: 40px; padding: 0 18px; border-radius: 8px; border: 0; background: var(--primary); color: var(--primary-foreground); font: inherit; font-size: 14px; font-weight: 700">Save role</button></div></div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 28px">
+    <div style="display: flex; flex-direction: column; gap: 12px">
+      <span style="font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #C9D6E6">New user</span>
+      <div role="dialog" aria-labelledby="nu" style="display: flex; flex-direction: column; gap: 14px; padding: 24px; border-radius: 16px; background: var(--popover); border: 1px solid var(--border); box-shadow: var(--shadow-lg)">
+        <h2 id="nu" style="margin: 0; font-size: 19px; font-weight: 800">New user</h2>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+          <div style="display: flex; flex-direction: column; gap: 6px"><label for="un" style="font-size: 13px; font-weight: 600">Name</label><input id="un" value="Yusuf Haddad" style="height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px"></div>
+          <div style="display: flex; flex-direction: column; gap: 6px"><label for="ue" style="font-size: 13px; font-weight: 600">Email</label><input id="ue" value="yusuf.haddad@xperts.ae" style="height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px"></div>
+          <div style="display: flex; flex-direction: column; gap: 6px"><label for="up" style="font-size: 13px; font-weight: 600">Temporary password</label><input id="up" value="Camp-7429-Sand" style="height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13.5px"></div>
+          <div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; font-weight: 600">Role</span><button type="button" style="height: 40px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px">Camp Supervisor<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button></div>
+        </div>
+        <fieldset style="margin: 0; padding: 12px; border-radius: 10px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 6px">
+          <legend style="padding: 0 4px; font-size: 13px; font-weight: 600">Camps <span style="font-weight: 500; color: var(--muted-foreground)">· this role is limited to assigned camps</span></legend>
+          <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 12px">
+            <label style="display: flex; align-items: center; gap: 8px; min-height: 28px; font-size: 13px"><input type="checkbox" style="margin: 0; accent-color: var(--primary)">Al Quoz Camp 3</label>
+            <label style="display: flex; align-items: center; gap: 8px; min-height: 28px; font-size: 13px"><input type="checkbox" style="margin: 0; accent-color: var(--primary)">Jebel Ali Labour Camp</label>
+            <label style="display: flex; align-items: center; gap: 8px; min-height: 28px; font-size: 13px"><input type="checkbox" style="margin: 0; accent-color: var(--primary)">Sonapur Camp 7</label>
+            <label style="display: flex; align-items: center; gap: 8px; min-height: 28px; font-size: 13px; font-weight: 600"><input type="checkbox" checked="checked" style="margin: 0; accent-color: var(--primary)">Mussafah M-12</label>
+            <label style="display: flex; align-items: center; gap: 8px; min-height: 28px; font-size: 13px"><input type="checkbox" style="margin: 0; accent-color: var(--primary)">Sajja Industrial Camp</label>
+            <label style="display: flex; align-items: center; gap: 8px; min-height: 28px; font-size: 13px"><input type="checkbox" style="margin: 0; accent-color: var(--primary)">Al Jurf Camp</label>
+          </div>
+        </fieldset>
+        <div style="display: flex; justify-content: flex-end; gap: 8px"><button type="button" style="height: 40px; padding: 0 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px; font-weight: 600">Cancel</button><button type="button" style="height: 40px; padding: 0 18px; border-radius: 8px; border: 0; background: var(--primary); color: var(--primary-foreground); font: inherit; font-size: 14px; font-weight: 700">Create user</button></div>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px">
+      <div style="display: flex; flex-direction: column; gap: 12px">
+        <span style="font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #C9D6E6">Set new password</span>
+        <div role="dialog" aria-labelledby="pw" style="display: flex; flex-direction: column; gap: 14px; padding: 20px; border-radius: 16px; background: var(--popover); border: 1px solid var(--border); box-shadow: var(--shadow-lg)">
+          <div style="display: flex; flex-direction: column; gap: 4px"><h2 id="pw" style="margin: 0; font-size: 17px; font-weight: 800">New password for Priya Menon</h2><p style="margin: 0; font-size: 12.5px; color: var(--muted-foreground); line-height: 18px">Share it with her directly. She&#39;ll be asked to change it at next sign-in.</p></div>
+          <div style="display: flex; flex-direction: column; gap: 6px"><label for="np" style="font-size: 13px; font-weight: 600">New password</label><input id="np" type="password" value="xxxxxxxxxxxx" style="height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px"><span style="font-size: 12px; color: var(--muted-foreground)">At least 10 characters</span></div>
+          <div style="display: flex; justify-content: flex-end; gap: 8px"><button type="button" style="height: 38px; padding: 0 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font: inherit; font-size: 13.5px; font-weight: 600">Cancel</button><button type="button" style="height: 38px; padding: 0 14px; border-radius: 8px; border: 0; background: var(--primary); color: var(--primary-foreground); font: inherit; font-size: 13.5px; font-weight: 700">Set password</button></div>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px">
+        <span style="font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #C9D6E6">Deactivate</span>
+        <div role="alertdialog" aria-labelledby="da" style="display: flex; flex-direction: column; gap: 14px; padding: 20px; border-radius: 16px; background: var(--popover); border: 1px solid var(--border); box-shadow: var(--shadow-lg)">
+          <div style="display: flex; flex-direction: column; gap: 6px"><h2 id="da" style="margin: 0; font-size: 17px; font-weight: 800">Deactivate Yusuf Haddad?</h2><p style="margin: 0; font-size: 13px; color: var(--muted-foreground); line-height: 19px">He&#39;ll be <strong style="color: var(--foreground)">signed out everywhere</strong> straight away and can&#39;t sign in. Everything he did stays in the audit log. You can activate him again later.</p></div>
+          <div style="display: flex; justify-content: flex-end; gap: 8px"><button type="button" style="height: 38px; padding: 0 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font: inherit; font-size: 13.5px; font-weight: 600">Cancel</button><button type="button" style="height: 38px; padding: 0 14px; border-radius: 8px; border: 0; background: var(--destructive); color: var(--destructive-foreground); font: inherit; font-size: 13.5px; font-weight: 700">Deactivate</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 12px">
+      <span style="font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #C9D6E6">Add custom field</span>
+      <div role="dialog" aria-labelledby="af" style="display: flex; flex-direction: column; gap: 14px; padding: 24px; border-radius: 16px; background: var(--popover); border: 1px solid var(--border); box-shadow: var(--shadow-lg)">
+        <h2 id="af" style="margin: 0; font-size: 19px; font-weight: 800">Add field</h2>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+          <div style="display: flex; flex-direction: column; gap: 6px"><label for="fl" style="font-size: 13px; font-weight: 600">Label <span style="color: var(--destructive)">*</span></label><input id="fl" value="Shift" style="height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px"><span style="font-size: 12px; color: var(--muted-foreground)">Stored as <span style="font-family: 'JetBrains Mono', ui-monospace, monospace">shift</span></span></div>
+          <div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; font-weight: 600">Type</span><button type="button" style="height: 40px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px">Dropdown<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><span style="font-size: 12px; color: var(--muted-foreground)">Text · Number · Date · Dropdown · Phone · Email · Yes/no</span></div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px"><label for="fo" style="font-size: 13px; font-weight: 600">Options <span style="font-weight: 500; color: var(--muted-foreground)">· one per line</span></label><textarea id="fo" rows="3" style="box-sizing: border-box; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px; line-height: 20px; resize: none">Day
+Night
+Rotating</textarea></div>
+        <label style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); font-size: 13.5px; font-weight: 600; cursor: pointer"><span style="display: flex; flex-direction: column; gap: 2px">Required<span style="font-size: 12px; font-weight: 500; color: var(--muted-foreground)">Staff must fill it when adding or editing a worker</span></span><span style="position: relative; width: 36px; height: 20px; flex: none; border-radius: 999px; background: var(--input)"><span style="position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 999px; background: #FFFFFF"></span></span><input type="checkbox" style="position: absolute; opacity: 0; width: 1px; height: 1px"></label>
+        <div style="display: flex; justify-content: flex-end; gap: 8px"><button type="button" style="height: 40px; padding: 0 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px; font-weight: 600">Cancel</button><button type="button" style="height: 40px; padding: 0 18px; border-radius: 8px; border: 0; background: var(--primary); color: var(--primary-foreground); font: inherit; font-size: 14px; font-weight: 700">Add field</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":1560}}'>
+const XC_L='background:#F5F7FA;foreground:#0E1B2C;card:#FFFFFF;popover:#FFFFFF;primary:#00579F;primary-foreground:#FFFFFF;muted:#EEF1F5;muted-foreground:#556274;destructive:#C2302A;destructive-foreground:#FFFFFF;border:#DCE2EA;input:#C9D2DE;shadow-lg:0 24px 48px rgba(14,27,44,.18),0 4px 12px rgba(14,27,44,.08);overlay-solid:#3B4656';
+const XC_D='background:#0A111C;foreground:#E5ECF5;card:#101A28;popover:#132034;primary:#4D9DE8;primary-foreground:#04111F;muted:#152234;muted-foreground:#93A2B6;destructive:#EF6A5F;destructive-foreground:#1C0605;border:#213149;input:#2A3D58;shadow-lg:0 24px 60px rgba(0,0,0,.6);overlay-solid:#04080F';
+function xcVars(d){return (d?XC_D:XC_L).split(';').map(function(s){return '--'+s;}).join(';')+';color-scheme:'+(d?'dark':'light')+';';}
+class Component extends DCLogic {
+  renderVals() {
+    var G = [
+      ['Camps', [['View camps', 1], ['Manage camps, rooms & beds', 0], ['Assign & move beds', 1]]],
+      ['Workers', [['View workers', 1], ['Add & edit workers', 0], ['Mark leave', 1], ['Exit workers', 0], ['See passport & Emirates ID', 0], ['Export workers', 0]]],
+      ['Reports', [['View & export reports', 0]]],
+      ['Administration', [['Manage custom fields', 0], ['View audit log', 1], ['Manage users', 0], ['Manage roles', 0]]]
+    ];
+    var groups = G.map(function (g) {
+      return {
+        name: g[0], all: g[1].every(function (p) { return p[1]; }),
+        perms: g[1].map(function (p) { return { label: p[0], on: !!p[1], style: p[1] ? 'font-weight: 600' : 'color: var(--muted-foreground)' }; })
+      };
+    });
+    return { tv: xcVars(this.props.dark ?? false), groups: groups };
+  }
+}
+</script>
+</body>
+</html>

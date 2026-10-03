@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Dashboard</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div style="{{tv}} min-height: 100vh; display: flex; flex-wrap: wrap; background: var(--background); color: var(--foreground); font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif">
+  <div style="flex: 0 0 248px; display: flex; flex-direction: column"><dc-import name="Sidebar" active="dashboard" dark="{{dark}}" hint-size="248px,100%"></dc-import></div>
+  <div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column">
+    <dc-import name="Topbar" crumbs="Dashboard" dark="{{dark}}" hint-size="100%,64px"></dc-import>
+    <main style="box-sizing: border-box; width: 100%; max-width: 1440px; padding: 28px 32px 48px; display: flex; flex-direction: column; gap: 24px">
+
+      <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px">
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <h1 style="margin: 0; font-size: 26px; line-height: 34px; font-weight: 800; letter-spacing: -0.02em">Good morning, Mariam</h1>
+          <p style="margin: 0; font-size: 14px; color: var(--muted-foreground)">Saturday, 3 October 2026 · Dubai. Here is where every bed stands today.</p>
+        </div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap">
+          <a href="Reports.dc.html" style="display: flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); text-decoration: none; font-size: 14px; font-weight: 600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>Occupancy sheet</a>
+          <a href="WorkerForm.dc.html" style="display: flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px; border-radius: 8px; background: var(--primary); color: var(--primary-foreground); text-decoration: none; font-size: 14px; font-weight: 600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>Add worker</a>
+        </div>
+      </div>
+
+      <section aria-label="Workers" style="display: flex; flex-direction: column; gap: 10px">
+        <div style="font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted-foreground)">Workers</div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); gap: 12px">
+          <sc-for list="{{kW}}" as="k" hint-placeholder-count="5">
+            <a href="Workers.dc.html" style="display: flex; flex-direction: column; gap: 8px; padding: 16px 18px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm); text-decoration: none; color: var(--foreground)">
+              <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--muted-foreground)"><span style="width: 8px; height: 8px; border-radius: 999px; background: {{k.dot}}"></span>{{k.label}}</div>
+              <div style="font-size: 30px; line-height: 36px; font-weight: 800; letter-spacing: -0.02em">{{k.value}}</div>
+              <div style="font-size: 12px; color: var(--muted-foreground)">{{k.sub}}</div>
+            </a>
+          </sc-for>
+        </div>
+      </section>
+
+      <section aria-label="Beds" style="display: flex; flex-direction: column; gap: 10px">
+        <div style="font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted-foreground)">Beds · 6 camps</div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); gap: 12px">
+          <sc-for list="{{kB}}" as="k" hint-placeholder-count="4">
+            <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px 18px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm)">
+              <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--muted-foreground)"><span style="width: 8px; height: 8px; border-radius: 3px; background: {{k.dot}}"></span>{{k.label}}</div>
+              <div style="font-size: 30px; line-height: 36px; font-weight: 800; letter-spacing: -0.02em">{{k.value}}</div>
+              <div style="font-size: 12px; color: var(--muted-foreground)">{{k.sub}}</div>
+            </div>
+          </sc-for>
+          <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px 18px; border-radius: 14px; background: var(--primary); color: var(--primary-foreground); box-shadow: var(--shadow-sm)">
+            <div style="font-size: 13px; font-weight: 600; opacity: .85">Occupancy</div>
+            <div style="font-size: 30px; line-height: 36px; font-weight: 800; letter-spacing: -0.02em">92.8%</div>
+            <div style="display: flex; height: 6px; border-radius: 999px; overflow: hidden; background: rgba(255,255,255,.22)"><div style="width: 92.8%; background: currentColor; border-radius: 999px"></div></div>
+          </div>
+        </div>
+      </section>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 16px; align-items: start">
+        <section style="grid-column: span 1; display: flex; flex-direction: column; gap: 16px; padding: 20px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm)">
+          <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+            <div style="display: flex; flex-direction: column; gap: 2px"><h2 style="margin: 0; font-size: 17px; font-weight: 700">Occupancy by camp</h2><span style="font-size: 13px; color: var(--muted-foreground)">Held beds count as in use</span></div>
+            <div style="display: flex; gap: 14px; font-size: 12px; color: var(--muted-foreground)">
+              <span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: var(--status-occupied)"></span>Occupied</span>
+              <span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: var(--status-held)"></span>Held</span>
+              <span style="display: flex; align-items: center; gap: 6px"><span style="width: 10px; height: 10px; border-radius: 3px; background: var(--status-vacant)"></span>Vacant</span>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 14px">
+            <sc-for list="{{camps}}" as="c" hint-placeholder-count="6">
+              <a href="CampDetail.dc.html" style="display: grid; grid-template-columns: minmax(150px, 220px) minmax(0, 1fr) 92px; align-items: center; gap: 16px; text-decoration: none; color: var(--foreground)">
+                <div style="display: flex; flex-direction: column; min-width: 0"><span style="font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{c.name}}</span><span style="font-size: 12px; color: var(--muted-foreground)">{{c.emirate}} · {{c.beds}} beds</span></div>
+                <div style="display: flex; height: 14px; border-radius: 999px; overflow: hidden; background: var(--muted); gap: 2px">
+                  <div style="width: {{c.o}}; background: var(--status-occupied)"></div>
+                  <div style="width: {{c.h}}; background: var(--status-held)"></div>
+                  <div style="width: {{c.v}}; background: var(--status-vacant)"></div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: flex-end"><span style="font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums">{{c.pct}}</span><span style="font-size: 12px; color: var(--status-vacant-fg); font-weight: 600">{{c.vac}} free</span></div>
+              </a>
+            </sc-for>
+          </div>
+        </section>
+
+        <div style="display: flex; flex-direction: column; gap: 16px">
+          <section style="display: flex; flex-direction: column; gap: 12px; padding: 20px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm)">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+              <h2 style="margin: 0; font-size: 17px; font-weight: 700; display: flex; align-items: center; gap: 8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--warning)"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>Rooms over capacity</h2>
+              <span style="font-size: 12px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: var(--warning-bg); color: var(--warning-fg); border: 1px solid var(--warning-border)">4 rooms</span>
+            </div>
+            <div style="display: flex; flex-direction: column">
+              <sc-for list="{{crowded}}" as="r" hint-placeholder-count="4">
+                <a href="CampDetail.dc.html" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid var(--border); text-decoration: none; color: var(--foreground)">
+                  <div style="display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600">Room {{r.room}}</span><span style="font-size: 12px; color: var(--muted-foreground)">{{r.camp}} · {{r.area}}</span></div>
+                  <span style="font-size: 12px; font-weight: 600; color: var(--warning-fg)">{{r.beds}} beds · fits ~{{r.fits}}</span>
+                </a>
+              </sc-for>
+            </div>
+          </section>
+          <section style="display: flex; flex-direction: column; gap: 12px; padding: 20px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm)">
+            <div style="display: flex; align-items: center; justify-content: space-between"><h2 style="margin: 0; font-size: 17px; font-weight: 700">Your access</h2><span style="font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: var(--secondary); color: var(--secondary-foreground)">Administrator</span></div>
+            <div style="display: flex; gap: 16px; font-size: 13px"><span style="color: var(--muted-foreground)">Camp access</span><strong>All camps (6)</strong></div>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px">
+              <sc-for list="{{perms}}" as="p" hint-placeholder-count="14"><span style="font-size: 12px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted-foreground)">{{p}}</span></sc-for>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 16px; align-items: start">
+        <section style="display: flex; flex-direction: column; gap: 4px; padding: 20px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm)">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px"><h2 style="margin: 0; font-size: 17px; font-weight: 700">On leave · 96</h2><a href="Workers.dc.html" style="font-size: 13px; font-weight: 600; text-decoration: none">View all</a></div>
+          <sc-for list="{{leave}}" as="w" hint-placeholder-count="5">
+            <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--border)">
+              <div style="width: 34px; height: 34px; flex: none; border-radius: 999px; background: var(--row-leave); color: var(--status-vacant-fg); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700">{{w.ini}}</div>
+              <div style="flex: 1; min-width: 0; display: flex; flex-direction: column"><a href="WorkerDetail.dc.html" style="font-size: 14px; font-weight: 600; color: var(--foreground); text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{w.name}}</a><span style="font-size: 12px; color: var(--muted-foreground)"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace">{{w.emp}}</span> · {{w.bed}} <span style="color: var(--status-held-fg); font-weight: 600">held</span></span></div>
+              <div style="display: flex; flex-direction: column; align-items: flex-end; flex: none"><span style="font-size: 12px; font-weight: 600">{{w.days}} days</span><span style="font-size: 11px; color: var(--muted-foreground)">since {{w.since}}</span></div>
+            </div>
+          </sc-for>
+        </section>
+        <section style="display: flex; flex-direction: column; gap: 4px; padding: 20px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm)">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px"><h2 style="margin: 0; font-size: 17px; font-weight: 700">Recent exits</h2><span style="font-size: 13px; color: var(--muted-foreground)">26 this month</span></div>
+          <sc-for list="{{exits}}" as="w" hint-placeholder-count="5">
+            <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--border)">
+              <div style="flex: 1; min-width: 0; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{w.name}}</span><span style="font-size: 12px; color: var(--muted-foreground)">Freed {{w.bed}}</span></div>
+              <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex: none"><span style="font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--muted); color: var(--muted-foreground); border: 1px solid var(--border)">{{w.type}}</span><span style="font-size: 11px; color: var(--muted-foreground)">{{w.date}}</span></div>
+            </div>
+          </sc-for>
+        </section>
+        <section style="display: flex; flex-direction: column; gap: 4px; padding: 20px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm)">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px"><h2 style="margin: 0; font-size: 17px; font-weight: 700">Recent activity</h2><a href="Audit.dc.html" style="font-size: 13px; font-weight: 600; text-decoration: none">Audit log</a></div>
+          <sc-for list="{{activity}}" as="a" hint-placeholder-count="6">
+            <div style="display: flex; gap: 12px; padding: 10px 0; border-top: 1px solid var(--border)">
+              <span style="width: 8px; height: 8px; margin-top: 6px; flex: none; border-radius: 999px; background: {{a.dot}}"></span>
+              <div style="flex: 1; min-width: 0; font-size: 13px; line-height: 19px"><strong style="font-weight: 600">{{a.who}}</strong> {{a.what}}</div>
+              <span style="font-size: 11px; color: var(--muted-foreground); white-space: nowrap">{{a.when}}</span>
+            </div>
+          </sc-for>
+        </section>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":1640}}'>
+const XC_L='background:#F5F7FA;foreground:#0E1B2C;card:#FFFFFF;card-foreground:#0E1B2C;popover:#FFFFFF;popover-foreground:#0E1B2C;primary:#00579F;primary-foreground:#FFFFFF;secondary:#E9EFF6;secondary-foreground:#0E2A4A;muted:#EEF1F5;muted-foreground:#556274;accent:#FFF1DC;accent-foreground:#8A4A00;destructive:#C2302A;destructive-foreground:#FFFFFF;border:#DCE2EA;input:#C9D2DE;ring:#3584CF;chart-1:#00579F;chart-2:#F39314;chart-3:#3AA0E4;chart-4:#23A162;chart-5:#8A96A8;sidebar:#0A2342;sidebar-foreground:#C6D3E3;sidebar-primary:#F39314;sidebar-primary-foreground:#1F1100;sidebar-accent:#12345E;sidebar-accent-foreground:#FFFFFF;sidebar-border:#1A3B66;sidebar-ring:#F39314;brand:#F39314;brand-ink:#A85A00;status-occupied:#2A8BD6;status-occupied-bg:#E5F1FC;status-occupied-border:#8FC2EE;status-occupied-fg:#0B4C85;status-held:#DDA00F;status-held-bg:#FCF1D2;status-held-border:#E6BA4C;status-held-fg:#694000;status-vacant:#23A162;status-vacant-bg:#E2F4EA;status-vacant-border:#84CDA4;status-vacant-fg:#0B5C33;status-invalid:#8A94A3;status-invalid-bg:#F1F3F6;status-invalid-border:#AEB7C3;status-invalid-fg:#66707D;row-leave:#EBF7F0;row-nobed:#FFEFDD;row-exited:#F2F3F5;warning:#D97A06;warning-bg:#FFF3DE;warning-border:#F1C16A;warning-fg:#7A4400;success:#1E8A52;shadow-sm:0 1px 2px rgba(14,27,44,.06),0 1px 3px rgba(14,27,44,.05);shadow-md:0 4px 12px rgba(14,27,44,.08),0 1px 3px rgba(14,27,44,.06);shadow-lg:0 24px 48px rgba(14,27,44,.18),0 4px 12px rgba(14,27,44,.08);overlay:rgba(10,20,35,.48)';
+const XC_D='background:#0A111C;foreground:#E5ECF5;card:#101A28;card-foreground:#E5ECF5;popover:#132034;popover-foreground:#E5ECF5;primary:#4D9DE8;primary-foreground:#04111F;secondary:#18263A;secondary-foreground:#DCE6F2;muted:#152234;muted-foreground:#93A2B6;accent:#33240E;accent-foreground:#FFC47A;destructive:#EF6A5F;destructive-foreground:#1C0605;border:#213149;input:#2A3D58;ring:#4D9DE8;chart-1:#4D9DE8;chart-2:#F5A23A;chart-3:#6CC0F5;chart-4:#3CC27F;chart-5:#7C8BA0;sidebar:#070D17;sidebar-foreground:#B4C2D4;sidebar-primary:#F5A23A;sidebar-primary-foreground:#1F1100;sidebar-accent:#122138;sidebar-accent-foreground:#FFFFFF;sidebar-border:#172538;sidebar-ring:#F5A23A;brand:#F5A23A;brand-ink:#FFB861;status-occupied:#4BA8F0;status-occupied-bg:#0F2A45;status-occupied-border:#2B679F;status-occupied-fg:#A6D3FA;status-held:#E8B53A;status-held-bg:#33270B;status-held-border:#866619;status-held-fg:#F6D57A;status-vacant:#3CC27F;status-vacant-bg:#0D2F21;status-vacant-border:#2A7650;status-vacant-fg:#93E3B9;status-invalid:#6C7789;status-invalid-bg:#121A26;status-invalid-border:#3A4659;status-invalid-fg:#7F8A9B;row-leave:#0F261C;row-nobed:#2E1F0E;row-exited:#0E1520;warning:#F0A23A;warning-bg:#2F210B;warning-border:#7E5A1C;warning-fg:#FFCE85;success:#3CC27F;shadow-sm:0 1px 2px rgba(0,0,0,.4);shadow-md:0 6px 16px rgba(0,0,0,.45);shadow-lg:0 24px 60px rgba(0,0,0,.6);overlay:rgba(2,6,12,.66)';
+function xcVars(d){return (d?XC_D:XC_L).split(';').map(function(s){return '--'+s;}).join(';')+';color-scheme:'+(d?'dark':'light')+';';}
+class Component extends DCLogic {
+  renderVals() {
+    var dark = this.props.dark ?? false;
+    var camps = [
+      ['Al Quoz Camp 3', 'Dubai', 312, 268, 22, 22],
+      ['Jebel Ali Labour Camp', 'Dubai', 296, 251, 19, 26],
+      ['Sonapur Camp 7', 'Dubai', 240, 214, 18, 8],
+      ['Mussafah M-12', 'Abu Dhabi', 220, 190, 16, 14],
+      ['Sajja Industrial Camp', 'Sharjah', 152, 118, 13, 21],
+      ['Al Jurf Camp', 'Ajman', 92, 80, 8, 4]
+    ].map(function (c) {
+      var t = c[2];
+      return { name: c[0], emirate: c[1], beds: c[2], o: (c[3] / t * 100).toFixed(2) + '%', h: (c[4] / t * 100).toFixed(2) + '%', v: (c[5] / t * 100).toFixed(2) + '%', pct: ((c[3] + c[4]) / t * 100).toFixed(1) + '%', vac: c[5] };
+    });
+    return {
+      dark: dark,
+      tv: xcVars(dark),
+      kW: [
+        { label: 'Active workers', value: '1,258', sub: '+14 joined this week', dot: 'var(--primary)' },
+        { label: 'Housed', value: '1,121', sub: 'In a bed and present', dot: 'var(--status-occupied)' },
+        { label: 'On leave', value: '96', sub: 'Beds held for them', dot: 'var(--status-vacant)' },
+        { label: 'Without a bed', value: '41', sub: 'Need assigning', dot: 'var(--brand)' },
+        { label: 'Exited this month', value: '26', sub: '9 resigned · 8 visa cancelled', dot: 'var(--status-invalid)' }
+      ],
+      kB: [
+        { label: 'Total beds', value: '1,312', sub: '166 rooms', dot: 'var(--chart-5)' },
+        { label: 'Occupied', value: '1,121', sub: '85.4% of beds', dot: 'var(--status-occupied)' },
+        { label: 'Held', value: '96', sub: 'Occupant on leave', dot: 'var(--status-held)' },
+        { label: 'Vacant', value: '95', sub: 'Ready to assign', dot: 'var(--status-vacant)' }
+      ],
+      camps: camps,
+      crowded: [
+        { room: '204', camp: 'Sonapur Camp 7', area: '26 m²', beds: 10, fits: 7 },
+        { room: 'G-12', camp: 'Al Quoz Camp 3', area: '22 m²', beds: 8, fits: 5 },
+        { room: '2B', camp: 'Mussafah M-12', area: '24 m²', beds: 10, fits: 8 },
+        { room: '115', camp: 'Jebel Ali Labour Camp', area: '29 m²', beds: 9, fits: 7 }
+      ],
+      perms: ['View camps', 'Manage camps, rooms & beds', 'Assign & move beds', 'View workers', 'Add & edit workers', 'Mark leave', 'Exit workers', 'See passport & Emirates ID', 'Export workers', 'View & export reports', 'Manage custom fields', 'View audit log', 'Manage users', 'Manage roles'],
+      leave: [
+        { ini: 'RT', name: 'Ram Bahadur Thapa', emp: 'XP-003912', bed: 'Al Quoz 3 · 101 · B2', days: 41, since: '23 Aug' },
+        { ini: 'MK', name: 'Mohammed Asif Khan', emp: 'XP-004410', bed: 'Jebel Ali · 115 · B5', days: 33, since: '31 Aug' },
+        { ini: 'JD', name: 'Jose Dela Cruz', emp: 'XP-002876', bed: 'Mussafah · 2B · B1', days: 19, since: '14 Sep' },
+        { ini: 'PR', name: 'Prakash Rai', emp: 'XP-004771', bed: 'Sonapur 7 · 204 · B8', days: 12, since: '21 Sep' },
+        { ini: 'SY', name: 'Suresh Yadav', emp: 'XP-005013', bed: 'Al Quoz 3 · 302 · B4', days: 4, since: '29 Sep' }
+      ],
+      exits: [
+        { name: 'Abdul Karim', type: 'Visa Cancelled', date: '2 Oct 2026', bed: 'Sajja · 12 · B3' },
+        { name: 'Imran Ali', type: 'Resigned', date: '1 Oct 2026', bed: 'Al Quoz 3 · 108 · B6' },
+        { name: 'Mark Anthony Reyes', type: 'Transferred Out', date: '30 Sep 2026', bed: 'Mussafah · 3A · B2' },
+        { name: 'Kabir Hossain', type: 'Absconded', date: '28 Sep 2026', bed: 'Jebel Ali · 207 · B1' },
+        { name: 'Faisal Rehman', type: 'Terminated', date: '27 Sep 2026', bed: 'Sonapur 7 · 110 · B4' }
+      ],
+      activity: [
+        { who: 'Rajesh Kumar', what: 'moved Bikash Tamang to Room 204 · B3, Sonapur Camp 7', when: '12 min', dot: 'var(--status-occupied)' },
+        { who: 'Mariam Al Hashimi', what: 'exited Abdul Karim (Visa Cancelled). Sajja · 12 · B3 is now vacant', when: '1 h', dot: 'var(--destructive)' },
+        { who: 'Rajesh Kumar', what: 'marked Suresh Yadav on leave; bed 302 · B4 held', when: '3 h', dot: 'var(--status-held)' },
+        { who: 'Aisha Noor', what: 'added 6 beds to Room 118, Jebel Ali Labour Camp', when: 'Yesterday', dot: 'var(--primary)' },
+        { who: 'Aisha Noor', what: 'invalidated Room G-04 — “Water damage, closed by facilities”', when: 'Yesterday', dot: 'var(--status-invalid)' },
+        { who: 'Mariam Al Hashimi', what: 'added worker Dil Kumar Magar (XP-005102)', when: '1 Oct', dot: 'var(--primary)' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

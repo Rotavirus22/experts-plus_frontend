@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en"><head><style>
+    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
+      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
+      border-radius:2px;box-sizing:border-box;overflow:hidden}
+    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
+    html.sc-dc-streaming .sc-placeholder,
+    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
+      background:color-mix(in srgb,currentColor 5%,transparent);
+      border-color:transparent}
+    html.sc-dc-streaming .sc-placeholder::before,
+    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
+      position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
+      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
+    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
+    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
+      background:color-mix(in srgb,currentColor 8%,transparent)}
+    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
+      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
+    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
+      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
+      border-radius:2px;box-sizing:border-box;color:transparent;
+      user-select:none}
+    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
+      color:color-mix(in srgb,currentColor 50%,transparent);
+      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
+      padding:0 3px}
+    .sc-host.sc-has-error{position:relative}
+    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
+      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
+      border-radius:4px;white-space:pre-wrap;pointer-events:none}
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts — keep both
+       in sync until dc-runtime regains a build step. */
+    @media print {
+      @page { margin: 0.5cm; }
+      figure, table { break-inside: avoid; }
+      #dc-root, #dc-root > .sc-host { height: auto; }
+      *, *::before, *::after {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+    }
+  </style>
+<meta charset="utf-8">
+<title>States</title>
+<style>x-dc{display:none!important}</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" data-dc-tpl="1"><style data-dc-tpl="2">
+body{margin:0}
+@keyframes xcShimmer{0%{opacity:.55}50%{opacity:1}100%{opacity:.55}}
+.xc-sk{animation:xcShimmer 1.4s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.xc-sk{animation:none}}
+</style></head>
+<body>
+<div id="dc-root"><div class="sc-host" data-sc-name="States"><div data-dc-tpl="3" style="--background: #F5F7FA; --foreground: #0E1B2C; --card: #FFFFFF; --popover: #FFFFFF; --primary: #00579F; --primary-foreground: #FFFFFF; --secondary: #E9EFF6; --secondary-foreground: #0E2A4A; --muted: #EEF1F5; --muted-foreground: #556274; --brand-ink: #A85A00; --destructive: #C2302A; --success: #1E8A52; --border: #DCE2EA; --input: #C9D2DE; --status-vacant-border: #84CDA4; --shadow-sm: 0 1px 2px rgba(14,27,44,.06),0 1px 3px rgba(14,27,44,.05); --shadow-md: 0 4px 12px rgba(14,27,44,.08),0 1px 3px rgba(14,27,44,.06); color-scheme: light; width: 1440px; min-height: 1300px; box-sizing: border-box; padding: 48px; background: var(--background); color: var(--foreground); font-family: &quot;Plus Jakarta Sans&quot;, ui-sans-serif, system-ui, sans-serif; display: grid; grid-template-columns: repeat(3, minmax(0px, 1fr)); gap: 28px; align-content: start;">
+
+  <div data-dc-tpl="4" style="display: flex; flex-direction: column; gap: 10px;">
+    <span data-dc-tpl="5" style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted-foreground);">Loading · table skeleton</span>
+    <div data-dc-tpl="6" aria-busy="true" aria-label="Loading workers" style="border-radius: 14px; background: var(--card); border: 1px solid var(--border); overflow: hidden;">
+      <div data-dc-tpl="7" style="height: 38px; background: var(--muted);"></div>
+      
+        <div data-dc-tpl="9" style="display: grid; grid-template-columns: 70px 1fr 80px 64px; gap: 14px; align-items: center; padding: 14px 16px; border-top: 1px solid var(--border);">
+          <div data-dc-tpl="10" class="xc-sk" style="height: 10px; border-radius: 6px; background: var(--muted);"></div>
+          <div data-dc-tpl="11" style="display: flex; flex-direction: column; gap: 6px;"><div data-dc-tpl="12" class="xc-sk" style="height: 10px; width: 70%; border-radius: 6px; background: var(--muted);"></div><div data-dc-tpl="13" class="xc-sk" style="height: 8px; width: 40%; border-radius: 6px; background: var(--muted);"></div></div>
+          <div data-dc-tpl="14" class="xc-sk" style="height: 10px; border-radius: 6px; background: var(--muted);"></div>
+          <div data-dc-tpl="15" class="xc-sk" style="height: 20px; border-radius: 999px; background: var(--muted);"></div>
+        </div>
+      
+        <div data-dc-tpl="9" style="display: grid; grid-template-columns: 70px 1fr 80px 64px; gap: 14px; align-items: center; padding: 14px 16px; border-top: 1px solid var(--border);">
+          <div data-dc-tpl="10" class="xc-sk" style="height: 10px; border-radius: 6px; background: var(--muted);"></div>
+          <div data-dc-tpl="11" style="display: flex; flex-direction: column; gap: 6px;"><div data-dc-tpl="12" class="xc-sk" style="height: 10px; width: 55%; border-radius: 6px; background: var(--muted);"></div><div data-dc-tpl="13" class="xc-sk" style="height: 8px; width: 40%; border-radius: 6px; background: var(--muted);"></div></div>
+          <div data-dc-tpl="14" class="xc-sk" style="height: 10px; border-radius: 6px; background: var(--muted);"></div>
+          <div data-dc-tpl="15" class="xc-sk" style="height: 20px; border-radius: 999px; background: var(--muted);"></div>
+        </div>
+      
+        <div data-dc-tpl="9" style="display: grid; grid-template-columns: 70px 1fr 80px 64px; gap: 14px; align-items: center; padding: 14px 16px; border-top: 1px solid var(--border);">
+          <div data-dc-tpl="10" class="xc-sk" style="height: 10px; border-radius: 6px; background: var(--muted);"></div>
+          <div data-dc-tpl="11" style="display: flex; flex-direction: column; gap: 6px;"><div data-dc-tpl="12" class="xc-sk" style="height: 10px; width: 80%; border-radius: 6px; background: var(--muted);"></div><div data-dc-tpl="13" class="xc-sk" style="height: 8px; width: 40%; border-radius: 6px; background: var(--muted);"></div></div>
+          <div data-dc-tpl="14" class="xc-sk" style="height: 10px; border-radius: 6px; background: var(--muted);"></div>
+          <div data-dc-tpl="15" class="xc-sk" style="height: 20px; border-radius: 999px; background: var(--muted);"></div>
+        </div>
+      
+        <div data-dc-tpl="9" style="display: grid; grid-template-columns: 70px 1fr 80px 64px; gap: 14px; align-items: center; padding: 14px 16px; border-top: 1px solid var(--border);">
+          <div data-dc-tpl="10" class="xc-sk" style="height: 10px; border-radius: 6px; background: var(--muted);"></div>
+          <div data-dc-tpl="11" style="display: flex; flex-direction: column; gap: 6px;"><div data-dc-tpl="12" class="xc-sk" style="height: 10px; width: 62%; border-radius: 6px; background: var(--muted);"></div><div data-dc-tpl="13" class="xc-sk" style="height: 8px; width: 40%; border-radius: 6px; background: var(--muted);"></div></div>
+          <div data-dc-tpl="14" class="xc-sk" style="height: 10px; border-radius: 6px; background: var(--muted);"></div>
+          <div data-dc-tpl="15" class="xc-sk" style="height: 20px; border-radius: 999px; background: var(--muted);"></div>
+        </div>
+      
+        <div data-dc-tpl="9" style="display: grid; grid-template-columns: 70px 1fr 80px 64px; gap: 14px; align-items: center; padding: 14px 16px; border-top: 1px solid var(--border);">
+          <div data-dc-tpl="10" class="xc-sk" style="height: 10px; border-radius: 6px; background: var(--muted);"></div>
+          <div data-dc-tpl="11" style="display: flex; flex-direction: column; gap: 6px;"><div data-dc-tpl="12" class="xc-sk" style="height: 10px; width: 74%; border-radius: 6px; background: var(--muted);"></div><div data-dc-tpl="13" class="xc-sk" style="height: 8px; width: 40%; border-radius: 6px; background: var(--muted);"></div></div>
+          <div data-dc-tpl="14" class="xc-sk" style="height: 10px; border-radius: 6px; background: var(--muted);"></div>
+          <div data-dc-tpl="15" class="xc-sk" style="height: 20px; border-radius: 999px; background: var(--muted);"></div>
+        </div>
+      
+        <div data-dc-tpl="9" style="display: grid; grid-template-columns: 70px 1fr 80px 64px; gap: 14px; align-items: center; padding: 14px 16px; border-top: 1px solid var(--border);">
+          <div data-dc-tpl="10" class="xc-sk" style="height: 10px; border-radius: 6px; background: var(--muted);"></div>
+          <div data-dc-tpl="11" style="display: flex; flex-direction: column; gap: 6px;"><div data-dc-tpl="12" class="xc-sk" style="height: 10px; width: 50%; border-radius: 6px; background: var(--muted);"></div><div data-dc-tpl="13" class="xc-sk" style="height: 8px; width: 40%; border-radius: 6px; background: var(--muted);"></div></div>
+          <div data-dc-tpl="14" class="xc-sk" style="height: 10px; border-radius: 6px; background: var(--muted);"></div>
+          <div data-dc-tpl="15" class="xc-sk" style="height: 20px; border-radius: 999px; background: var(--muted);"></div>
+        </div>
+      
+    </div>
+  </div>
+
+  <div data-dc-tpl="16" style="display: flex; flex-direction: column; gap: 10px;">
+    <span data-dc-tpl="17" style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted-foreground);">Loading · camp &amp; room cards</span>
+    <div data-dc-tpl="18" aria-busy="true" style="display: grid; grid-template-columns: repeat(2, minmax(0px, 1fr)); gap: 12px;">
+      
+        <div data-dc-tpl="20" style="display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 14px; background: var(--card); border: 1px solid var(--border);">
+          <div data-dc-tpl="21" class="xc-sk" style="height: 12px; width: 60%; border-radius: 6px; background: var(--muted);"></div>
+          <div data-dc-tpl="22" class="xc-sk" style="height: 8px; width: 40%; border-radius: 6px; background: var(--muted);"></div>
+          <div data-dc-tpl="23" style="display: grid; grid-template-columns: repeat(3, minmax(0px, 1fr)); gap: 6px;"><div data-dc-tpl="24" class="xc-sk" style="height: 40px; border-radius: 8px; background: var(--muted);"></div><div data-dc-tpl="25" class="xc-sk" style="height: 40px; border-radius: 8px; background: var(--muted);"></div><div data-dc-tpl="26" class="xc-sk" style="height: 40px; border-radius: 8px; background: var(--muted);"></div><div data-dc-tpl="27" class="xc-sk" style="height: 40px; border-radius: 8px; background: var(--muted);"></div><div data-dc-tpl="28" class="xc-sk" style="height: 40px; border-radius: 8px; background: var(--muted);"></div></div>
+        </div>
+      
+        <div data-dc-tpl="20" style="display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 14px; background: var(--card); border: 1px solid var(--border);">
+          <div data-dc-tpl="21" class="xc-sk" style="height: 12px; width: 60%; border-radius: 6px; background: var(--muted);"></div>
+          <div data-dc-tpl="22" class="xc-sk" style="height: 8px; width: 40%; border-radius: 6px; background: var(--muted);"></div>
+          <div data-dc-tpl="23" style="display: grid; grid-template-columns: repeat(3, minmax(0px, 1fr)); gap: 6px;"><div data-dc-tpl="24" class="xc-sk" style="height: 40px; border-radius: 8px; background: var(--muted);"></div><div data-dc-tpl="25" class="xc-sk" style="height: 40px; border-radius: 8px; background: var(--muted);"></div><div data-dc-tpl="26" class="xc-sk" style="height: 40px; border-radius: 8px; background: var(--muted);"></div><div data-dc-tpl="27" class="xc-sk" style="height: 40px; border-radius: 8px; background: var(--muted);"></div><div data-dc-tpl="28" class="xc-sk" style="height: 40px; border-radius: 8px; background: var(--muted);"></div></div>
+        </div>
+      
+        <div data-dc-tpl="20" style="display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 14px; background: var(--card); border: 1px solid var(--border);">
+          <div data-dc-tpl="21" class="xc-sk" style="height: 12px; width: 60%; border-radius: 6px; background: var(--muted);"></div>
+          <div data-dc-tpl="22" class="xc-sk" style="height: 8px; width: 40%; border-radius: 6px; background: var(--muted);"></div>
+          <div data-dc-tpl="23" style="display: grid; grid-template-columns: repeat(3, minmax(0px, 1fr)); gap: 6px;"><div data-dc-tpl="24" class="xc-sk" style="height: 40px; border-radius: 8px; background: var(--muted);"></div><div data-dc-tpl="25" class="xc-sk" style="height: 40px; border-radius: 8px; background: var(--muted);"></div><div data-dc-tpl="26" class="xc-sk" style="height: 40px; border-radius: 8px; background: var(--muted);"></div><div data-dc-tpl="27" class="xc-sk" style="height: 40px; border-radius: 8px; background: var(--muted);"></div><div data-dc-tpl="28" class="xc-sk" style="height: 40px; border-radius: 8px; background: var(--muted);"></div></div>
+        </div>
+      
+        <div data-dc-tpl="20" style="display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 14px; background: var(--card); border: 1px solid var(--border);">
+          <div data-dc-tpl="21" class="xc-sk" style="height: 12px; width: 60%; border-radius: 6px; background: var(--muted);"></div>
+          <div data-dc-tpl="22" class="xc-sk" style="height: 8px; width: 40%; border-radius: 6px; background: var(--muted);"></div>
+          <div data-dc-tpl="23" style="display: grid; grid-template-columns: repeat(3, minmax(0px, 1fr)); gap: 6px;"><div data-dc-tpl="24" class="xc-sk" style="height: 40px; border-radius: 8px; background: var(--muted);"></div><div data-dc-tpl="25" class="xc-sk" style="height: 40px; border-radius: 8px; background: var(--muted);"></div><div data-dc-tpl="26" class="xc-sk" style="height: 40px; border-radius: 8px; background: var(--muted);"></div><div data-dc-tpl="27" class="xc-sk" style="height: 40px; border-radius: 8px; background: var(--muted);"></div><div data-dc-tpl="28" class="xc-sk" style="height: 40px; border-radius: 8px; background: var(--muted);"></div></div>
+        </div>
+      
+    </div>
+  </div>
+
+  <div data-dc-tpl="29" style="display: flex; flex-direction: column; gap: 10px;">
+    <span data-dc-tpl="30" style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted-foreground);">Error</span>
+    <div data-dc-tpl="31" role="alert" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; padding: 36px 24px; border-radius: 14px; background: var(--card); border: 1px solid var(--border);">
+      <div data-dc-tpl="32" style="width: 48px; height: 48px; border-radius: 14px; background: color-mix(in oklab, var(--destructive) 12%, var(--card)); color: var(--destructive); display: flex; align-items: center; justify-content: center;"><svg data-dc-tpl="33" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="34" d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path data-dc-tpl="35" d="M12 9v4"></path><path data-dc-tpl="36" d="M12 17h.01"></path></svg></div>
+      <h3 data-dc-tpl="37" style="margin: 0px; font-size: 16px; font-weight: 700;">Couldn’t load workers</h3>
+      <p data-dc-tpl="38" style="margin: 0px; font-size: 13.5px; line-height: 20px; color: var(--muted-foreground); max-width: 300px;">The connection dropped while loading. Nothing was changed. Try again, and if it keeps happening tell your administrator.</p>
+      <button data-dc-tpl="39" type="button" style="height: 38px; padding: 0px 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 14px; font-weight: 600;">Try again</button>
+      <span data-dc-tpl="40" style="font-family: &quot;JetBrains Mono&quot;, ui-monospace, monospace; font-size: 11px; color: var(--muted-foreground);">ref 7f3a-21c9</span>
+    </div>
+  </div>
+
+  <div data-dc-tpl="41" style="display: flex; flex-direction: column; gap: 10px;">
+    <span data-dc-tpl="42" style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted-foreground);">Empty · filters match nothing</span>
+    <div data-dc-tpl="43" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; padding: 36px 24px; border-radius: 14px; background: var(--card); border: 1px dashed var(--border);">
+      <div data-dc-tpl="44" style="width: 48px; height: 48px; border-radius: 14px; background: var(--secondary); color: var(--secondary-foreground); display: flex; align-items: center; justify-content: center;"><svg data-dc-tpl="45" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle data-dc-tpl="46" cx="11" cy="11" r="8"></circle><path data-dc-tpl="47" d="m21 21-4.3-4.3"></path></svg></div>
+      <h3 data-dc-tpl="48" style="margin: 0px; font-size: 16px; font-weight: 700;">No workers match these filters</h3>
+      <p data-dc-tpl="49" style="margin: 0px; font-size: 13.5px; line-height: 20px; color: var(--muted-foreground);">Camp: Al Jurf · Leave: On leave · Bed: No bed</p>
+      <button data-dc-tpl="50" type="button" style="height: 38px; padding: 0px 16px; border-radius: 8px; border: 0px; background: var(--primary); color: var(--primary-foreground); font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 14px; font-weight: 600;">Clear filters</button>
+    </div>
+  </div>
+
+  <div data-dc-tpl="51" style="display: flex; flex-direction: column; gap: 10px;">
+    <span data-dc-tpl="52" style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted-foreground);">Empty · new camp, no rooms</span>
+    <div data-dc-tpl="53" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; padding: 36px 24px; border-radius: 14px; background: var(--card); border: 1px dashed var(--border);">
+      <div data-dc-tpl="54" aria-hidden="true" style="display: grid; grid-template-columns: repeat(3, 22px); gap: 4px;"><span data-dc-tpl="55" style="height: 16px; border-radius: 4px; border: 1.5px dashed var(--status-vacant-border);"></span><span data-dc-tpl="56" style="height: 16px; border-radius: 4px; border: 1.5px dashed var(--status-vacant-border);"></span><span data-dc-tpl="57" style="height: 16px; border-radius: 4px; border: 1.5px dashed var(--status-vacant-border);"></span><span data-dc-tpl="58" style="height: 16px; border-radius: 4px; border: 1.5px dashed var(--status-vacant-border);"></span><span data-dc-tpl="59" style="height: 16px; border-radius: 4px; border: 1.5px dashed var(--status-vacant-border);"></span><span data-dc-tpl="60" style="height: 16px; border-radius: 4px; border: 1.5px dashed var(--status-vacant-border);"></span></div>
+      <h3 data-dc-tpl="61" style="margin: 0px; font-size: 16px; font-weight: 700;">Al Quoz Camp 4 has no rooms yet</h3>
+      <p data-dc-tpl="62" style="margin: 0px; font-size: 13.5px; line-height: 20px; color: var(--muted-foreground); max-width: 300px;">Add rooms, then add beds to each one. Workers can be put into beds once they exist.</p>
+      <button data-dc-tpl="63" type="button" style="height: 38px; padding: 0px 16px; border-radius: 8px; border: 0px; background: var(--primary); color: var(--primary-foreground); font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 14px; font-weight: 600;">Add first room</button>
+    </div>
+  </div>
+
+  <div data-dc-tpl="64" style="display: flex; flex-direction: column; gap: 10px;">
+    <span data-dc-tpl="65" style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted-foreground);">Permission denied · redirect</span>
+    <div data-dc-tpl="66" style="display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 14px; background: var(--background); border: 1px solid var(--border);">
+      <div data-dc-tpl="67" role="status" style="display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border-radius: 10px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+        <svg data-dc-tpl="68" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 auto; color: var(--brand-ink); margin-top: 1px;"><rect data-dc-tpl="69" width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path data-dc-tpl="70" d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        <div data-dc-tpl="71" style="display: flex; flex-direction: column; gap: 3px; flex: 1 1 0%;"><strong data-dc-tpl="72" style="font-size: 14px;">You don’t have access to Users</strong><span data-dc-tpl="73" style="font-size: 13px; line-height: 19px; color: var(--muted-foreground);">Your role (Camp Supervisor) can’t manage users, so we brought you to the dashboard. Ask an administrator if you need it.</span></div>
+        <button data-dc-tpl="74" type="button" aria-label="Dismiss" style="width: 28px; height: 28px; border: 0px; border-radius: 6px; background: transparent; color: var(--muted-foreground); display: flex; align-items: center; justify-content: center;"><svg data-dc-tpl="75" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="76" d="M18 6 6 18"></path><path data-dc-tpl="77" d="m6 6 12 12"></path></svg></button>
+      </div>
+      <div data-dc-tpl="78" style="display: flex; flex-direction: column; gap: 6px; padding: 4px 4px 0px;"><div data-dc-tpl="79" style="height: 12px; width: 50%; border-radius: 6px; background: var(--muted);"></div><div data-dc-tpl="80" style="height: 8px; width: 70%; border-radius: 6px; background: var(--muted);"></div></div>
+    </div>
+    <span data-dc-tpl="81" style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted-foreground); margin-top: 10px;">Disabled action + why</span>
+    <div data-dc-tpl="82" style="position: relative; display: flex; flex-direction: column; gap: 8px; padding: 16px 16px 64px; border-radius: 14px; background: var(--card); border: 1px solid var(--border);">
+      <button data-dc-tpl="83" type="button" disabled="" aria-describedby="why" style="width: max-content; display: flex; align-items: center; gap: 8px; height: 36px; padding: 0px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--destructive); font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 13.5px; font-weight: 600; opacity: 0.45; cursor: not-allowed;"><svg data-dc-tpl="84" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle data-dc-tpl="85" cx="12" cy="12" r="10"></circle><path data-dc-tpl="86" d="m4.9 4.9 14.2 14.2"></path></svg>Invalidate room</button>
+      <span data-dc-tpl="87" id="why" role="tooltip" style="position: absolute; left: 16px; top: 60px; width: 270px; padding: 8px 10px; border-radius: 8px; background: var(--foreground); color: var(--background); font-size: 12px; line-height: 17px; box-shadow: var(--shadow-md);">7 beds are in use. Move or exit those workers first.</span>
+    </div>
+  </div>
+
+  <div data-dc-tpl="88" style="grid-column: 1 / -1; display: flex; flex-direction: column; gap: 10px;">
+    <span data-dc-tpl="89" style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted-foreground);">Toasts · Sonner, bottom-right, 5 s (errors stay until dismissed)</span>
+    <div data-dc-tpl="90" style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start;">
+      <div data-dc-tpl="91" role="status" style="width: 380px; display: flex; gap: 12px; padding: 14px 16px; border-radius: 12px; background: var(--popover); border: 1px solid var(--border); box-shadow: var(--shadow-md);">
+        <svg data-dc-tpl="92" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 auto; color: var(--success); margin-top: 1px;"><circle data-dc-tpl="93" cx="12" cy="12" r="10"></circle><path data-dc-tpl="94" d="m9 12 2 2 4-4"></path></svg>
+        <div data-dc-tpl="95" style="display: flex; flex-direction: column; gap: 2px; flex: 1 1 0%;"><strong data-dc-tpl="96" style="font-size: 14px;">Anil Kumar assigned</strong><span data-dc-tpl="97" style="font-size: 13px; color: var(--muted-foreground);">Al Quoz Camp 3 · Room 101 · B7, from 3 Oct 2026</span></div>
+        <a data-dc-tpl="98" href="WorkerDetail.html" style="align-self: center; font-size: 13px; font-weight: 700; text-decoration: none;">View</a>
+      </div>
+      <div data-dc-tpl="99" role="status" style="width: 380px; display: flex; gap: 12px; padding: 14px 16px; border-radius: 12px; background: var(--popover); border: 1px solid var(--border); box-shadow: var(--shadow-md);">
+        <svg data-dc-tpl="100" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 auto; color: var(--success); margin-top: 1px;"><circle data-dc-tpl="101" cx="12" cy="12" r="10"></circle><path data-dc-tpl="102" d="m9 12 2 2 4-4"></path></svg>
+        <div data-dc-tpl="103" style="display: flex; flex-direction: column; gap: 2px; flex: 1 1 0%;"><strong data-dc-tpl="104" style="font-size: 14px;">Bikash Tamang exited · Resigned</strong><span data-dc-tpl="105" style="font-size: 13px; color: var(--muted-foreground);">Sonapur Camp 7 · 204 · B3 is now vacant</span></div>
+      </div>
+      <div data-dc-tpl="106" role="alert" style="width: 380px; display: flex; gap: 12px; padding: 14px 16px; border-radius: 12px; background: var(--popover); border: 1px solid color-mix(in oklab, var(--destructive) 40%, var(--border)); box-shadow: var(--shadow-md);">
+        <svg data-dc-tpl="107" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 auto; color: var(--destructive); margin-top: 1px;"><circle data-dc-tpl="108" cx="12" cy="12" r="10"></circle><path data-dc-tpl="109" d="M12 8v4"></path><path data-dc-tpl="110" d="M12 16h.01"></path></svg>
+        <div data-dc-tpl="111" style="display: flex; flex-direction: column; gap: 2px; flex: 1 1 0%;"><strong data-dc-tpl="112" style="font-size: 14px;">B7 was just taken</strong><span data-dc-tpl="113" style="font-size: 13px; color: var(--muted-foreground);">Rajesh Kumar assigned it a moment ago. Pick another bed.</span></div>
+        <button data-dc-tpl="114" type="button" aria-label="Dismiss" style="width: 26px; height: 26px; border: 0px; border-radius: 6px; background: transparent; color: var(--muted-foreground);">×</button>
+      </div>
+    </div>
+  </div></div></div></div>
+
+
+
+</body></html>

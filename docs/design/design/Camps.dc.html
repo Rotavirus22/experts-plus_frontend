@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Camps</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div style="{{tv}} min-height: 100vh; display: flex; flex-wrap: wrap; background: var(--background); color: var(--foreground); font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif">
+  <div style="flex: 0 0 248px; display: flex; flex-direction: column"><dc-import name="Sidebar" active="camps" dark="{{dark}}" hint-size="248px,100%"></dc-import></div>
+  <div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column">
+    <dc-import name="Topbar" crumbs="Camps" dark="{{dark}}" hint-size="100%,64px"></dc-import>
+    <main style="box-sizing: border-box; width: 100%; max-width: 1600px; padding: 28px 32px 48px; display: flex; flex-direction: column; gap: 22px">
+      <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px">
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <h1 style="margin: 0; font-size: 26px; line-height: 34px; font-weight: 800; letter-spacing: -0.02em">Camps</h1>
+          <p style="margin: 0; font-size: 14px; color: var(--muted-foreground)">6 camps · 1,312 beds · 92.8% in use</p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 18px; flex-wrap: wrap">
+          <label style="display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 500; cursor: pointer">
+            <span style="position: relative; width: 36px; height: 20px; border-radius: 999px; background: var(--primary)"><span style="position: absolute; top: 2px; left: 18px; width: 16px; height: 16px; border-radius: 999px; background: #FFFFFF; box-shadow: var(--shadow-sm)"></span></span>
+            <input type="checkbox" checked="checked" aria-label="Show invalidated camps" style="position: absolute; opacity: 0; width: 1px; height: 1px">
+            Show invalidated (1)
+          </label>
+          <a href="CampDialogs.dc.html" style="display: flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px; border-radius: 8px; background: var(--primary); color: var(--primary-foreground); text-decoration: none; font-size: 14px; font-weight: 600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>New camp</a>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(360px, 100%), 1fr)); gap: 16px">
+        <sc-for list="{{camps}}" as="c" hint-placeholder-count="7">
+          <a href="CampDetail.dc.html" style="{{c.cardStyle}}">
+            <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px">
+              <div style="display: flex; flex-direction: column; gap: 3px; min-width: 0">
+                <h2 style="{{c.titleStyle}}">{{c.name}}</h2>
+                <span style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted-foreground)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg><span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{c.emirate}} · {{c.addr}}</span></span>
+              </div>
+              <sc-if value="{{c.invalid}}" hint-placeholder-val="{{ false }}"><span style="flex: none; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: var(--status-invalid-bg); color: var(--status-invalid-fg); border: 1px dashed var(--status-invalid-border)">Invalidated</span></sc-if>
+              <sc-if value="{{c.emirateTag}}" hint-placeholder-val="{{ true }}"><span style="flex: none; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: var(--secondary); color: var(--secondary-foreground)">{{c.emirateTag}}</span></sc-if>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px">
+              <div style="display: flex; height: 10px; border-radius: 999px; overflow: hidden; background: var(--muted); gap: 2px">
+                <div style="width: {{c.o}}; background: var(--status-occupied)"></div>
+                <div style="width: {{c.h}}; background: var(--status-held)"></div>
+                <div style="width: {{c.v}}; background: var(--status-vacant)"></div>
+              </div>
+              <div style="font-size: 13px; color: var(--muted-foreground)"><strong style="color: var(--foreground)">{{c.beds}} beds</strong> · {{c.pct}} in use</div>
+            </div>
+            <sc-if value="{{c.note}}" hint-placeholder-val="{{ false }}"><div style="font-size: 12px; line-height: 17px; color: var(--muted-foreground)">{{c.note}}</div></sc-if>
+            <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; padding-top: 12px; border-top: 1px solid var(--border)">
+              <div style="display: flex; flex-direction: column"><span style="font-size: 11.5px; color: var(--muted-foreground); font-weight: 600">Rooms</span><span style="font-size: 17px; font-weight: 700">{{c.rooms}}</span></div>
+              <div style="display: flex; flex-direction: column"><span style="font-size: 11.5px; color: var(--status-occupied-fg); font-weight: 600">Occupied</span><span style="font-size: 17px; font-weight: 700">{{c.occ}}</span></div>
+              <div style="display: flex; flex-direction: column"><span style="font-size: 11.5px; color: var(--status-held-fg); font-weight: 600">Held</span><span style="font-size: 17px; font-weight: 700">{{c.held}}</span></div>
+              <div style="display: flex; flex-direction: column"><span style="font-size: 11.5px; color: var(--status-vacant-fg); font-weight: 600">Vacant</span><span style="font-size: 17px; font-weight: 700">{{c.vac}}</span></div>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":1200}}'>
+const XC_L='background:#F5F7FA;foreground:#0E1B2C;card:#FFFFFF;card-foreground:#0E1B2C;popover:#FFFFFF;popover-foreground:#0E1B2C;primary:#00579F;primary-foreground:#FFFFFF;secondary:#E9EFF6;secondary-foreground:#0E2A4A;muted:#EEF1F5;muted-foreground:#556274;accent:#FFF1DC;accent-foreground:#8A4A00;destructive:#C2302A;destructive-foreground:#FFFFFF;border:#DCE2EA;input:#C9D2DE;ring:#3584CF;brand:#F39314;status-occupied:#2A8BD6;status-occupied-bg:#E5F1FC;status-occupied-border:#8FC2EE;status-occupied-fg:#0B4C85;status-held:#DDA00F;status-held-bg:#FCF1D2;status-held-border:#E6BA4C;status-held-fg:#694000;status-vacant:#23A162;status-vacant-bg:#E2F4EA;status-vacant-border:#84CDA4;status-vacant-fg:#0B5C33;status-invalid:#8A94A3;status-invalid-bg:#F1F3F6;status-invalid-border:#AEB7C3;status-invalid-fg:#66707D;shadow-sm:0 1px 2px rgba(14,27,44,.06),0 1px 3px rgba(14,27,44,.05);shadow-md:0 4px 12px rgba(14,27,44,.08),0 1px 3px rgba(14,27,44,.06)';
+const XC_D='background:#0A111C;foreground:#E5ECF5;card:#101A28;card-foreground:#E5ECF5;popover:#132034;popover-foreground:#E5ECF5;primary:#4D9DE8;primary-foreground:#04111F;secondary:#18263A;secondary-foreground:#DCE6F2;muted:#152234;muted-foreground:#93A2B6;accent:#33240E;accent-foreground:#FFC47A;destructive:#EF6A5F;destructive-foreground:#1C0605;border:#213149;input:#2A3D58;ring:#4D9DE8;brand:#F5A23A;status-occupied:#4BA8F0;status-occupied-bg:#0F2A45;status-occupied-border:#2B679F;status-occupied-fg:#A6D3FA;status-held:#E8B53A;status-held-bg:#33270B;status-held-border:#866619;status-held-fg:#F6D57A;status-vacant:#3CC27F;status-vacant-bg:#0D2F21;status-vacant-border:#2A7650;status-vacant-fg:#93E3B9;status-invalid:#6C7789;status-invalid-bg:#121A26;status-invalid-border:#3A4659;status-invalid-fg:#7F8A9B;shadow-sm:0 1px 2px rgba(0,0,0,.4);shadow-md:0 6px 16px rgba(0,0,0,.45)';
+function xcVars(d){return (d?XC_D:XC_L).split(';').map(function(s){return '--'+s;}).join(';')+';color-scheme:'+(d?'dark':'light')+';';}
+class Component extends DCLogic {
+  renderVals() {
+    var dark = this.props.dark ?? false;
+    var data = [
+      ['Al Quoz Camp 3', 'Dubai', 'Al Quoz Industrial Area 3, Street 17', 38, 312, 268, 22, 22],
+      ['Jebel Ali Labour Camp', 'Dubai', 'Jebel Ali Industrial Area 1', 41, 296, 251, 19, 26],
+      ['Sonapur Camp 7', 'Dubai', 'Muhaisnah 2, Sonapur', 30, 240, 214, 18, 8],
+      ['Mussafah M-12', 'Abu Dhabi', 'Mussafah Industrial, Sector M-12', 26, 220, 190, 16, 14],
+      ['Sajja Industrial Camp', 'Sharjah', 'Al Sajaa Industrial Area', 19, 152, 118, 13, 21],
+      ['Al Jurf Camp', 'Ajman', 'Al Jurf Industrial Area 2', 12, 92, 80, 8, 4],
+      ['Hatta Temporary Camp', 'Dubai', 'Hatta Road, Plot 44', 8, 48, 0, 0, 0, 'Invalidated 15 Jun 2026 by Mariam Al Hashimi · “Lease ended; all workers moved to Al Quoz 3”']
+    ];
+    var camps = data.map(function (c) {
+      var t = c[4], inv = !!c[8];
+      return {
+        name: c[0], emirate: c[1], addr: c[2], rooms: c[3], beds: t, occ: c[5], held: c[6], vac: c[7], invalid: inv, note: c[8] || '',
+        emirateTag: '',
+        o: (c[5] / t * 100).toFixed(2) + '%', h: (c[6] / t * 100).toFixed(2) + '%', v: (c[7] / t * 100).toFixed(2) + '%',
+        pct: inv ? '0%' : ((c[5] + c[6]) / t * 100).toFixed(1) + '%',
+        cardStyle: 'display: flex; flex-direction: column; gap: 16px; padding: 20px; border-radius: 16px; text-decoration: none; color: var(--foreground); background: ' + (inv ? 'var(--status-invalid-bg)' : 'var(--card)') + '; border: 1px ' + (inv ? 'dashed var(--status-invalid-border)' : 'solid var(--border)') + '; box-shadow: ' + (inv ? 'none' : 'var(--shadow-sm)') + ';' + (inv ? ' opacity: .78;' : ''),
+        titleStyle: 'margin: 0; font-size: 18px; font-weight: 700; letter-spacing: -0.01em;' + (inv ? ' color: var(--status-invalid-fg);' : '')
+      };
+    });
+    return { dark: dark, tv: xcVars(dark), camps: camps };
+  }
+}
+</script>
+</body>
+</html>

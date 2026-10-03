@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sign in</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div style="{{tv}} min-height: 100vh; display: flex; flex-wrap: wrap; background: var(--background); color: var(--foreground); font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif">
+  <aside style="flex: 1 1 440px; min-height: 260px; box-sizing: border-box; padding: 48px 56px; background: var(--sidebar); color: var(--sidebar-foreground); display: flex; flex-direction: column; justify-content: space-between; gap: 40px; position: relative; overflow: hidden">
+    <div style="position: absolute; right: -120px; bottom: -120px; width: 520px; height: 520px; border-radius: 999px; border: 1px solid var(--sidebar-border)"></div>
+    <div style="position: absolute; right: -40px; bottom: -40px; width: 360px; height: 360px; border-radius: 999px; border: 1px solid var(--sidebar-border)"></div>
+    <div style="position: relative; width: 252px; height: 80px; overflow: hidden; background: #FFFFFF; border-radius: 14px">
+      <img src="../public/xperts-logo.jpg" alt="Xperts Plus Recruitment Services" style="display: block; width: 252px; height: 252px; margin: -86px 0 0 0">
+    </div>
+    <div style="position: relative; display: flex; flex-direction: column; gap: 14px; max-width: 460px">
+      <div style="display: flex; align-items: center; gap: 10px"><span style="width: 28px; height: 3px; border-radius: 999px; background: var(--sidebar-primary)"></span><span style="font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--sidebar-primary)">Xperts Camps</span></div>
+      <h1 style="margin: 0; font-size: 36px; line-height: 44px; font-weight: 800; letter-spacing: -0.02em; color: var(--sidebar-accent-foreground); text-wrap: balance">Workers, camps and beds across the UAE, in one place.</h1>
+      <p style="margin: 0; font-size: 15px; line-height: 23px">The internal accommodation system for Xperts Recruitment staff.</p>
+    </div>
+    <div style="position: relative; font-size: 12px; opacity: .7">© 2026 Xperts Recruitment Services · Dubai, UAE</div>
+  </aside>
+  <section style="flex: 1 1 520px; box-sizing: border-box; padding: 48px 24px; display: flex; align-items: center; justify-content: center">
+    <form style="width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 22px">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <h2 style="margin: 0; font-size: 28px; line-height: 36px; font-weight: 800; letter-spacing: -0.02em">Sign in</h2>
+        <p style="margin: 0; font-size: 14px; line-height: 21px; color: var(--muted-foreground)">Staff accounts only. Ask an administrator if you need access.</p>
+      </div>
+      <div role="alert" style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px; background: color-mix(in oklab, var(--destructive) 10%, var(--card)); border: 1px solid color-mix(in oklab, var(--destructive) 40%, var(--card)); color: var(--destructive); font-size: 13.5px; font-weight: 600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>Incorrect email or password</div>
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <label for="email" style="font-size: 13.5px; font-weight: 600">Email</label>
+        <input id="email" type="email" value="mariam.hashimi@xperts.ae" autocomplete="username" style="height: 44px; box-sizing: border-box; padding: 0 14px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 15px">
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <label for="password" style="font-size: 13.5px; font-weight: 600">Password</label>
+        <div style="position: relative; display: flex">
+          <input id="password" type="password" value="wrongpass" autocomplete="current-password" aria-invalid="true" style="flex: 1; height: 44px; box-sizing: border-box; padding: 0 48px 0 14px; border-radius: 8px; border: 1px solid var(--destructive); background: var(--card); color: var(--foreground); font: inherit; font-size: 15px; box-shadow: 0 0 0 3px color-mix(in oklab, var(--destructive) 18%, transparent)">
+          <button type="button" aria-label="Show password" style="position: absolute; right: 4px; top: 4px; width: 36px; height: 36px; border: 0; border-radius: 6px; background: transparent; color: var(--muted-foreground); display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg></button>
+        </div>
+      </div>
+      <a href="Dashboard.dc.html" style="height: 46px; border-radius: 8px; background: var(--primary); color: var(--primary-foreground); display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 15px; font-weight: 700">Sign in</a>
+      <p style="margin: 0; font-size: 12.5px; color: var(--muted-foreground); text-align: center">Forgot your password? An administrator can set a new one for you.</p>
+    </form>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":900}}'>
+const XC_L='background:#F5F7FA;foreground:#0E1B2C;card:#FFFFFF;card-foreground:#0E1B2C;popover:#FFFFFF;popover-foreground:#0E1B2C;primary:#00579F;primary-foreground:#FFFFFF;secondary:#E9EFF6;secondary-foreground:#0E2A4A;muted:#EEF1F5;muted-foreground:#556274;accent:#FFF1DC;accent-foreground:#8A4A00;destructive:#C2302A;destructive-foreground:#FFFFFF;border:#DCE2EA;input:#C9D2DE;ring:#3584CF;sidebar:#0A2342;sidebar-foreground:#C6D3E3;sidebar-primary:#F39314;sidebar-primary-foreground:#1F1100;sidebar-accent:#12345E;sidebar-accent-foreground:#FFFFFF;sidebar-border:#1A3B66;brand:#F39314';
+const XC_D='background:#0A111C;foreground:#E5ECF5;card:#101A28;card-foreground:#E5ECF5;popover:#132034;popover-foreground:#E5ECF5;primary:#4D9DE8;primary-foreground:#04111F;secondary:#18263A;secondary-foreground:#DCE6F2;muted:#152234;muted-foreground:#93A2B6;accent:#33240E;accent-foreground:#FFC47A;destructive:#EF6A5F;destructive-foreground:#1C0605;border:#213149;input:#2A3D58;ring:#4D9DE8;sidebar:#070D17;sidebar-foreground:#B4C2D4;sidebar-primary:#F5A23A;sidebar-primary-foreground:#1F1100;sidebar-accent:#122138;sidebar-accent-foreground:#FFFFFF;sidebar-border:#172538;brand:#F5A23A';
+function xcVars(d){return (d?XC_D:XC_L).split(';').map(function(s){return '--'+s;}).join(';')+';color-scheme:'+(d?'dark':'light')+';';}
+class Component extends DCLogic {
+  renderVals() { return { tv: xcVars(this.props.dark ?? false) }; }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Bed drawer</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div style="{{tv}} position: relative; width: 1440px; height: 1000px; overflow: hidden; background: var(--background); color: var(--foreground); font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif">
+  <div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none"><dc-import name="CampDetail" dark="{{dark}}" hint-size="1440px,1900px"></dc-import></div>
+  <div style="position: absolute; inset: 0; background: var(--overlay)"></div>
+
+  <aside role="dialog" aria-modal="true" aria-labelledby="bed-title" style="position: absolute; top: 0; right: 0; bottom: 0; width: 480px; box-sizing: border-box; background: var(--card); border-left: 1px solid var(--border); box-shadow: var(--shadow-lg); display: flex; flex-direction: column">
+    <div style="padding: 20px 24px 16px; display: flex; flex-direction: column; gap: 10px; border-bottom: 1px solid var(--border)">
+      <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px">
+        <div style="display: flex; flex-direction: column; gap: 2px">
+          <span style="font-size: 12.5px; color: var(--muted-foreground); font-weight: 600">Al Quoz Camp 3</span>
+          <h2 id="bed-title" style="margin: 0; font-size: 22px; line-height: 30px; font-weight: 800; letter-spacing: -0.015em">Room 101 · {{bed}}</h2>
+        </div>
+        <button type="button" aria-label="Close" style="width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--muted-foreground); display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px">
+        <span style="{{badgeStyle}}">{{statusLabel}}</span>
+        <span style="display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 999px; font-size: 12px; font-weight: 600; background: var(--secondary); color: var(--secondary-foreground)">{{typeLabel}}</span>
+      </div>
+    </div>
+
+    <div style="flex: 1; overflow: auto; padding: 20px 24px 28px; display: flex; flex-direction: column; gap: 22px">
+      <sc-if value="{{held}}" hint-placeholder-val="{{ true }}">
+        <section style="display: flex; flex-direction: column; gap: 10px">
+          <h3 style="margin: 0; font-size: 13px; font-weight: 700; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: .06em">Current occupant</h3>
+          <div style="display: flex; flex-direction: column; gap: 14px; padding: 16px; border-radius: 12px; background: var(--status-held-bg); border: 1px solid var(--status-held-border)">
+            <div style="display: flex; align-items: center; gap: 12px">
+              <div style="width: 44px; height: 44px; border-radius: 999px; background: var(--card); color: var(--status-held-fg); display: flex; align-items: center; justify-content: center; font-weight: 800">RT</div>
+              <div style="display: flex; flex-direction: column; gap: 1px; flex: 1"><a href="WorkerDetail.dc.html" style="font-size: 15px; font-weight: 700; color: var(--foreground)">Ram Bahadur Thapa</a><span style="font-size: 12.5px; color: var(--muted-foreground)"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace">XP-003912</span> · Mason · in this bed since 4 Feb 2025</span></div>
+            </div>
+            <div style="display: flex; align-items: flex-start; gap: 8px; font-size: 13px; line-height: 19px; color: var(--status-held-fg)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 1px"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg><span><strong>On leave since 23 Aug 2026 — bed held.</strong> Nobody can be put here until he returns or exits.</span></div>
+            <a href="BedPicker.dc.html" style="display: flex; align-items: center; justify-content: center; gap: 8px; height: 38px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); text-decoration: none; font-size: 14px; font-weight: 600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 3 4 4-4 4"/><path d="M20 7H4"/><path d="m8 21-4-4 4-4"/><path d="M4 17h16"/></svg>Move to another bed</a>
+          </div>
+        </section>
+      </sc-if>
+
+      <sc-if value="{{vacant}}" hint-placeholder-val="{{ false }}">
+        <section style="display: flex; flex-direction: column; gap: 12px">
+          <h3 style="margin: 0; font-size: 13px; font-weight: 700; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: .06em">Put a worker in this bed</h3>
+          <label style="display: flex; align-items: center; gap: 8px; height: 38px; padding: 0 12px; border-radius: 8px; border: 1px solid var(--ring); box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 22%, transparent); background: var(--card); color: var(--muted-foreground)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="search" placeholder="Search name or Emp No" aria-label="Search workers" style="flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font: inherit; font-size: 14px; color: var(--foreground)">
+          </label>
+          <div role="radiogroup" aria-label="Candidates" style="display: flex; flex-direction: column; border-radius: 10px; border: 1px solid var(--border); overflow: hidden">
+            <div style="padding: 8px 12px; font-size: 11.5px; font-weight: 700; color: var(--muted-foreground); background: var(--muted); text-transform: uppercase; letter-spacing: .05em">Without a bed · 41</div>
+            <sc-for list="{{cands}}" as="c" hint-placeholder-count="5">
+              <label style="{{c.style}}">
+                <input type="radio" name="cand" checked="{{c.sel}}" style="width: 16px; height: 16px; margin: 0; accent-color: var(--primary)">
+                <span style="flex: 1; min-width: 0; display: flex; flex-direction: column"><span style="font-size: 13.5px; font-weight: 600">{{c.name}}</span><span style="font-size: 12px; color: var(--muted-foreground)"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace">{{c.emp}}</span> · {{c.pos}}</span></span>
+                <span style="{{c.tagStyle}}">{{c.tag}}</span>
+              </label>
+            </sc-for>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; align-items: end">
+            <div style="display: flex; flex-direction: column; gap: 6px"><label for="from" style="font-size: 13px; font-weight: 600">In this bed from</label><div style="display: flex; align-items: center; gap: 8px; height: 38px; padding: 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--muted-foreground)"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg><input id="from" value="3 Oct 2026" style="flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font: inherit; font-size: 14px; color: var(--foreground)"></div></div>
+            <a href="States.dc.html" style="height: 38px; border-radius: 8px; background: var(--primary); color: var(--primary-foreground); display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; font-size: 14px; font-weight: 700">Assign to B7</a>
+          </div>
+          <p style="margin: 0; font-size: 12.5px; color: var(--muted-foreground); line-height: 18px">Choosing a worker who already has a bed turns this into a <strong style="color: var(--foreground)">move</strong> — the button becomes “Move here” and their old bed is freed.</p>
+        </section>
+      </sc-if>
+
+      <section style="display: flex; flex-direction: column; gap: 10px">
+        <h3 style="margin: 0; font-size: 13px; font-weight: 700; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: .06em">Bed details</h3>
+        <div style="display: grid; grid-template-columns: 110px minmax(0, 1fr) auto; gap: 10px; align-items: end">
+          <div style="display: flex; flex-direction: column; gap: 6px"><label for="lbl" style="font-size: 13px; font-weight: 600">Label</label><input id="lbl" value="{{bed}}" style="height: 38px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px"></div>
+          <div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; font-weight: 600">Type</span><button type="button" style="height: 38px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px; cursor: pointer">{{typeLabel}}<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button></div>
+          <button type="button" style="height: 38px; padding: 0 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--secondary); color: var(--secondary-foreground); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer">Save</button>
+        </div>
+        <sc-if value="{{vacant}}" hint-placeholder-val="{{ false }}">
+          <a href="CampDialogs.dc.html" style="display: flex; align-items: center; gap: 8px; width: max-content; height: 36px; padding: 0 12px; border-radius: 8px; border: 1px solid color-mix(in oklab, var(--destructive) 40%, var(--border)); color: var(--destructive); text-decoration: none; font-size: 13.5px; font-weight: 600"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg>Invalidate bed…</a>
+        </sc-if>
+        <sc-if value="{{held}}" hint-placeholder-val="{{ true }}">
+          <div style="display: flex; align-items: center; gap: 10px">
+            <button type="button" disabled="disabled" style="display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 12px; border-radius: 8px; border: 1px solid var(--border); background: transparent; color: var(--destructive); font: inherit; font-size: 13.5px; font-weight: 600; opacity: .45; cursor: not-allowed"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg>Invalidate bed</button>
+            <span style="font-size: 12px; color: var(--muted-foreground)">Only vacant beds can be invalidated.</span>
+          </div>
+        </sc-if>
+      </section>
+
+      <section style="display: flex; flex-direction: column; gap: 12px">
+        <h3 style="margin: 0; font-size: 13px; font-weight: 700; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: .06em">Everyone who stayed in this bed</h3>
+        <ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column">
+          <sc-for list="{{history}}" as="h" hint-placeholder-count="4">
+            <li style="display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 12px">
+              <div style="display: flex; flex-direction: column; align-items: center"><span style="{{h.dotStyle}}"></span><span style="{{h.lineStyle}}"></span></div>
+              <div style="display: flex; flex-direction: column; gap: 3px; padding-bottom: 18px">
+                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap"><a href="WorkerDetail.dc.html" style="font-size: 14px; font-weight: 700; color: var(--foreground); text-decoration: none">{{h.name}}</a><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: var(--muted-foreground)">{{h.emp}}</span><sc-if value="{{h.current}}" hint-placeholder-val="{{ false }}"><span style="font-size: 11px; font-weight: 700; padding: 1px 8px; border-radius: 999px; background: var(--primary); color: var(--primary-foreground)">Current</span></sc-if></div>
+                <div style="font-size: 13px"><span style="font-weight: 600">{{h.from}} → {{h.to}}</span><span style="color: var(--muted-foreground)"> · {{h.how}}</span></div>
+                <div style="font-size: 12px; color: var(--muted-foreground)">{{h.by}}</div>
+              </div>
+            </li>
+          </sc-for>
+        </ol>
+      </section>
+    </div>
+  </aside>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"variant":{"editor":"enum","options":["held","vacant"],"default":"held"},"dark":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":1000}}'>
+const XC_L='background:#F5F7FA;foreground:#0E1B2C;card:#FFFFFF;card-foreground:#0E1B2C;popover:#FFFFFF;popover-foreground:#0E1B2C;primary:#00579F;primary-foreground:#FFFFFF;secondary:#E9EFF6;secondary-foreground:#0E2A4A;muted:#EEF1F5;muted-foreground:#556274;accent:#FFF1DC;accent-foreground:#8A4A00;destructive:#C2302A;destructive-foreground:#FFFFFF;border:#DCE2EA;input:#C9D2DE;ring:#3584CF;brand:#F39314;status-occupied:#2A8BD6;status-occupied-bg:#E5F1FC;status-occupied-border:#8FC2EE;status-occupied-fg:#0B4C85;status-held:#DDA00F;status-held-bg:#FCF1D2;status-held-border:#E6BA4C;status-held-fg:#694000;status-vacant:#23A162;status-vacant-bg:#E2F4EA;status-vacant-border:#84CDA4;status-vacant-fg:#0B5C33;status-invalid:#8A94A3;status-invalid-bg:#F1F3F6;status-invalid-border:#AEB7C3;status-invalid-fg:#66707D;warning-bg:#FFF3DE;warning-border:#F1C16A;warning-fg:#7A4400;shadow-sm:0 1px 2px rgba(14,27,44,.06),0 1px 3px rgba(14,27,44,.05);shadow-md:0 4px 12px rgba(14,27,44,.08),0 1px 3px rgba(14,27,44,.06);shadow-lg:0 24px 48px rgba(14,27,44,.18),0 4px 12px rgba(14,27,44,.08);overlay:rgba(10,20,35,.48)';
+const XC_D='background:#0A111C;foreground:#E5ECF5;card:#101A28;card-foreground:#E5ECF5;popover:#132034;popover-foreground:#E5ECF5;primary:#4D9DE8;primary-foreground:#04111F;secondary:#18263A;secondary-foreground:#DCE6F2;muted:#152234;muted-foreground:#93A2B6;accent:#33240E;accent-foreground:#FFC47A;destructive:#EF6A5F;destructive-foreground:#1C0605;border:#213149;input:#2A3D58;ring:#4D9DE8;brand:#F5A23A;status-occupied:#4BA8F0;status-occupied-bg:#0F2A45;status-occupied-border:#2B679F;status-occupied-fg:#A6D3FA;status-held:#E8B53A;status-held-bg:#33270B;status-held-border:#866619;status-held-fg:#F6D57A;status-vacant:#3CC27F;status-vacant-bg:#0D2F21;status-vacant-border:#2A7650;status-vacant-fg:#93E3B9;status-invalid:#6C7789;status-invalid-bg:#121A26;status-invalid-border:#3A4659;status-invalid-fg:#7F8A9B;warning-bg:#2F210B;warning-border:#7E5A1C;warning-fg:#FFCE85;shadow-sm:0 1px 2px rgba(0,0,0,.4);shadow-md:0 6px 16px rgba(0,0,0,.45);shadow-lg:0 24px 60px rgba(0,0,0,.6);overlay:rgba(2,6,12,.66)';
+function xcVars(d){return (d?XC_D:XC_L).split(';').map(function(s){return '--'+s;}).join(';')+';color-scheme:'+(d?'dark':'light')+';';}
+var B = 'display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 999px; font-size: 12px; font-weight: 700; ';
+function hist(list) {
+  return list.map(function (h, ix) {
+    var last = ix === list.length - 1;
+    return {
+      name: h[0], emp: h[1], from: h[2], to: h[3], how: h[4], by: h[5], current: !!h[6],
+      dotStyle: 'width: 12px; height: 12px; margin-top: 4px; border-radius: 999px; box-sizing: border-box; ' + (h[6] ? 'background: var(--primary); box-shadow: 0 0 0 4px color-mix(in oklab, var(--primary) 20%, transparent);' : 'background: var(--card); border: 2px solid var(--muted-foreground);'),
+      lineStyle: 'flex: 1; width: 2px; margin-top: 4px; background: ' + (last ? 'transparent' : 'var(--border)')
+    };
+  });
+}
+class Component extends DCLogic {
+  renderVals() {
+    var dark = this.props.dark ?? false;
+    var v = this.props.variant ?? 'held';
+    var vacant = v === 'vacant';
+    var cands = [
+      ['Anil Kumar', 'XP-004021', 'Plumber · Marina Build LLC', 'No bed', true, false],
+      ['Shahid Mehmood', 'XP-004290', 'Forklift Operator · Desert Line', 'No bed', false, false],
+      ['Dil Kumar Magar', 'XP-005102', 'Helper · Gulf Horizon', 'Joined 1 Oct', false, false],
+      ['Bikash Tamang', 'XP-004182', 'Scaffolder · Marina Build LLC', 'Now in Room 204 · B3', false, true]
+    ].map(function (c) {
+      return {
+        name: c[0], emp: c[1], pos: c[2], tag: c[3], sel: c[4],
+        style: 'display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-top: 1px solid var(--border); cursor: pointer; ' + (c[4] ? 'background: color-mix(in oklab, var(--primary) 9%, var(--card)); box-shadow: inset 0 0 0 1.5px var(--primary);' : 'background: var(--card);'),
+        tagStyle: 'flex: none; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; ' + (c[5] ? 'background: var(--status-occupied-bg); color: var(--status-occupied-fg);' : 'background: var(--warning-bg); color: var(--warning-fg);')
+      };
+    });
+    var hHeld = hist([
+      ['Ram Bahadur Thapa', 'XP-003912', '4 Feb 2025', 'now', 'on leave since 23 Aug 2026', 'In by Rajesh Kumar', true],
+      ['Bikram Shahi', 'XP-002210', '3 Jan 2024', '31 Jan 2025', 'exited · Resigned', 'In by Aisha Noor · out by Mariam Al Hashimi'],
+      ['Naveen Reddy', 'XP-001877', '19 Jun 2023', '2 Jan 2024', 'moved to Room 204 · B5', 'In by Aisha Noor · out by Rajesh Kumar'],
+      ['Abdul Wahab', 'XP-001420', '1 Feb 2023', '15 Jun 2023', 'exited · Visa Cancelled', 'In by Mariam Al Hashimi · out by Mariam Al Hashimi']
+    ]);
+    var hVac = hist([
+      ['Kamal Hossain', 'XP-002980', '9 Mar 2025', '29 Sep 2026', 'exited · Resigned', 'In by Rajesh Kumar · out by Mariam Al Hashimi'],
+      ['Hemant Joshi', 'XP-002655', '14 Aug 2023', '20 Feb 2025', 'moved to Room 302 · B1', 'In by Aisha Noor · out by Rajesh Kumar']
+    ]);
+    return {
+      dark: dark, tv: xcVars(dark), held: !vacant, vacant: vacant,
+      bed: vacant ? 'B7' : 'B2',
+      typeLabel: vacant ? 'Bunk lower' : 'Bunk upper',
+      statusLabel: vacant ? 'Vacant' : 'Held · occupant on leave',
+      badgeStyle: B + (vacant ? 'background: var(--status-vacant-bg); color: var(--status-vacant-fg); border: 1px solid var(--status-vacant-border)' : 'background: var(--status-held-bg); color: var(--status-held-fg); border: 1px solid var(--status-held-border)'),
+      cands: cands,
+      history: vacant ? hVac : hHeld
+    };
+  }
+}
+</script>
+</body>
+</html>

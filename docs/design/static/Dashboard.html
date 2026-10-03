@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en"><head><style>
+    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
+      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
+      border-radius:2px;box-sizing:border-box;overflow:hidden}
+    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
+    html.sc-dc-streaming .sc-placeholder,
+    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
+      background:color-mix(in srgb,currentColor 5%,transparent);
+      border-color:transparent}
+    html.sc-dc-streaming .sc-placeholder::before,
+    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
+      position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
+      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
+    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
+    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
+      background:color-mix(in srgb,currentColor 8%,transparent)}
+    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
+      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
+    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
+      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
+      border-radius:2px;box-sizing:border-box;color:transparent;
+      user-select:none}
+    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
+      color:color-mix(in srgb,currentColor 50%,transparent);
+      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
+      padding:0 3px}
+    .sc-host.sc-has-error{position:relative}
+    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
+      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
+      border-radius:4px;white-space:pre-wrap;pointer-events:none}
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts — keep both
+       in sync until dc-runtime regains a build step. */
+    @media print {
+      @page { margin: 0.5cm; }
+      figure, table { break-inside: avoid; }
+      #dc-root, #dc-root > .sc-host { height: auto; }
+      *, *::before, *::after {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+    }
+  </style>
+<meta charset="utf-8">
+<title>Dashboard</title>
+<style>x-dc{display:none!important}</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" data-dc-tpl="1"><style data-dc-tpl="2">body{margin:0}</style><style data-dc-tpl="2">body{margin:0}</style><style data-dc-tpl="2">body{margin:0}</style></head>
+<body>
+<div id="dc-root"><div class="sc-host" data-sc-name="Dashboard"><div data-dc-tpl="3" style="--background: #F5F7FA; --foreground: #0E1B2C; --card: #FFFFFF; --card-foreground: #0E1B2C; --popover: #FFFFFF; --popover-foreground: #0E1B2C; --primary: #00579F; --primary-foreground: #FFFFFF; --secondary: #E9EFF6; --secondary-foreground: #0E2A4A; --muted: #EEF1F5; --muted-foreground: #556274; --accent: #FFF1DC; --accent-foreground: #8A4A00; --destructive: #C2302A; --destructive-foreground: #FFFFFF; --border: #DCE2EA; --input: #C9D2DE; --ring: #3584CF; --chart-1: #00579F; --chart-2: #F39314; --chart-3: #3AA0E4; --chart-4: #23A162; --chart-5: #8A96A8; --sidebar: #0A2342; --sidebar-foreground: #C6D3E3; --sidebar-primary: #F39314; --sidebar-primary-foreground: #1F1100; --sidebar-accent: #12345E; --sidebar-accent-foreground: #FFFFFF; --sidebar-border: #1A3B66; --sidebar-ring: #F39314; --brand: #F39314; --brand-ink: #A85A00; --status-occupied: #2A8BD6; --status-occupied-bg: #E5F1FC; --status-occupied-border: #8FC2EE; --status-occupied-fg: #0B4C85; --status-held: #DDA00F; --status-held-bg: #FCF1D2; --status-held-border: #E6BA4C; --status-held-fg: #694000; --status-vacant: #23A162; --status-vacant-bg: #E2F4EA; --status-vacant-border: #84CDA4; --status-vacant-fg: #0B5C33; --status-invalid: #8A94A3; --status-invalid-bg: #F1F3F6; --status-invalid-border: #AEB7C3; --status-invalid-fg: #66707D; --row-leave: #EBF7F0; --row-nobed: #FFEFDD; --row-exited: #F2F3F5; --warning: #D97A06; --warning-bg: #FFF3DE; --warning-border: #F1C16A; --warning-fg: #7A4400; --success: #1E8A52; --shadow-sm: 0 1px 2px rgba(14,27,44,.06),0 1px 3px rgba(14,27,44,.05); --shadow-md: 0 4px 12px rgba(14,27,44,.08),0 1px 3px rgba(14,27,44,.06); --shadow-lg: 0 24px 48px rgba(14,27,44,.18),0 4px 12px rgba(14,27,44,.08); --overlay: rgba(10,20,35,.48); color-scheme: light; min-height: 100vh; display: flex; flex-wrap: wrap; background: var(--background); color: var(--foreground); font-family: &quot;Plus Jakarta Sans&quot;, ui-sans-serif, system-ui, sans-serif;">
+  <div data-dc-tpl="4" style="flex: 0 0 248px; display: flex; flex-direction: column;"><div class="sc-host" data-sc-name="Sidebar" data-dc-tpl="5"><nav data-dc-tpl="3" aria-label="Main navigation" style="--background: #F5F7FA; --foreground: #0E1B2C; --card: #FFFFFF; --card-foreground: #0E1B2C; --popover: #FFFFFF; --popover-foreground: #0E1B2C; --primary: #00579F; --primary-foreground: #FFFFFF; --secondary: #E9EFF6; --secondary-foreground: #0E2A4A; --muted: #EEF1F5; --muted-foreground: #556274; --accent: #FFF1DC; --accent-foreground: #8A4A00; --destructive: #C2302A; --destructive-foreground: #FFFFFF; --border: #DCE2EA; --input: #C9D2DE; --ring: #3584CF; --chart-1: #00579F; --chart-2: #F39314; --chart-3: #3AA0E4; --chart-4: #23A162; --chart-5: #8A96A8; --sidebar: #0A2342; --sidebar-foreground: #C6D3E3; --sidebar-primary: #F39314; --sidebar-primary-foreground: #1F1100; --sidebar-accent: #12345E; --sidebar-accent-foreground: #FFFFFF; --sidebar-border: #1A3B66; --sidebar-ring: #F39314; --brand: #F39314; --brand-ink: #A85A00; --status-occupied: #2A8BD6; --status-occupied-bg: #E5F1FC; --status-occupied-border: #8FC2EE; --status-occupied-fg: #0B4C85; --status-held: #DDA00F; --status-held-bg: #FCF1D2; --status-held-border: #E6BA4C; --status-held-fg: #694000; --status-vacant: #23A162; --status-vacant-bg: #E2F4EA; --status-vacant-border: #84CDA4; --status-vacant-fg: #0B5C33; --status-invalid: #8A94A3; --status-invalid-bg: #F1F3F6; --status-invalid-border: #AEB7C3; --status-invalid-fg: #66707D; --row-leave: #EBF7F0; --row-nobed: #FFEFDD; --row-exited: #F2F3F5; --warning: #D97A06; --warning-bg: #FFF3DE; --warning-border: #F1C16A; --warning-fg: #7A4400; --success: #1E8A52; --shadow-sm: 0 1px 2px rgba(14,27,44,.06),0 1px 3px rgba(14,27,44,.05); --shadow-md: 0 4px 12px rgba(14,27,44,.08),0 1px 3px rgba(14,27,44,.06); --shadow-lg: 0 24px 48px rgba(14,27,44,.18),0 4px 12px rgba(14,27,44,.08); --overlay: rgba(10,20,35,.48); color-scheme: light; width: 248px; height: 100%; min-height: 100vh; box-sizing: border-box; background: var(--sidebar); color: var(--sidebar-foreground); font-family: &quot;Plus Jakarta Sans&quot;, ui-sans-serif, system-ui, sans-serif; display: flex; flex-direction: column; gap: 22px; padding: 16px 14px; border-right: 1px solid var(--sidebar-border);">
+  <div data-dc-tpl="4" style="display: flex; flex-direction: column; gap: 10px;">
+    <div data-dc-tpl="5" style="width: 216px; height: 64px; overflow: hidden; background: rgb(255, 255, 255); border-radius: 10px;">
+      <img data-dc-tpl="6" src="xperts-logo.jpg" alt="Xperts Plus Recruitment Services" style="display: block; width: 214px; height: 214px; margin: -76px 0px 0px;">
+    </div>
+    <div data-dc-tpl="7" style="display: flex; align-items: center; justify-content: space-between; padding: 0px 4px;">
+      <div data-dc-tpl="8" style="display: flex; flex-direction: column;"><span data-dc-tpl="9" style="font-size: 15px; font-weight: 700; color: var(--sidebar-accent-foreground);">Xperts Camps</span><span data-dc-tpl="10" style="font-size: 11px; color: var(--sidebar-foreground); opacity: 0.8;">Accommodation · UAE</span></div>
+      <button data-dc-tpl="11" type="button" aria-label="Collapse sidebar" style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--sidebar-border); background: transparent; color: var(--sidebar-foreground); display: flex; align-items: center; justify-content: center; cursor: pointer;"><svg data-dc-tpl="12" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect data-dc-tpl="13" width="18" height="18" x="3" y="3" rx="2"></rect><path data-dc-tpl="14" d="M9 3v18"></path><path data-dc-tpl="15" d="m16 15-3-3 3-3"></path></svg></button>
+    </div>
+  </div>
+
+  <div data-dc-tpl="16" style="display: flex; flex-direction: column; gap: 2px;">
+    <div data-dc-tpl="17" style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; padding: 0px 10px 6px;">Main</div>
+    <a data-dc-tpl="18" href="Dashboard.html" style="position: relative; display: flex; align-items: center; gap: 12px; height: 40px; padding: 0px 10px 0px 14px; border-radius: 10px; text-decoration: none; font-size: 14px; font-weight: 600; color: var(--sidebar-accent-foreground); background: var(--sidebar-accent); transition: background 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.2s;"><span data-dc-tpl="19" style="position: absolute; left: 0px; top: 10px; bottom: 10px; width: 3px; border-radius: 999px; background: var(--sidebar-primary); opacity: 1; transition: opacity 0.2s, transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);"></span><svg data-dc-tpl="20" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect data-dc-tpl="21" width="7" height="9" x="3" y="3" rx="1"></rect><rect data-dc-tpl="22" width="7" height="5" x="14" y="3" rx="1"></rect><rect data-dc-tpl="23" width="7" height="9" x="14" y="12" rx="1"></rect><rect data-dc-tpl="24" width="7" height="5" x="3" y="16" rx="1"></rect></svg><span data-dc-tpl="25" style="flex: 1 1 0%;">Dashboard</span></a>
+    <a data-dc-tpl="26" href="Workers.html" style="position: relative; display: flex; align-items: center; gap: 12px; height: 40px; padding: 0px 10px 0px 14px; border-radius: 10px; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--sidebar-foreground); background: transparent; transition: background 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.2s;"><span data-dc-tpl="27" style="position: absolute; left: 0px; top: 10px; bottom: 10px; width: 3px; border-radius: 999px; background: var(--sidebar-primary); opacity: 0; transition: opacity 0.2s, transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);"></span><svg data-dc-tpl="28" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="29" d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle data-dc-tpl="30" cx="9" cy="7" r="4"></circle><path data-dc-tpl="31" d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path data-dc-tpl="32" d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg><span data-dc-tpl="33" style="flex: 1 1 0%;">Workers</span><span data-dc-tpl="34" style="font-size: 11px; font-weight: 600; font-family: &quot;JetBrains Mono&quot;, ui-monospace, monospace; opacity: 0.75;">1,258</span></a>
+    <a data-dc-tpl="35" href="Camps.html" style="position: relative; display: flex; align-items: center; gap: 12px; height: 40px; padding: 0px 10px 0px 14px; border-radius: 10px; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--sidebar-foreground); background: transparent; transition: background 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.2s;"><span data-dc-tpl="36" style="position: absolute; left: 0px; top: 10px; bottom: 10px; width: 3px; border-radius: 999px; background: var(--sidebar-primary); opacity: 0; transition: opacity 0.2s, transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);"></span><svg data-dc-tpl="37" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="38" d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path><path data-dc-tpl="39" d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path><path data-dc-tpl="40" d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path><path data-dc-tpl="41" d="M10 6h4"></path><path data-dc-tpl="42" d="M10 10h4"></path><path data-dc-tpl="43" d="M10 14h4"></path><path data-dc-tpl="44" d="M10 18h4"></path></svg><span data-dc-tpl="45" style="flex: 1 1 0%;">Camps</span><span data-dc-tpl="46" style="font-size: 11px; font-weight: 600; font-family: &quot;JetBrains Mono&quot;, ui-monospace, monospace; opacity: 0.75;">6</span></a>
+    
+      <a data-dc-tpl="48" href="Reports.html" style="position: relative; display: flex; align-items: center; gap: 12px; height: 40px; padding: 0px 10px 0px 14px; border-radius: 10px; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--sidebar-foreground); background: transparent; transition: background 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.2s;"><span data-dc-tpl="49" style="position: absolute; left: 0px; top: 10px; bottom: 10px; width: 3px; border-radius: 999px; background: var(--sidebar-primary); opacity: 0; transition: opacity 0.2s, transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);"></span><svg data-dc-tpl="50" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="51" d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path data-dc-tpl="52" d="M14 2v4a2 2 0 0 0 2 2h4"></path><path data-dc-tpl="53" d="M8 18v-2"></path><path data-dc-tpl="54" d="M12 18v-4"></path><path data-dc-tpl="55" d="M16 18v-6"></path></svg><span data-dc-tpl="56" style="flex: 1 1 0%;">Reports</span></a>
+    
+  </div>
+
+  
+    <div data-dc-tpl="58" style="display: flex; flex-direction: column; gap: 2px;">
+      <div data-dc-tpl="59" style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; padding: 0px 10px 6px;">Administration</div>
+      <a data-dc-tpl="60" href="Fields.html" style="position: relative; display: flex; align-items: center; gap: 12px; height: 40px; padding: 0px 10px 0px 14px; border-radius: 10px; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--sidebar-foreground); background: transparent; transition: background 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.2s;"><span data-dc-tpl="61" style="position: absolute; left: 0px; top: 10px; bottom: 10px; width: 3px; border-radius: 999px; background: var(--sidebar-primary); opacity: 0; transition: opacity 0.2s, transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);"></span><svg data-dc-tpl="62" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="63" d="M11 12H3"></path><path data-dc-tpl="64" d="M16 6H3"></path><path data-dc-tpl="65" d="M16 18H3"></path><path data-dc-tpl="66" d="M18 9v6"></path><path data-dc-tpl="67" d="M21 12h-6"></path></svg><span data-dc-tpl="68" style="flex: 1 1 0%;">Custom fields</span></a>
+      <a data-dc-tpl="69" href="Users.html" style="position: relative; display: flex; align-items: center; gap: 12px; height: 40px; padding: 0px 10px 0px 14px; border-radius: 10px; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--sidebar-foreground); background: transparent; transition: background 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.2s;"><span data-dc-tpl="70" style="position: absolute; left: 0px; top: 10px; bottom: 10px; width: 3px; border-radius: 999px; background: var(--sidebar-primary); opacity: 0; transition: opacity 0.2s, transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);"></span><svg data-dc-tpl="71" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle data-dc-tpl="72" cx="10" cy="7" r="4"></circle><path data-dc-tpl="73" d="M10.3 15H7a4 4 0 0 0-4 4v2"></path><circle data-dc-tpl="74" cx="17" cy="17" r="3"></circle><path data-dc-tpl="75" d="M17 12.5v1.5"></path><path data-dc-tpl="76" d="M17 20v1.5"></path><path data-dc-tpl="77" d="m20.9 14.8-1.3.7"></path><path data-dc-tpl="78" d="m14.4 18.5-1.3.7"></path><path data-dc-tpl="79" d="m20.9 19.2-1.3-.7"></path><path data-dc-tpl="80" d="m14.4 15.5-1.3-.7"></path></svg><span data-dc-tpl="81" style="flex: 1 1 0%;">Users</span></a>
+      <a data-dc-tpl="82" href="Roles.html" style="position: relative; display: flex; align-items: center; gap: 12px; height: 40px; padding: 0px 10px 0px 14px; border-radius: 10px; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--sidebar-foreground); background: transparent; transition: background 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.2s;"><span data-dc-tpl="83" style="position: absolute; left: 0px; top: 10px; bottom: 10px; width: 3px; border-radius: 999px; background: var(--sidebar-primary); opacity: 0; transition: opacity 0.2s, transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);"></span><svg data-dc-tpl="84" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="85" d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path data-dc-tpl="86" d="m9 12 2 2 4-4"></path></svg><span data-dc-tpl="87" style="flex: 1 1 0%;">Roles &amp; permissions</span></a>
+      <a data-dc-tpl="88" href="Audit.html" style="position: relative; display: flex; align-items: center; gap: 12px; height: 40px; padding: 0px 10px 0px 14px; border-radius: 10px; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--sidebar-foreground); background: transparent; transition: background 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.2s;"><span data-dc-tpl="89" style="position: absolute; left: 0px; top: 10px; bottom: 10px; width: 3px; border-radius: 999px; background: var(--sidebar-primary); opacity: 0; transition: opacity 0.2s, transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);"></span><svg data-dc-tpl="90" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="91" d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path data-dc-tpl="92" d="M3 3v5h5"></path><path data-dc-tpl="93" d="M12 7v5l4 2"></path></svg><span data-dc-tpl="94" style="flex: 1 1 0%;">Audit log</span></a>
+    </div>
+  
+
+  <div data-dc-tpl="95" style="flex: 1 1 0%;"></div></nav></div></div>
+  <div data-dc-tpl="6" style="flex: 999 1 560px; min-width: 0px; display: flex; flex-direction: column;">
+    <div class="sc-host" data-sc-name="Topbar" data-dc-tpl="7"><header data-dc-tpl="3" style="--background: #F5F7FA; --foreground: #0E1B2C; --card: #FFFFFF; --card-foreground: #0E1B2C; --popover: #FFFFFF; --popover-foreground: #0E1B2C; --primary: #00579F; --primary-foreground: #FFFFFF; --secondary: #E9EFF6; --secondary-foreground: #0E2A4A; --muted: #EEF1F5; --muted-foreground: #556274; --accent: #FFF1DC; --accent-foreground: #8A4A00; --destructive: #C2302A; --destructive-foreground: #FFFFFF; --border: #DCE2EA; --input: #C9D2DE; --ring: #3584CF; --chart-1: #00579F; --chart-2: #F39314; --chart-3: #3AA0E4; --chart-4: #23A162; --chart-5: #8A96A8; --sidebar: #0A2342; --sidebar-foreground: #C6D3E3; --sidebar-primary: #F39314; --sidebar-primary-foreground: #1F1100; --sidebar-accent: #12345E; --sidebar-accent-foreground: #FFFFFF; --sidebar-border: #1A3B66; --sidebar-ring: #F39314; --brand: #F39314; --brand-ink: #A85A00; --status-occupied: #2A8BD6; --status-occupied-bg: #E5F1FC; --status-occupied-border: #8FC2EE; --status-occupied-fg: #0B4C85; --status-held: #DDA00F; --status-held-bg: #FCF1D2; --status-held-border: #E6BA4C; --status-held-fg: #694000; --status-vacant: #23A162; --status-vacant-bg: #E2F4EA; --status-vacant-border: #84CDA4; --status-vacant-fg: #0B5C33; --status-invalid: #8A94A3; --status-invalid-bg: #F1F3F6; --status-invalid-border: #AEB7C3; --status-invalid-fg: #66707D; --row-leave: #EBF7F0; --row-nobed: #FFEFDD; --row-exited: #F2F3F5; --warning: #D97A06; --warning-bg: #FFF3DE; --warning-border: #F1C16A; --warning-fg: #7A4400; --success: #1E8A52; --shadow-sm: 0 1px 2px rgba(14,27,44,.06),0 1px 3px rgba(14,27,44,.05); --shadow-md: 0 4px 12px rgba(14,27,44,.08),0 1px 3px rgba(14,27,44,.06); --shadow-lg: 0 24px 48px rgba(14,27,44,.18),0 4px 12px rgba(14,27,44,.08); --overlay: rgba(10,20,35,.48); color-scheme: light; box-sizing: border-box; min-height: 64px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 12px 24px; background: var(--card); color: var(--foreground); border-bottom: 1px solid var(--border); font-family: &quot;Plus Jakarta Sans&quot;, ui-sans-serif, system-ui, sans-serif;">
+  <nav data-dc-tpl="4" aria-label="Breadcrumb" style="display: flex; align-items: center; gap: 8px; flex: 1 1 260px; min-width: 0px; font-size: 14px;">
+    
+      <span data-dc-tpl="6" style="display: flex; align-items: center; gap: 8px; white-space: nowrap;">
+        
+        <span data-dc-tpl="10" style="font-weight: 600; color: var(--foreground);"><span class="sc-interp">Dashboard</span></span>
+      </span>
+    
+  </nav>
+  <label data-dc-tpl="11" style="display: flex; align-items: center; gap: 8px; height: 38px; padding: 0px 10px 0px 12px; flex: 0 1 340px; min-width: 200px; border-radius: 8px; border: 1px solid var(--border); background: var(--background); color: var(--muted-foreground); font-size: 13px;">
+    <svg data-dc-tpl="12" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle data-dc-tpl="13" cx="11" cy="11" r="8"></circle><path data-dc-tpl="14" d="m21 21-4.3-4.3"></path></svg>
+    <input data-dc-tpl="15" type="search" placeholder="Search workers, rooms, beds…" aria-label="Global search (coming soon)" style="flex: 1 1 0%; min-width: 0px; border: 0px; outline: none; background: transparent; font: inherit; color: var(--foreground);">
+    <span data-dc-tpl="16" style="font-family: &quot;JetBrains Mono&quot;, ui-monospace, monospace; font-size: 11px; padding: 2px 6px; border-radius: 5px; border: 1px solid var(--border); background: var(--card);">⌘K</span>
+  </label>
+  <div data-dc-tpl="17" style="display: flex; align-items: center; gap: 12px;">
+    <div data-dc-tpl="18" style="display: flex; align-items: center; gap: 10px;">
+      <div data-dc-tpl="19" style="width: 34px; height: 34px; border-radius: 999px; background: var(--accent); color: var(--accent-foreground); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;"><span class="sc-interp">MA</span></div>
+      <div data-dc-tpl="20" style="display: flex; flex-direction: column; line-height: 1.2;"><span data-dc-tpl="21" style="font-size: 13px; font-weight: 600;"><span class="sc-interp">Mariam Al Hashimi</span></span><span data-dc-tpl="22" style="font-size: 12px; color: var(--muted-foreground);"><span class="sc-interp">Administrator</span></span></div>
+    </div>
+    <a data-dc-tpl="23" href="Login.html" style="display: flex; align-items: center; gap: 6px; height: 36px; padding: 0px 12px; border-radius: 8px; border: 1px solid var(--border); color: var(--foreground); text-decoration: none; font-size: 13px; font-weight: 500;"><svg data-dc-tpl="24" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="25" d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><path data-dc-tpl="26" d="m16 17 5-5-5-5"></path><path data-dc-tpl="27" d="M21 12H9"></path></svg>Sign out</a>
+  </div></header></div>
+    <main data-dc-tpl="8" style="box-sizing: border-box; width: 100%; max-width: 1440px; padding: 28px 32px 48px; display: flex; flex-direction: column; gap: 24px;">
+
+      <div data-dc-tpl="9" style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px;">
+        <div data-dc-tpl="10" style="display: flex; flex-direction: column; gap: 4px;">
+          <h1 data-dc-tpl="11" style="margin: 0px; font-size: 26px; line-height: 34px; font-weight: 800; letter-spacing: -0.02em;">Good morning, Mariam</h1>
+          <p data-dc-tpl="12" style="margin: 0px; font-size: 14px; color: var(--muted-foreground);">Saturday, 3 October 2026 · Dubai. Here is where every bed stands today.</p>
+        </div>
+        <div data-dc-tpl="13" style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <a data-dc-tpl="14" href="Reports.html" style="display: flex; align-items: center; gap: 8px; height: 38px; padding: 0px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); text-decoration: none; font-size: 14px; font-weight: 600;"><svg data-dc-tpl="15" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="16" d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path data-dc-tpl="17" d="m7 10 5 5 5-5"></path><path data-dc-tpl="18" d="M12 15V3"></path></svg>Occupancy sheet</a>
+          <a data-dc-tpl="19" href="WorkerForm.html" style="display: flex; align-items: center; gap: 8px; height: 38px; padding: 0px 14px; border-radius: 8px; background: var(--primary); color: var(--primary-foreground); text-decoration: none; font-size: 14px; font-weight: 600;"><svg data-dc-tpl="20" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="21" d="M5 12h14"></path><path data-dc-tpl="22" d="M12 5v14"></path></svg>Add worker</a>
+        </div>
+      </div>
+
+      <section data-dc-tpl="23" aria-label="Workers" style="display: flex; flex-direction: column; gap: 10px;">
+        <div data-dc-tpl="24" style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted-foreground);">Workers</div>
+        <div data-dc-tpl="25" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); gap: 12px;">
+          
+            <a data-dc-tpl="27" href="Workers.html" style="display: flex; flex-direction: column; gap: 8px; padding: 16px 18px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm); text-decoration: none; color: var(--foreground);">
+              <div data-dc-tpl="28" style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--muted-foreground);"><span data-dc-tpl="29" style="width: 8px; height: 8px; border-radius: 999px; background: var(--primary);"></span><span class="sc-interp">Active workers</span></div>
+              <div data-dc-tpl="30" style="font-size: 30px; line-height: 36px; font-weight: 800; letter-spacing: -0.02em;"><span class="sc-interp">1,258</span></div>
+              <div data-dc-tpl="31" style="font-size: 12px; color: var(--muted-foreground);"><span class="sc-interp">+14 joined this week</span></div>
+            </a>
+          
+            <a data-dc-tpl="27" href="Workers.html" style="display: flex; flex-direction: column; gap: 8px; padding: 16px 18px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm); text-decoration: none; color: var(--foreground);">
+              <div data-dc-tpl="28" style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--muted-foreground);"><span data-dc-tpl="29" style="width: 8px; height: 8px; border-radius: 999px; background: var(--status-occupied);"></span><span class="sc-interp">Housed</span></div>
+              <div data-dc-tpl="30" style="font-size: 30px; line-height: 36px; font-weight: 800; letter-spacing: -0.02em;"><span class="sc-interp">1,121</span></div>
+              <div data-dc-tpl="31" style="font-size: 12px; color: var(--muted-foreground);"><span class="sc-interp">In a bed and present</span></div>
+            </a>
+          
+            <a data-dc-tpl="27" href="Workers.html" style="display: flex; flex-direction: column; gap: 8px; padding: 16px 18px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm); text-decoration: none; color: var(--foreground);">
+              <div data-dc-tpl="28" style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--muted-foreground);"><span data-dc-tpl="29" style="width: 8px; height: 8px; border-radius: 999px; background: var(--status-vacant);"></span><span class="sc-interp">On leave</span></div>
+              <div data-dc-tpl="30" style="font-size: 30px; line-height: 36px; font-weight: 800; letter-spacing: -0.02em;"><span class="sc-interp">96</span></div>
+              <div data-dc-tpl="31" style="font-size: 12px; color: var(--muted-foreground);"><span class="sc-interp">Beds held for them</span></div>
+            </a>
+          
+            <a data-dc-tpl="27" href="Workers.html" style="display: flex; flex-direction: column; gap: 8px; padding: 16px 18px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm); text-decoration: none; color: var(--foreground);">
+              <div data-dc-tpl="28" style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--muted-foreground);"><span data-dc-tpl="29" style="width: 8px; height: 8px; border-radius: 999px; background: var(--brand);"></span><span class="sc-interp">Without a bed</span></div>
+              <div data-dc-tpl="30" style="font-size: 30px; line-height: 36px; font-weight: 800; letter-spacing: -0.02em;"><span class="sc-interp">41</span></div>
+              <div data-dc-tpl="31" style="font-size: 12px; color: var(--muted-foreground);"><span class="sc-interp">Need assigning</span></div>
+            </a>
+          
+            <a data-dc-tpl="27" href="Workers.html" style="display: flex; flex-direction: column; gap: 8px; padding: 16px 18px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm); text-decoration: none; color: var(--foreground);">
+              <div data-dc-tpl="28" style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--muted-foreground);"><span data-dc-tpl="29" style="width: 8px; height: 8px; border-radius: 999px; background: var(--status-invalid);"></span><span class="sc-interp">Exited this month</span></div>
+              <div data-dc-tpl="30" style="font-size: 30px; line-height: 36px; font-weight: 800; letter-spacing: -0.02em;"><span class="sc-interp">26</span></div>
+              <div data-dc-tpl="31" style="font-size: 12px; color: var(--muted-foreground);"><span class="sc-interp">9 resigned · 8 visa cancelled</span></div>
+            </a>
+          
+        </div>
+      </section>
+
+      <section data-dc-tpl="32" aria-label="Beds" style="display: flex; flex-direction: column; gap: 10px;">
+        <div data-dc-tpl="33" style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted-foreground);">Beds · 6 camps</div>
+        <div data-dc-tpl="34" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); gap: 12px;">
+          
+            <div data-dc-tpl="36" style="display: flex; flex-direction: column; gap: 8px; padding: 16px 18px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+              <div data-dc-tpl="37" style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--muted-foreground);"><span data-dc-tpl="38" style="width: 8px; height: 8px; border-radius: 3px; background: var(--chart-5);"></span><span class="sc-interp">Total beds</span></div>
+              <div data-dc-tpl="39" style="font-size: 30px; line-height: 36px; font-weight: 800; letter-spacing: -0.02em;"><span class="sc-interp">1,312</span></div>
+              <div data-dc-tpl="40" style="font-size: 12px; color: var(--muted-foreground);"><span class="sc-interp">166 rooms</span></div>
+            </div>
+          
+            <div data-dc-tpl="36" style="display: flex; flex-direction: column; gap: 8px; padding: 16px 18px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+              <div data-dc-tpl="37" style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--muted-foreground);"><span data-dc-tpl="38" style="width: 8px; height: 8px; border-radius: 3px; background: var(--status-occupied);"></span><span class="sc-interp">Occupied</span></div>
+              <div data-dc-tpl="39" style="font-size: 30px; line-height: 36px; font-weight: 800; letter-spacing: -0.02em;"><span class="sc-interp">1,121</span></div>
+              <div data-dc-tpl="40" style="font-size: 12px; color: var(--muted-foreground);"><span class="sc-interp">85.4% of beds</span></div>
+            </div>
+          
+            <div data-dc-tpl="36" style="display: flex; flex-direction: column; gap: 8px; padding: 16px 18px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+              <div data-dc-tpl="37" style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--muted-foreground);"><span data-dc-tpl="38" style="width: 8px; height: 8px; border-radius: 3px; background: var(--status-held);"></span><span class="sc-interp">Held</span></div>
+              <div data-dc-tpl="39" style="font-size: 30px; line-height: 36px; font-weight: 800; letter-spacing: -0.02em;"><span class="sc-interp">96</span></div>
+              <div data-dc-tpl="40" style="font-size: 12px; color: var(--muted-foreground);"><span class="sc-interp">Occupant on leave</span></div>
+            </div>
+          
+            <div data-dc-tpl="36" style="display: flex; flex-direction: column; gap: 8px; padding: 16px 18px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+              <div data-dc-tpl="37" style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--muted-foreground);"><span data-dc-tpl="38" style="width: 8px; height: 8px; border-radius: 3px; background: var(--status-vacant);"></span><span class="sc-interp">Vacant</span></div>
+              <div data-dc-tpl="39" style="font-size: 30px; line-height: 36px; font-weight: 800; letter-spacing: -0.02em;"><span class="sc-interp">95</span></div>
+              <div data-dc-tpl="40" style="font-size: 12px; color: var(--muted-foreground);"><span class="sc-interp">Ready to assign</span></div>
+            </div>
+          
+          <div data-dc-tpl="41" style="display: flex; flex-direction: column; gap: 8px; padding: 16px 18px; border-radius: 14px; background: var(--primary); color: var(--primary-foreground); box-shadow: var(--shadow-sm);">
+            <div data-dc-tpl="42" style="font-size: 13px; font-weight: 600; opacity: 0.85;">Occupancy</div>
+            <div data-dc-tpl="43" style="font-size: 30px; line-height: 36px; font-weight: 800; letter-spacing: -0.02em;">92.8%</div>
+            <div data-dc-tpl="44" style="display: flex; height: 6px; border-radius: 999px; overflow: hidden; background: rgba(255, 255, 255, 0.22);"><div data-dc-tpl="45" style="width: 92.8%; background: currentcolor; border-radius: 999px;"></div></div>
+          </div>
+        </div>
+      </section>
+
+      <div data-dc-tpl="46" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 16px; align-items: start;">
+        <section data-dc-tpl="47" style="grid-column: span 1; display: flex; flex-direction: column; gap: 16px; padding: 20px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+          <div data-dc-tpl="48" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;">
+            <div data-dc-tpl="49" style="display: flex; flex-direction: column; gap: 2px;"><h2 data-dc-tpl="50" style="margin: 0px; font-size: 17px; font-weight: 700;">Occupancy by camp</h2><span data-dc-tpl="51" style="font-size: 13px; color: var(--muted-foreground);">Held beds count as in use</span></div>
+            <div data-dc-tpl="52" style="display: flex; gap: 14px; font-size: 12px; color: var(--muted-foreground);">
+              <span data-dc-tpl="53" style="display: flex; align-items: center; gap: 6px;"><span data-dc-tpl="54" style="width: 10px; height: 10px; border-radius: 3px; background: var(--status-occupied);"></span>Occupied</span>
+              <span data-dc-tpl="55" style="display: flex; align-items: center; gap: 6px;"><span data-dc-tpl="56" style="width: 10px; height: 10px; border-radius: 3px; background: var(--status-held);"></span>Held</span>
+              <span data-dc-tpl="57" style="display: flex; align-items: center; gap: 6px;"><span data-dc-tpl="58" style="width: 10px; height: 10px; border-radius: 3px; background: var(--status-vacant);"></span>Vacant</span>
+            </div>
+          </div>
+          <div data-dc-tpl="59" style="display: flex; flex-direction: column; gap: 14px;">
+            
+              <a data-dc-tpl="61" href="CampDetail.html" style="display: grid; grid-template-columns: minmax(150px, 220px) minmax(0px, 1fr) 92px; align-items: center; gap: 16px; text-decoration: none; color: var(--foreground);">
+                <div data-dc-tpl="62" style="display: flex; flex-direction: column; min-width: 0px;"><span data-dc-tpl="63" style="font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Al Quoz Camp 3</span></span><span data-dc-tpl="64" style="font-size: 12px; color: var(--muted-foreground);"><span class="sc-interp">Dubai</span> · <span class="sc-interp">312</span> beds</span></div>
+                <div data-dc-tpl="65" style="display: flex; height: 14px; border-radius: 999px; overflow: hidden; background: var(--muted); gap: 2px;">
+                  <div data-dc-tpl="66" style="width: 85.9%; background: var(--status-occupied);"></div>
+                  <div data-dc-tpl="67" style="width: 7.05%; background: var(--status-held);"></div>
+                  <div data-dc-tpl="68" style="width: 7.05%; background: var(--status-vacant);"></div>
+                </div>
+                <div data-dc-tpl="69" style="display: flex; flex-direction: column; align-items: flex-end;"><span data-dc-tpl="70" style="font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums;"><span class="sc-interp">92.9%</span></span><span data-dc-tpl="71" style="font-size: 12px; color: var(--status-vacant-fg); font-weight: 600;"><span class="sc-interp">22</span> free</span></div>
+              </a>
+            
+              <a data-dc-tpl="61" href="CampDetail.html" style="display: grid; grid-template-columns: minmax(150px, 220px) minmax(0px, 1fr) 92px; align-items: center; gap: 16px; text-decoration: none; color: var(--foreground);">
+                <div data-dc-tpl="62" style="display: flex; flex-direction: column; min-width: 0px;"><span data-dc-tpl="63" style="font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Jebel Ali Labour Camp</span></span><span data-dc-tpl="64" style="font-size: 12px; color: var(--muted-foreground);"><span class="sc-interp">Dubai</span> · <span class="sc-interp">296</span> beds</span></div>
+                <div data-dc-tpl="65" style="display: flex; height: 14px; border-radius: 999px; overflow: hidden; background: var(--muted); gap: 2px;">
+                  <div data-dc-tpl="66" style="width: 84.8%; background: var(--status-occupied);"></div>
+                  <div data-dc-tpl="67" style="width: 6.42%; background: var(--status-held);"></div>
+                  <div data-dc-tpl="68" style="width: 8.78%; background: var(--status-vacant);"></div>
+                </div>
+                <div data-dc-tpl="69" style="display: flex; flex-direction: column; align-items: flex-end;"><span data-dc-tpl="70" style="font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums;"><span class="sc-interp">91.2%</span></span><span data-dc-tpl="71" style="font-size: 12px; color: var(--status-vacant-fg); font-weight: 600;"><span class="sc-interp">26</span> free</span></div>
+              </a>
+            
+              <a data-dc-tpl="61" href="CampDetail.html" style="display: grid; grid-template-columns: minmax(150px, 220px) minmax(0px, 1fr) 92px; align-items: center; gap: 16px; text-decoration: none; color: var(--foreground);">
+                <div data-dc-tpl="62" style="display: flex; flex-direction: column; min-width: 0px;"><span data-dc-tpl="63" style="font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Sonapur Camp 7</span></span><span data-dc-tpl="64" style="font-size: 12px; color: var(--muted-foreground);"><span class="sc-interp">Dubai</span> · <span class="sc-interp">240</span> beds</span></div>
+                <div data-dc-tpl="65" style="display: flex; height: 14px; border-radius: 999px; overflow: hidden; background: var(--muted); gap: 2px;">
+                  <div data-dc-tpl="66" style="width: 89.17%; background: var(--status-occupied);"></div>
+                  <div data-dc-tpl="67" style="width: 7.5%; background: var(--status-held);"></div>
+                  <div data-dc-tpl="68" style="width: 3.33%; background: var(--status-vacant);"></div>
+                </div>
+                <div data-dc-tpl="69" style="display: flex; flex-direction: column; align-items: flex-end;"><span data-dc-tpl="70" style="font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums;"><span class="sc-interp">96.7%</span></span><span data-dc-tpl="71" style="font-size: 12px; color: var(--status-vacant-fg); font-weight: 600;"><span class="sc-interp">8</span> free</span></div>
+              </a>
+            
+              <a data-dc-tpl="61" href="CampDetail.html" style="display: grid; grid-template-columns: minmax(150px, 220px) minmax(0px, 1fr) 92px; align-items: center; gap: 16px; text-decoration: none; color: var(--foreground);">
+                <div data-dc-tpl="62" style="display: flex; flex-direction: column; min-width: 0px;"><span data-dc-tpl="63" style="font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Mussafah M-12</span></span><span data-dc-tpl="64" style="font-size: 12px; color: var(--muted-foreground);"><span class="sc-interp">Abu Dhabi</span> · <span class="sc-interp">220</span> beds</span></div>
+                <div data-dc-tpl="65" style="display: flex; height: 14px; border-radius: 999px; overflow: hidden; background: var(--muted); gap: 2px;">
+                  <div data-dc-tpl="66" style="width: 86.36%; background: var(--status-occupied);"></div>
+                  <div data-dc-tpl="67" style="width: 7.27%; background: var(--status-held);"></div>
+                  <div data-dc-tpl="68" style="width: 6.36%; background: var(--status-vacant);"></div>
+                </div>
+                <div data-dc-tpl="69" style="display: flex; flex-direction: column; align-items: flex-end;"><span data-dc-tpl="70" style="font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums;"><span class="sc-interp">93.6%</span></span><span data-dc-tpl="71" style="font-size: 12px; color: var(--status-vacant-fg); font-weight: 600;"><span class="sc-interp">14</span> free</span></div>
+              </a>
+            
+              <a data-dc-tpl="61" href="CampDetail.html" style="display: grid; grid-template-columns: minmax(150px, 220px) minmax(0px, 1fr) 92px; align-items: center; gap: 16px; text-decoration: none; color: var(--foreground);">
+                <div data-dc-tpl="62" style="display: flex; flex-direction: column; min-width: 0px;"><span data-dc-tpl="63" style="font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Sajja Industrial Camp</span></span><span data-dc-tpl="64" style="font-size: 12px; color: var(--muted-foreground);"><span class="sc-interp">Sharjah</span> · <span class="sc-interp">152</span> beds</span></div>
+                <div data-dc-tpl="65" style="display: flex; height: 14px; border-radius: 999px; overflow: hidden; background: var(--muted); gap: 2px;">
+                  <div data-dc-tpl="66" style="width: 77.63%; background: var(--status-occupied);"></div>
+                  <div data-dc-tpl="67" style="width: 8.55%; background: var(--status-held);"></div>
+                  <div data-dc-tpl="68" style="width: 13.82%; background: var(--status-vacant);"></div>
+                </div>
+                <div data-dc-tpl="69" style="display: flex; flex-direction: column; align-items: flex-end;"><span data-dc-tpl="70" style="font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums;"><span class="sc-interp">86.2%</span></span><span data-dc-tpl="71" style="font-size: 12px; color: var(--status-vacant-fg); font-weight: 600;"><span class="sc-interp">21</span> free</span></div>
+              </a>
+            
+              <a data-dc-tpl="61" href="CampDetail.html" style="display: grid; grid-template-columns: minmax(150px, 220px) minmax(0px, 1fr) 92px; align-items: center; gap: 16px; text-decoration: none; color: var(--foreground);">
+                <div data-dc-tpl="62" style="display: flex; flex-direction: column; min-width: 0px;"><span data-dc-tpl="63" style="font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Al Jurf Camp</span></span><span data-dc-tpl="64" style="font-size: 12px; color: var(--muted-foreground);"><span class="sc-interp">Ajman</span> · <span class="sc-interp">92</span> beds</span></div>
+                <div data-dc-tpl="65" style="display: flex; height: 14px; border-radius: 999px; overflow: hidden; background: var(--muted); gap: 2px;">
+                  <div data-dc-tpl="66" style="width: 86.96%; background: var(--status-occupied);"></div>
+                  <div data-dc-tpl="67" style="width: 8.7%; background: var(--status-held);"></div>
+                  <div data-dc-tpl="68" style="width: 4.35%; background: var(--status-vacant);"></div>
+                </div>
+                <div data-dc-tpl="69" style="display: flex; flex-direction: column; align-items: flex-end;"><span data-dc-tpl="70" style="font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums;"><span class="sc-interp">95.7%</span></span><span data-dc-tpl="71" style="font-size: 12px; color: var(--status-vacant-fg); font-weight: 600;"><span class="sc-interp">4</span> free</span></div>
+              </a>
+            
+          </div>
+        </section>
+
+        <div data-dc-tpl="72" style="display: flex; flex-direction: column; gap: 16px;">
+          <section data-dc-tpl="73" style="display: flex; flex-direction: column; gap: 12px; padding: 20px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div data-dc-tpl="74" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+              <h2 data-dc-tpl="75" style="margin: 0px; font-size: 17px; font-weight: 700; display: flex; align-items: center; gap: 8px;"><svg data-dc-tpl="76" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--warning);"><path data-dc-tpl="77" d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path data-dc-tpl="78" d="M12 9v4"></path><path data-dc-tpl="79" d="M12 17h.01"></path></svg>Rooms over capacity</h2>
+              <span data-dc-tpl="80" style="font-size: 12px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: var(--warning-bg); color: var(--warning-fg); border: 1px solid var(--warning-border);">4 rooms</span>
+            </div>
+            <div data-dc-tpl="81" style="display: flex; flex-direction: column;">
+              
+                <a data-dc-tpl="83" href="CampDetail.html" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0px; border-top: 1px solid var(--border); text-decoration: none; color: var(--foreground);">
+                  <div data-dc-tpl="84" style="display: flex; flex-direction: column;"><span data-dc-tpl="85" style="font-size: 14px; font-weight: 600;">Room <span class="sc-interp">204</span></span><span data-dc-tpl="86" style="font-size: 12px; color: var(--muted-foreground);"><span class="sc-interp">Sonapur Camp 7</span> · <span class="sc-interp">26 m²</span></span></div>
+                  <span data-dc-tpl="87" style="font-size: 12px; font-weight: 600; color: var(--warning-fg);"><span class="sc-interp">10</span> beds · fits ~<span class="sc-interp">7</span></span>
+                </a>
+              
+                <a data-dc-tpl="83" href="CampDetail.html" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0px; border-top: 1px solid var(--border); text-decoration: none; color: var(--foreground);">
+                  <div data-dc-tpl="84" style="display: flex; flex-direction: column;"><span data-dc-tpl="85" style="font-size: 14px; font-weight: 600;">Room <span class="sc-interp">G-12</span></span><span data-dc-tpl="86" style="font-size: 12px; color: var(--muted-foreground);"><span class="sc-interp">Al Quoz Camp 3</span> · <span class="sc-interp">22 m²</span></span></div>
+                  <span data-dc-tpl="87" style="font-size: 12px; font-weight: 600; color: var(--warning-fg);"><span class="sc-interp">8</span> beds · fits ~<span class="sc-interp">5</span></span>
+                </a>
+              
+                <a data-dc-tpl="83" href="CampDetail.html" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0px; border-top: 1px solid var(--border); text-decoration: none; color: var(--foreground);">
+                  <div data-dc-tpl="84" style="display: flex; flex-direction: column;"><span data-dc-tpl="85" style="font-size: 14px; font-weight: 600;">Room <span class="sc-interp">2B</span></span><span data-dc-tpl="86" style="font-size: 12px; color: var(--muted-foreground);"><span class="sc-interp">Mussafah M-12</span> · <span class="sc-interp">24 m²</span></span></div>
+                  <span data-dc-tpl="87" style="font-size: 12px; font-weight: 600; color: var(--warning-fg);"><span class="sc-interp">10</span> beds · fits ~<span class="sc-interp">8</span></span>
+                </a>
+              
+                <a data-dc-tpl="83" href="CampDetail.html" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0px; border-top: 1px solid var(--border); text-decoration: none; color: var(--foreground);">
+                  <div data-dc-tpl="84" style="display: flex; flex-direction: column;"><span data-dc-tpl="85" style="font-size: 14px; font-weight: 600;">Room <span class="sc-interp">115</span></span><span data-dc-tpl="86" style="font-size: 12px; color: var(--muted-foreground);"><span class="sc-interp">Jebel Ali Labour Camp</span> · <span class="sc-interp">29 m²</span></span></div>
+                  <span data-dc-tpl="87" style="font-size: 12px; font-weight: 600; color: var(--warning-fg);"><span class="sc-interp">9</span> beds · fits ~<span class="sc-interp">7</span></span>
+                </a>
+              
+            </div>
+          </section>
+          <section data-dc-tpl="88" style="display: flex; flex-direction: column; gap: 12px; padding: 20px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div data-dc-tpl="89" style="display: flex; align-items: center; justify-content: space-between;"><h2 data-dc-tpl="90" style="margin: 0px; font-size: 17px; font-weight: 700;">Your access</h2><span data-dc-tpl="91" style="font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: var(--secondary); color: var(--secondary-foreground);">Administrator</span></div>
+            <div data-dc-tpl="92" style="display: flex; gap: 16px; font-size: 13px;"><span data-dc-tpl="93" style="color: var(--muted-foreground);">Camp access</span><strong data-dc-tpl="94">All camps (6)</strong></div>
+            <div data-dc-tpl="95" style="display: flex; flex-wrap: wrap; gap: 6px;">
+              <span data-dc-tpl="97" style="font-size: 12px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted-foreground);"><span class="sc-interp">View camps</span></span><span data-dc-tpl="97" style="font-size: 12px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted-foreground);"><span class="sc-interp">Manage camps, rooms &amp; beds</span></span><span data-dc-tpl="97" style="font-size: 12px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted-foreground);"><span class="sc-interp">Assign &amp; move beds</span></span><span data-dc-tpl="97" style="font-size: 12px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted-foreground);"><span class="sc-interp">View workers</span></span><span data-dc-tpl="97" style="font-size: 12px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted-foreground);"><span class="sc-interp">Add &amp; edit workers</span></span><span data-dc-tpl="97" style="font-size: 12px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted-foreground);"><span class="sc-interp">Mark leave</span></span><span data-dc-tpl="97" style="font-size: 12px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted-foreground);"><span class="sc-interp">Exit workers</span></span><span data-dc-tpl="97" style="font-size: 12px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted-foreground);"><span class="sc-interp">See passport &amp; Emirates ID</span></span><span data-dc-tpl="97" style="font-size: 12px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted-foreground);"><span class="sc-interp">Export workers</span></span><span data-dc-tpl="97" style="font-size: 12px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted-foreground);"><span class="sc-interp">View &amp; export reports</span></span><span data-dc-tpl="97" style="font-size: 12px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted-foreground);"><span class="sc-interp">Manage custom fields</span></span><span data-dc-tpl="97" style="font-size: 12px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted-foreground);"><span class="sc-interp">View audit log</span></span><span data-dc-tpl="97" style="font-size: 12px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted-foreground);"><span class="sc-interp">Manage users</span></span><span data-dc-tpl="97" style="font-size: 12px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted-foreground);"><span class="sc-interp">Manage roles</span></span>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <div data-dc-tpl="98" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr)); gap: 16px; align-items: start;">
+        <section data-dc-tpl="99" style="display: flex; flex-direction: column; gap: 4px; padding: 20px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+          <div data-dc-tpl="100" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;"><h2 data-dc-tpl="101" style="margin: 0px; font-size: 17px; font-weight: 700;">On leave · 96</h2><a data-dc-tpl="102" href="Workers.html" style="font-size: 13px; font-weight: 600; text-decoration: none;">View all</a></div>
+          
+            <div data-dc-tpl="104" style="display: flex; align-items: center; gap: 12px; padding: 10px 0px; border-top: 1px solid var(--border);">
+              <div data-dc-tpl="105" style="width: 34px; height: 34px; flex: 0 0 auto; border-radius: 999px; background: var(--row-leave); color: var(--status-vacant-fg); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;"><span class="sc-interp">RT</span></div>
+              <div data-dc-tpl="106" style="flex: 1 1 0%; min-width: 0px; display: flex; flex-direction: column;"><a data-dc-tpl="107" href="WorkerDetail.html" style="font-size: 14px; font-weight: 600; color: var(--foreground); text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Ram Bahadur Thapa</span></a><span data-dc-tpl="108" style="font-size: 12px; color: var(--muted-foreground);"><span data-dc-tpl="109" style="font-family: &quot;JetBrains Mono&quot;, ui-monospace, monospace;"><span class="sc-interp">XP-003912</span></span> · <span class="sc-interp">Al Quoz 3 · 101 · B2</span> <span data-dc-tpl="110" style="color: var(--status-held-fg); font-weight: 600;">held</span></span></div>
+              <div data-dc-tpl="111" style="display: flex; flex-direction: column; align-items: flex-end; flex: 0 0 auto;"><span data-dc-tpl="112" style="font-size: 12px; font-weight: 600;"><span class="sc-interp">41</span> days</span><span data-dc-tpl="113" style="font-size: 11px; color: var(--muted-foreground);">since <span class="sc-interp">23 Aug</span></span></div>
+            </div>
+          
+            <div data-dc-tpl="104" style="display: flex; align-items: center; gap: 12px; padding: 10px 0px; border-top: 1px solid var(--border);">
+              <div data-dc-tpl="105" style="width: 34px; height: 34px; flex: 0 0 auto; border-radius: 999px; background: var(--row-leave); color: var(--status-vacant-fg); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;"><span class="sc-interp">MK</span></div>
+              <div data-dc-tpl="106" style="flex: 1 1 0%; min-width: 0px; display: flex; flex-direction: column;"><a data-dc-tpl="107" href="WorkerDetail.html" style="font-size: 14px; font-weight: 600; color: var(--foreground); text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Mohammed Asif Khan</span></a><span data-dc-tpl="108" style="font-size: 12px; color: var(--muted-foreground);"><span data-dc-tpl="109" style="font-family: &quot;JetBrains Mono&quot;, ui-monospace, monospace;"><span class="sc-interp">XP-004410</span></span> · <span class="sc-interp">Jebel Ali · 115 · B5</span> <span data-dc-tpl="110" style="color: var(--status-held-fg); font-weight: 600;">held</span></span></div>
+              <div data-dc-tpl="111" style="display: flex; flex-direction: column; align-items: flex-end; flex: 0 0 auto;"><span data-dc-tpl="112" style="font-size: 12px; font-weight: 600;"><span class="sc-interp">33</span> days</span><span data-dc-tpl="113" style="font-size: 11px; color: var(--muted-foreground);">since <span class="sc-interp">31 Aug</span></span></div>
+            </div>
+          
+            <div data-dc-tpl="104" style="display: flex; align-items: center; gap: 12px; padding: 10px 0px; border-top: 1px solid var(--border);">
+              <div data-dc-tpl="105" style="width: 34px; height: 34px; flex: 0 0 auto; border-radius: 999px; background: var(--row-leave); color: var(--status-vacant-fg); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;"><span class="sc-interp">JD</span></div>
+              <div data-dc-tpl="106" style="flex: 1 1 0%; min-width: 0px; display: flex; flex-direction: column;"><a data-dc-tpl="107" href="WorkerDetail.html" style="font-size: 14px; font-weight: 600; color: var(--foreground); text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Jose Dela Cruz</span></a><span data-dc-tpl="108" style="font-size: 12px; color: var(--muted-foreground);"><span data-dc-tpl="109" style="font-family: &quot;JetBrains Mono&quot;, ui-monospace, monospace;"><span class="sc-interp">XP-002876</span></span> · <span class="sc-interp">Mussafah · 2B · B1</span> <span data-dc-tpl="110" style="color: var(--status-held-fg); font-weight: 600;">held</span></span></div>
+              <div data-dc-tpl="111" style="display: flex; flex-direction: column; align-items: flex-end; flex: 0 0 auto;"><span data-dc-tpl="112" style="font-size: 12px; font-weight: 600;"><span class="sc-interp">19</span> days</span><span data-dc-tpl="113" style="font-size: 11px; color: var(--muted-foreground);">since <span class="sc-interp">14 Sep</span></span></div>
+            </div>
+          
+            <div data-dc-tpl="104" style="display: flex; align-items: center; gap: 12px; padding: 10px 0px; border-top: 1px solid var(--border);">
+              <div data-dc-tpl="105" style="width: 34px; height: 34px; flex: 0 0 auto; border-radius: 999px; background: var(--row-leave); color: var(--status-vacant-fg); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;"><span class="sc-interp">PR</span></div>
+              <div data-dc-tpl="106" style="flex: 1 1 0%; min-width: 0px; display: flex; flex-direction: column;"><a data-dc-tpl="107" href="WorkerDetail.html" style="font-size: 14px; font-weight: 600; color: var(--foreground); text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Prakash Rai</span></a><span data-dc-tpl="108" style="font-size: 12px; color: var(--muted-foreground);"><span data-dc-tpl="109" style="font-family: &quot;JetBrains Mono&quot;, ui-monospace, monospace;"><span class="sc-interp">XP-004771</span></span> · <span class="sc-interp">Sonapur 7 · 204 · B8</span> <span data-dc-tpl="110" style="color: var(--status-held-fg); font-weight: 600;">held</span></span></div>
+              <div data-dc-tpl="111" style="display: flex; flex-direction: column; align-items: flex-end; flex: 0 0 auto;"><span data-dc-tpl="112" style="font-size: 12px; font-weight: 600;"><span class="sc-interp">12</span> days</span><span data-dc-tpl="113" style="font-size: 11px; color: var(--muted-foreground);">since <span class="sc-interp">21 Sep</span></span></div>
+            </div>
+          
+            <div data-dc-tpl="104" style="display: flex; align-items: center; gap: 12px; padding: 10px 0px; border-top: 1px solid var(--border);">
+              <div data-dc-tpl="105" style="width: 34px; height: 34px; flex: 0 0 auto; border-radius: 999px; background: var(--row-leave); color: var(--status-vacant-fg); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;"><span class="sc-interp">SY</span></div>
+              <div data-dc-tpl="106" style="flex: 1 1 0%; min-width: 0px; display: flex; flex-direction: column;"><a data-dc-tpl="107" href="WorkerDetail.html" style="font-size: 14px; font-weight: 600; color: var(--foreground); text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Suresh Yadav</span></a><span data-dc-tpl="108" style="font-size: 12px; color: var(--muted-foreground);"><span data-dc-tpl="109" style="font-family: &quot;JetBrains Mono&quot;, ui-monospace, monospace;"><span class="sc-interp">XP-005013</span></span> · <span class="sc-interp">Al Quoz 3 · 302 · B4</span> <span data-dc-tpl="110" style="color: var(--status-held-fg); font-weight: 600;">held</span></span></div>
+              <div data-dc-tpl="111" style="display: flex; flex-direction: column; align-items: flex-end; flex: 0 0 auto;"><span data-dc-tpl="112" style="font-size: 12px; font-weight: 600;"><span class="sc-interp">4</span> days</span><span data-dc-tpl="113" style="font-size: 11px; color: var(--muted-foreground);">since <span class="sc-interp">29 Sep</span></span></div>
+            </div>
+          
+        </section>
+        <section data-dc-tpl="114" style="display: flex; flex-direction: column; gap: 4px; padding: 20px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+          <div data-dc-tpl="115" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;"><h2 data-dc-tpl="116" style="margin: 0px; font-size: 17px; font-weight: 700;">Recent exits</h2><span data-dc-tpl="117" style="font-size: 13px; color: var(--muted-foreground);">26 this month</span></div>
+          
+            <div data-dc-tpl="119" style="display: flex; align-items: center; gap: 12px; padding: 10px 0px; border-top: 1px solid var(--border);">
+              <div data-dc-tpl="120" style="flex: 1 1 0%; min-width: 0px; display: flex; flex-direction: column;"><span data-dc-tpl="121" style="font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Abdul Karim</span></span><span data-dc-tpl="122" style="font-size: 12px; color: var(--muted-foreground);">Freed <span class="sc-interp">Sajja · 12 · B3</span></span></div>
+              <div data-dc-tpl="123" style="display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex: 0 0 auto;"><span data-dc-tpl="124" style="font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--muted); color: var(--muted-foreground); border: 1px solid var(--border);"><span class="sc-interp">Visa Cancelled</span></span><span data-dc-tpl="125" style="font-size: 11px; color: var(--muted-foreground);"><span class="sc-interp">2 Oct 2026</span></span></div>
+            </div>
+          
+            <div data-dc-tpl="119" style="display: flex; align-items: center; gap: 12px; padding: 10px 0px; border-top: 1px solid var(--border);">
+              <div data-dc-tpl="120" style="flex: 1 1 0%; min-width: 0px; display: flex; flex-direction: column;"><span data-dc-tpl="121" style="font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Imran Ali</span></span><span data-dc-tpl="122" style="font-size: 12px; color: var(--muted-foreground);">Freed <span class="sc-interp">Al Quoz 3 · 108 · B6</span></span></div>
+              <div data-dc-tpl="123" style="display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex: 0 0 auto;"><span data-dc-tpl="124" style="font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--muted); color: var(--muted-foreground); border: 1px solid var(--border);"><span class="sc-interp">Resigned</span></span><span data-dc-tpl="125" style="font-size: 11px; color: var(--muted-foreground);"><span class="sc-interp">1 Oct 2026</span></span></div>
+            </div>
+          
+            <div data-dc-tpl="119" style="display: flex; align-items: center; gap: 12px; padding: 10px 0px; border-top: 1px solid var(--border);">
+              <div data-dc-tpl="120" style="flex: 1 1 0%; min-width: 0px; display: flex; flex-direction: column;"><span data-dc-tpl="121" style="font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Mark Anthony Reyes</span></span><span data-dc-tpl="122" style="font-size: 12px; color: var(--muted-foreground);">Freed <span class="sc-interp">Mussafah · 3A · B2</span></span></div>
+              <div data-dc-tpl="123" style="display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex: 0 0 auto;"><span data-dc-tpl="124" style="font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--muted); color: var(--muted-foreground); border: 1px solid var(--border);"><span class="sc-interp">Transferred Out</span></span><span data-dc-tpl="125" style="font-size: 11px; color: var(--muted-foreground);"><span class="sc-interp">30 Sep 2026</span></span></div>
+            </div>
+          
+            <div data-dc-tpl="119" style="display: flex; align-items: center; gap: 12px; padding: 10px 0px; border-top: 1px solid var(--border);">
+              <div data-dc-tpl="120" style="flex: 1 1 0%; min-width: 0px; display: flex; flex-direction: column;"><span data-dc-tpl="121" style="font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Kabir Hossain</span></span><span data-dc-tpl="122" style="font-size: 12px; color: var(--muted-foreground);">Freed <span class="sc-interp">Jebel Ali · 207 · B1</span></span></div>
+              <div data-dc-tpl="123" style="display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex: 0 0 auto;"><span data-dc-tpl="124" style="font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--muted); color: var(--muted-foreground); border: 1px solid var(--border);"><span class="sc-interp">Absconded</span></span><span data-dc-tpl="125" style="font-size: 11px; color: var(--muted-foreground);"><span class="sc-interp">28 Sep 2026</span></span></div>
+            </div>
+          
+            <div data-dc-tpl="119" style="display: flex; align-items: center; gap: 12px; padding: 10px 0px; border-top: 1px solid var(--border);">
+              <div data-dc-tpl="120" style="flex: 1 1 0%; min-width: 0px; display: flex; flex-direction: column;"><span data-dc-tpl="121" style="font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Faisal Rehman</span></span><span data-dc-tpl="122" style="font-size: 12px; color: var(--muted-foreground);">Freed <span class="sc-interp">Sonapur 7 · 110 · B4</span></span></div>
+              <div data-dc-tpl="123" style="display: flex; flex-direction: column; align-items: flex-end; gap: 3px; flex: 0 0 auto;"><span data-dc-tpl="124" style="font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--muted); color: var(--muted-foreground); border: 1px solid var(--border);"><span class="sc-interp">Terminated</span></span><span data-dc-tpl="125" style="font-size: 11px; color: var(--muted-foreground);"><span class="sc-interp">27 Sep 2026</span></span></div>
+            </div>
+          
+        </section>
+        <section data-dc-tpl="126" style="display: flex; flex-direction: column; gap: 4px; padding: 20px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+          <div data-dc-tpl="127" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;"><h2 data-dc-tpl="128" style="margin: 0px; font-size: 17px; font-weight: 700;">Recent activity</h2><a data-dc-tpl="129" href="Audit.html" style="font-size: 13px; font-weight: 600; text-decoration: none;">Audit log</a></div>
+          
+            <div data-dc-tpl="131" style="display: flex; gap: 12px; padding: 10px 0px; border-top: 1px solid var(--border);">
+              <span data-dc-tpl="132" style="width: 8px; height: 8px; margin-top: 6px; flex: 0 0 auto; border-radius: 999px; background: var(--status-occupied);"></span>
+              <div data-dc-tpl="133" style="flex: 1 1 0%; min-width: 0px; font-size: 13px; line-height: 19px;"><strong data-dc-tpl="134" style="font-weight: 600;"><span class="sc-interp">Rajesh Kumar</span></strong> <span class="sc-interp">moved Bikash Tamang to Room 204 · B3, Sonapur Camp 7</span></div>
+              <span data-dc-tpl="135" style="font-size: 11px; color: var(--muted-foreground); white-space: nowrap;"><span class="sc-interp">12 min</span></span>
+            </div>
+          
+            <div data-dc-tpl="131" style="display: flex; gap: 12px; padding: 10px 0px; border-top: 1px solid var(--border);">
+              <span data-dc-tpl="132" style="width: 8px; height: 8px; margin-top: 6px; flex: 0 0 auto; border-radius: 999px; background: var(--destructive);"></span>
+              <div data-dc-tpl="133" style="flex: 1 1 0%; min-width: 0px; font-size: 13px; line-height: 19px;"><strong data-dc-tpl="134" style="font-weight: 600;"><span class="sc-interp">Mariam Al Hashimi</span></strong> <span class="sc-interp">exited Abdul Karim (Visa Cancelled). Sajja · 12 · B3 is now vacant</span></div>
+              <span data-dc-tpl="135" style="font-size: 11px; color: var(--muted-foreground); white-space: nowrap;"><span class="sc-interp">1 h</span></span>
+            </div>
+          
+            <div data-dc-tpl="131" style="display: flex; gap: 12px; padding: 10px 0px; border-top: 1px solid var(--border);">
+              <span data-dc-tpl="132" style="width: 8px; height: 8px; margin-top: 6px; flex: 0 0 auto; border-radius: 999px; background: var(--status-held);"></span>
+              <div data-dc-tpl="133" style="flex: 1 1 0%; min-width: 0px; font-size: 13px; line-height: 19px;"><strong data-dc-tpl="134" style="font-weight: 600;"><span class="sc-interp">Rajesh Kumar</span></strong> <span class="sc-interp">marked Suresh Yadav on leave; bed 302 · B4 held</span></div>
+              <span data-dc-tpl="135" style="font-size: 11px; color: var(--muted-foreground); white-space: nowrap;"><span class="sc-interp">3 h</span></span>
+            </div>
+          
+            <div data-dc-tpl="131" style="display: flex; gap: 12px; padding: 10px 0px; border-top: 1px solid var(--border);">
+              <span data-dc-tpl="132" style="width: 8px; height: 8px; margin-top: 6px; flex: 0 0 auto; border-radius: 999px; background: var(--primary);"></span>
+              <div data-dc-tpl="133" style="flex: 1 1 0%; min-width: 0px; font-size: 13px; line-height: 19px;"><strong data-dc-tpl="134" style="font-weight: 600;"><span class="sc-interp">Aisha Noor</span></strong> <span class="sc-interp">added 6 beds to Room 118, Jebel Ali Labour Camp</span></div>
+              <span data-dc-tpl="135" style="font-size: 11px; color: var(--muted-foreground); white-space: nowrap;"><span class="sc-interp">Yesterday</span></span>
+            </div>
+          
+            <div data-dc-tpl="131" style="display: flex; gap: 12px; padding: 10px 0px; border-top: 1px solid var(--border);">
+              <span data-dc-tpl="132" style="width: 8px; height: 8px; margin-top: 6px; flex: 0 0 auto; border-radius: 999px; background: var(--status-invalid);"></span>
+              <div data-dc-tpl="133" style="flex: 1 1 0%; min-width: 0px; font-size: 13px; line-height: 19px;"><strong data-dc-tpl="134" style="font-weight: 600;"><span class="sc-interp">Aisha Noor</span></strong> <span class="sc-interp">invalidated Room G-04 — “Water damage, closed by facilities”</span></div>
+              <span data-dc-tpl="135" style="font-size: 11px; color: var(--muted-foreground); white-space: nowrap;"><span class="sc-interp">Yesterday</span></span>
+            </div>
+          
+            <div data-dc-tpl="131" style="display: flex; gap: 12px; padding: 10px 0px; border-top: 1px solid var(--border);">
+              <span data-dc-tpl="132" style="width: 8px; height: 8px; margin-top: 6px; flex: 0 0 auto; border-radius: 999px; background: var(--primary);"></span>
+              <div data-dc-tpl="133" style="flex: 1 1 0%; min-width: 0px; font-size: 13px; line-height: 19px;"><strong data-dc-tpl="134" style="font-weight: 600;"><span class="sc-interp">Mariam Al Hashimi</span></strong> <span class="sc-interp">added worker Dil Kumar Magar (XP-005102)</span></div>
+              <span data-dc-tpl="135" style="font-size: 11px; color: var(--muted-foreground); white-space: nowrap;"><span class="sc-interp">1 Oct</span></span>
+            </div>
+          
+        </section>
+      </div>
+    </main>
+  </div></div></div></div>
+
+
+
+</body></html>

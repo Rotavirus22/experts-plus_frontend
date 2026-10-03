@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mobile dashboard</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div style="{{tv}} width: 390px; height: 844px; overflow: hidden; box-sizing: border-box; background: var(--background); color: var(--foreground); font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif; display: flex; flex-direction: column">
+  <header style="display: flex; align-items: center; gap: 10px; height: 60px; padding: 0 12px; background: var(--card); border-bottom: 1px solid var(--border); flex: none">
+    <a href="MobileNav.dc.html" aria-label="Open menu" style="width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--foreground)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16"/><path d="M4 6h16"/><path d="M4 18h16"/></svg></a>
+    <div style="width: 30px; height: 30px; border-radius: 8px; overflow: hidden; background: #FFFFFF; border: 1px solid var(--border)"><img src="../public/xperts-logo.jpg" alt="Xperts" style="display: block; width: 106px; height: 106px; margin: -37px 0 0 -3px"></div>
+    <strong style="flex: 1; font-size: 16px">Dashboard</strong>
+    <div style="width: 34px; height: 34px; border-radius: 999px; background: var(--accent); color: var(--accent-foreground); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700">RK</div>
+  </header>
+  <main style="flex: 1; overflow: hidden; padding: 16px; display: flex; flex-direction: column; gap: 14px">
+    <div style="display: flex; flex-direction: column; gap: 2px"><h1 style="margin: 0; font-size: 21px; font-weight: 800; letter-spacing: -0.015em">Good morning, Rajesh</h1><span style="font-size: 13px; color: var(--muted-foreground)">Sat 3 Oct · Camp Supervisor · 2 camps</span></div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+      <sc-for list="{{kpis}}" as="k" hint-placeholder-count="4">
+        <div style="display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; border-radius: 12px; background: var(--card); border: 1px solid var(--border)"><span style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--muted-foreground)"><span style="width: 7px; height: 7px; border-radius: 999px; background: {{k.dot}}"></span>{{k.label}}</span><span style="font-size: 24px; font-weight: 800; letter-spacing: -0.02em">{{k.value}}</span></div>
+      </sc-for>
+    </div>
+    <section style="display: flex; flex-direction: column; gap: 12px; padding: 14px; border-radius: 12px; background: var(--card); border: 1px solid var(--border)">
+      <h2 style="margin: 0; font-size: 15px; font-weight: 700">My camps</h2>
+      <sc-for list="{{camps}}" as="c" hint-placeholder-count="2">
+        <a href="MobileCamp.dc.html" style="display: flex; flex-direction: column; gap: 6px; text-decoration: none; color: var(--foreground)">
+          <div style="display: flex; justify-content: space-between; font-size: 13.5px"><strong>{{c.name}}</strong><span style="font-weight: 700">{{c.pct}}</span></div>
+          <div style="display: flex; height: 10px; border-radius: 999px; overflow: hidden; background: var(--muted); gap: 2px"><div style="width: {{c.o}}; background: var(--status-occupied)"></div><div style="width: {{c.h}}; background: var(--status-held)"></div><div style="width: {{c.v}}; background: var(--status-vacant)"></div></div>
+          <span style="font-size: 12px; color: var(--muted-foreground)">{{c.sub}}</span>
+        </a>
+      </sc-for>
+    </section>
+    <section style="display: flex; flex-direction: column; gap: 4px; padding: 14px; border-radius: 12px; background: var(--card); border: 1px solid var(--border)">
+      <h2 style="margin: 0 0 6px; font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--warning)"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>Rooms over capacity</h2>
+      <a href="MobileCamp.dc.html" style="display: flex; justify-content: space-between; padding: 10px 0; border-top: 1px solid var(--border); text-decoration: none; color: var(--foreground); font-size: 13.5px"><span><strong>Room 204</strong> <span style="color: var(--muted-foreground)">· Sonapur 7</span></span><span style="color: var(--warning-fg); font-weight: 600; font-size: 12.5px">10 beds · fits ~7</span></a>
+      <a href="MobileCamp.dc.html" style="display: flex; justify-content: space-between; padding: 10px 0; border-top: 1px solid var(--border); text-decoration: none; color: var(--foreground); font-size: 13.5px"><span><strong>Room G-12</strong> <span style="color: var(--muted-foreground)">· Al Quoz 3</span></span><span style="color: var(--warning-fg); font-weight: 600; font-size: 12.5px">8 beds · fits ~5</span></a>
+    </section>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":844}}'>
+const XC_L='background:#F5F7FA;foreground:#0E1B2C;card:#FFFFFF;primary:#00579F;primary-foreground:#FFFFFF;muted:#EEF1F5;muted-foreground:#556274;accent:#FFF1DC;accent-foreground:#8A4A00;border:#DCE2EA;brand:#F39314;warning:#D97A06;warning-fg:#7A4400;status-occupied:#2A8BD6;status-held:#DDA00F;status-vacant:#23A162';
+const XC_D='background:#0A111C;foreground:#E5ECF5;card:#101A28;primary:#4D9DE8;primary-foreground:#04111F;muted:#152234;muted-foreground:#93A2B6;accent:#33240E;accent-foreground:#FFC47A;border:#213149;brand:#F5A23A;warning:#F0A23A;warning-fg:#FFCE85;status-occupied:#4BA8F0;status-held:#E8B53A;status-vacant:#3CC27F';
+function xcVars(d){return (d?XC_D:XC_L).split(';').map(function(s){return '--'+s;}).join(';')+';color-scheme:'+(d?'dark':'light')+';';}
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      tv: xcVars(this.props.dark ?? false),
+      kpis: [
+        { label: 'Workers housed', value: '482', dot: 'var(--status-occupied)' },
+        { label: 'Without a bed', value: '9', dot: 'var(--brand)' },
+        { label: 'On leave', value: '40', dot: 'var(--status-vacant)' },
+        { label: 'Vacant beds', value: '30', dot: 'var(--status-vacant)' }
+      ],
+      camps: [
+        { name: 'Al Quoz Camp 3', pct: '93.0%', o: '85.9%', h: '7.05%', v: '7.05%', sub: '312 beds · 268 occupied · 22 held · 22 vacant' },
+        { name: 'Sonapur Camp 7', pct: '96.7%', o: '89.2%', h: '7.5%', v: '3.3%', sub: '240 beds · 214 occupied · 18 held · 8 vacant' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

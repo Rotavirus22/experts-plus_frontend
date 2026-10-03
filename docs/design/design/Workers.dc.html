@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Workers</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div style="{{tv}} min-height: 100vh; display: flex; flex-wrap: wrap; background: var(--background); color: var(--foreground); font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif">
+  <div style="flex: 0 0 248px; display: flex; flex-direction: column"><dc-import name="Sidebar" active="workers" dark="{{dark}}" hint-size="248px,100%"></dc-import></div>
+  <div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column">
+    <dc-import name="Topbar" crumbs="Workers" dark="{{dark}}" hint-size="100%,64px"></dc-import>
+    <main style="box-sizing: border-box; width: 100%; max-width: 1600px; padding: 28px 32px 48px; display: flex; flex-direction: column; gap: 20px">
+
+      <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px">
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <h1 style="margin: 0; font-size: 26px; line-height: 34px; font-weight: 800; letter-spacing: -0.02em">Workers</h1>
+          <p style="margin: 0; font-size: 14px; color: var(--muted-foreground)"><strong style="color: var(--foreground)">1,258</strong> matching · active workers across all camps</p>
+        </div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap">
+          <button type="button" style="display: flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>Export to Excel</button>
+          <a href="WorkerForm.dc.html" style="display: flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px; border-radius: 8px; background: var(--primary); color: var(--primary-foreground); text-decoration: none; font-size: 14px; font-weight: 600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>Add worker</a>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 10px; padding: 14px; border-radius: 14px; background: var(--card); border: 1px solid var(--border)">
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center">
+          <label style="display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 12px; flex: 1 1 280px; border-radius: 8px; border: 1px solid var(--input); background: var(--background); color: var(--muted-foreground)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="search" placeholder="Search Emp No, name or phone" aria-label="Search workers" style="flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font: inherit; font-size: 14px; color: var(--foreground)">
+          </label>
+          <sc-for list="{{filters}}" as="f" hint-placeholder-count="6">
+            <button type="button" disabled="{{f.disabled}}" title="{{f.tip}}" style="{{f.style}}"><span style="color: var(--muted-foreground); font-weight: 500">{{f.label}}</span><span style="font-weight: 600">{{f.value}}</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--muted-foreground)"><path d="m6 9 6 6 6-6"/></svg></button>
+          </sc-for>
+          <button type="button" style="height: 36px; padding: 0 10px; border: 0; background: transparent; color: var(--primary); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer">Clear filters</button>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px; font-size: 12px; color: var(--muted-foreground)">
+          <span style="font-weight: 600">Row colour</span>
+          <span style="display: flex; align-items: center; gap: 6px"><span style="width: 14px; height: 10px; border-radius: 3px; background: var(--card); border: 1px solid var(--border)"></span>Occupied</span>
+          <span style="display: flex; align-items: center; gap: 6px"><span style="width: 14px; height: 10px; border-radius: 3px; background: var(--row-leave); border: 1px solid var(--status-vacant-border)"></span>On leave</span>
+          <span style="display: flex; align-items: center; gap: 6px"><span style="width: 14px; height: 10px; border-radius: 3px; background: var(--row-nobed); border: 1px solid var(--warning-border)"></span>No bed</span>
+          <span style="display: flex; align-items: center; gap: 6px"><span style="width: 14px; height: 10px; border-radius: 3px; background: var(--row-exited); border: 1px solid var(--border)"></span>Exited</span>
+        </div>
+      </div>
+
+      <div style="border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm); overflow: hidden">
+        <div style="overflow-x: auto">
+          <table style="width: 100%; min-width: 1080px; border-collapse: collapse; font-size: 13px">
+            <thead>
+              <tr style="background: var(--muted); text-align: left; color: var(--muted-foreground)">
+                <th scope="col" style="padding: 10px 14px; font-size: 12px; font-weight: 600; white-space: nowrap"><button type="button" style="display: flex; align-items: center; gap: 4px; border: 0; background: transparent; padding: 0; font: inherit; color: var(--foreground); cursor: pointer">Emp No<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg></button></th>
+                <th scope="col" style="padding: 10px 14px; font-size: 12px; font-weight: 600"><button type="button" style="display: flex; align-items: center; gap: 4px; border: 0; background: transparent; padding: 0; font: inherit; color: inherit; cursor: pointer">Name<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="opacity: .5"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg></button></th>
+                <th scope="col" style="padding: 10px 14px; font-size: 12px; font-weight: 600"><button type="button" style="display: flex; align-items: center; gap: 4px; border: 0; background: transparent; padding: 0; font: inherit; color: inherit; cursor: pointer">Position<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="opacity: .5"><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg></button></th>
+                <th scope="col" style="padding: 10px 14px; font-size: 12px; font-weight: 600">Division / Client</th>
+                <th scope="col" style="padding: 10px 14px; font-size: 12px; font-weight: 600">Camp · Room · Bed</th>
+                <th scope="col" style="padding: 10px 14px; font-size: 12px; font-weight: 600">Status</th>
+                <th scope="col" style="padding: 10px 14px; font-size: 12px; font-weight: 600; text-align: right">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <sc-for list="{{rows}}" as="r" hint-placeholder-count="12">
+                <tr style="{{r.rowStyle}}">
+                  <td style="padding: 10px 14px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12.5px; font-weight: 500; white-space: nowrap">{{r.emp}}</td>
+                  <td style="padding: 10px 14px"><div style="display: flex; flex-direction: column"><a href="WorkerDetail.dc.html" style="{{r.nameStyle}}">{{r.name}}</a><span style="font-size: 12px; color: var(--muted-foreground)">{{r.nat}}</span></div></td>
+                  <td style="padding: 10px 14px">{{r.pos}}</td>
+                  <td style="padding: 10px 14px"><div style="display: flex; flex-direction: column"><span>{{r.div}}</span><span style="font-size: 12px; color: var(--muted-foreground)">{{r.client}}</span></div></td>
+                  <td style="padding: 10px 14px; white-space: nowrap">
+                    <sc-if value="{{r.hasBed}}" hint-placeholder-val="{{ true }}"><div style="display: flex; flex-direction: column"><span style="font-weight: 500">{{r.camp}}</span><span style="font-size: 12px; color: var(--muted-foreground)">Room {{r.room}} · <strong style="color: var(--foreground)">{{r.bed}}</strong></span></div></sc-if>
+                    <sc-if value="{{r.noBedText}}" hint-placeholder-val="{{ false }}"><span style="color: var(--muted-foreground)">{{r.noBedText}}</span></sc-if>
+                  </td>
+                  <td style="padding: 10px 14px"><div style="display: flex; flex-direction: column; align-items: flex-start; gap: 3px"><span style="{{r.badgeStyle}}">{{r.status}}</span><sc-if value="{{r.statusSub}}" hint-placeholder-val="{{ false }}"><span style="font-size: 11.5px; color: var(--muted-foreground); white-space: nowrap">{{r.statusSub}}</span></sc-if></div></td>
+                  <td style="padding: 8px 14px">
+                    <div style="display: flex; justify-content: flex-end; align-items: center; gap: 6px">
+                      <sc-if value="{{r.canAssign}}" hint-placeholder-val="{{ false }}"><a href="BedPicker.dc.html" style="display: flex; align-items: center; gap: 6px; height: 30px; padding: 0 10px; border-radius: 7px; background: var(--primary); color: var(--primary-foreground); text-decoration: none; font-size: 12.5px; font-weight: 600; white-space: nowrap"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>Assign bed</a></sc-if>
+                      <sc-if value="{{r.canLeave}}" hint-placeholder-val="{{ true }}"><a href="WorkerDialogs.dc.html" style="display: flex; align-items: center; gap: 6px; height: 30px; padding: 0 10px; border-radius: 7px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); text-decoration: none; font-size: 12.5px; font-weight: 600; white-space: nowrap"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>On leave</a></sc-if>
+                      <sc-if value="{{r.canReturn}}" hint-placeholder-val="{{ false }}"><a href="WorkerDialogs.dc.html" style="display: flex; align-items: center; gap: 6px; height: 30px; padding: 0 10px; border-radius: 7px; border: 1px solid var(--status-vacant-border); background: var(--card); color: var(--status-vacant-fg); text-decoration: none; font-size: 12.5px; font-weight: 600; white-space: nowrap"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Returned</a></sc-if>
+                      <sc-if value="{{r.active}}" hint-placeholder-val="{{ true }}">
+                        <a href="WorkerForm.dc.html" aria-label="Edit {{r.name}}" title="Edit" style="width: 30px; height: 30px; border-radius: 7px; display: flex; align-items: center; justify-content: center; color: var(--muted-foreground)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.17 6.81a1 1 0 0 0-3.99-3.99L3.84 16.17a2 2 0 0 0-.5.83l-1.32 4.35a.5.5 0 0 0 .62.62l4.35-1.32a2 2 0 0 0 .83-.5z"/><path d="m15 5 4 4"/></svg></a>
+                        <a href="WorkerDialogs.dc.html" style="display: flex; align-items: center; height: 30px; padding: 0 10px; border-radius: 7px; color: var(--destructive); text-decoration: none; font-size: 12.5px; font-weight: 600">Exit</a>
+                      </sc-if>
+                      <sc-if value="{{r.exited}}" hint-placeholder-val="{{ false }}"><a href="WorkerDetail.dc.html" style="height: 30px; padding: 0 10px; display: flex; align-items: center; color: var(--muted-foreground); font-size: 12.5px; font-weight: 600; text-decoration: none">View history</a></sc-if>
+                    </div>
+                  </td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted-foreground)">
+          <div style="display: flex; align-items: center; gap: 10px">Rows per page
+            <button type="button" style="display: flex; align-items: center; gap: 6px; height: 32px; padding: 0 10px; border-radius: 7px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-weight: 600; cursor: pointer">50<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+            <span style="font-size: 12px">25 · 50 · 100 · 200</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px">
+            <span style="margin-right: 8px">1–50 of 1,258</span>
+            <button type="button" disabled="disabled" aria-label="Previous page" style="width: 32px; height: 32px; border-radius: 7px; border: 1px solid var(--border); background: var(--card); color: var(--muted-foreground); opacity: .5; display: flex; align-items: center; justify-content: center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+            <button type="button" aria-current="page" style="min-width: 32px; height: 32px; border-radius: 7px; border: 1px solid var(--primary); background: var(--primary); color: var(--primary-foreground); font: inherit; font-weight: 700">1</button>
+            <button type="button" style="min-width: 32px; height: 32px; border-radius: 7px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font: inherit; font-weight: 600">2</button>
+            <button type="button" style="min-width: 32px; height: 32px; border-radius: 7px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font: inherit; font-weight: 600">3</button>
+            <span style="padding: 0 4px">…</span>
+            <button type="button" style="min-width: 32px; height: 32px; border-radius: 7px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font: inherit; font-weight: 600">26</button>
+            <button type="button" aria-label="Next page" style="width: 32px; height: 32px; border-radius: 7px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); display: flex; align-items: center; justify-content: center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":1360}}'>
+const XC_L='background:#F5F7FA;foreground:#0E1B2C;card:#FFFFFF;card-foreground:#0E1B2C;popover:#FFFFFF;popover-foreground:#0E1B2C;primary:#00579F;primary-foreground:#FFFFFF;secondary:#E9EFF6;secondary-foreground:#0E2A4A;muted:#EEF1F5;muted-foreground:#556274;accent:#FFF1DC;accent-foreground:#8A4A00;destructive:#C2302A;destructive-foreground:#FFFFFF;border:#DCE2EA;input:#C9D2DE;ring:#3584CF;chart-1:#00579F;chart-2:#F39314;chart-3:#3AA0E4;chart-4:#23A162;chart-5:#8A96A8;sidebar:#0A2342;sidebar-foreground:#C6D3E3;sidebar-primary:#F39314;sidebar-primary-foreground:#1F1100;sidebar-accent:#12345E;sidebar-accent-foreground:#FFFFFF;sidebar-border:#1A3B66;sidebar-ring:#F39314;brand:#F39314;brand-ink:#A85A00;status-occupied:#2A8BD6;status-occupied-bg:#E5F1FC;status-occupied-border:#8FC2EE;status-occupied-fg:#0B4C85;status-held:#DDA00F;status-held-bg:#FCF1D2;status-held-border:#E6BA4C;status-held-fg:#694000;status-vacant:#23A162;status-vacant-bg:#E2F4EA;status-vacant-border:#84CDA4;status-vacant-fg:#0B5C33;status-invalid:#8A94A3;status-invalid-bg:#F1F3F6;status-invalid-border:#AEB7C3;status-invalid-fg:#66707D;row-leave:#EBF7F0;row-nobed:#FFEFDD;row-exited:#F2F3F5;warning:#D97A06;warning-bg:#FFF3DE;warning-border:#F1C16A;warning-fg:#7A4400;success:#1E8A52;shadow-sm:0 1px 2px rgba(14,27,44,.06),0 1px 3px rgba(14,27,44,.05);shadow-md:0 4px 12px rgba(14,27,44,.08),0 1px 3px rgba(14,27,44,.06);shadow-lg:0 24px 48px rgba(14,27,44,.18),0 4px 12px rgba(14,27,44,.08);overlay:rgba(10,20,35,.48)';
+const XC_D='background:#0A111C;foreground:#E5ECF5;card:#101A28;card-foreground:#E5ECF5;popover:#132034;popover-foreground:#E5ECF5;primary:#4D9DE8;primary-foreground:#04111F;secondary:#18263A;secondary-foreground:#DCE6F2;muted:#152234;muted-foreground:#93A2B6;accent:#33240E;accent-foreground:#FFC47A;destructive:#EF6A5F;destructive-foreground:#1C0605;border:#213149;input:#2A3D58;ring:#4D9DE8;chart-1:#4D9DE8;chart-2:#F5A23A;chart-3:#6CC0F5;chart-4:#3CC27F;chart-5:#7C8BA0;sidebar:#070D17;sidebar-foreground:#B4C2D4;sidebar-primary:#F5A23A;sidebar-primary-foreground:#1F1100;sidebar-accent:#122138;sidebar-accent-foreground:#FFFFFF;sidebar-border:#172538;sidebar-ring:#F5A23A;brand:#F5A23A;brand-ink:#FFB861;status-occupied:#4BA8F0;status-occupied-bg:#0F2A45;status-occupied-border:#2B679F;status-occupied-fg:#A6D3FA;status-held:#E8B53A;status-held-bg:#33270B;status-held-border:#866619;status-held-fg:#F6D57A;status-vacant:#3CC27F;status-vacant-bg:#0D2F21;status-vacant-border:#2A7650;status-vacant-fg:#93E3B9;status-invalid:#6C7789;status-invalid-bg:#121A26;status-invalid-border:#3A4659;status-invalid-fg:#7F8A9B;row-leave:#0F261C;row-nobed:#2E1F0E;row-exited:#0E1520;warning:#F0A23A;warning-bg:#2F210B;warning-border:#7E5A1C;warning-fg:#FFCE85;success:#3CC27F;shadow-sm:0 1px 2px rgba(0,0,0,.4);shadow-md:0 6px 16px rgba(0,0,0,.45);shadow-lg:0 24px 60px rgba(0,0,0,.6);overlay:rgba(2,6,12,.66)';
+function xcVars(d){return (d?XC_D:XC_L).split(';').map(function(s){return '--'+s;}).join(';')+';color-scheme:'+(d?'dark':'light')+';';}
+var BADGE = 'display: inline-flex; align-items: center; gap: 5px; height: 22px; padding: 0 9px; border-radius: 999px; font-size: 11.5px; font-weight: 700; white-space: nowrap; ';
+class Component extends DCLogic {
+  renderVals() {
+    var dark = this.props.dark ?? false;
+    var data = [
+      ['XP-003904', 'Ram Prasad Adhikari', 'Nepal', 'Steel Fixer', 'Civil', 'Gulf Horizon Contracting', 'Al Quoz Camp 3', '101', 'B1', 'occ'],
+      ['XP-003912', 'Ram Bahadur Thapa', 'Nepal', 'Mason', 'Civil', 'Gulf Horizon Contracting', 'Al Quoz Camp 3', '101', 'B2', 'leave', 'Since 23 Aug 2026 · bed held'],
+      ['XP-003958', 'Mohammad Rafiqul Islam', 'Bangladesh', 'Electrician', 'MEP', 'Gulf Horizon Contracting', 'Al Quoz Camp 3', '102', 'B4', 'occ'],
+      ['XP-004021', 'Anil Kumar', 'India', 'Plumber', 'MEP', 'Marina Build LLC', '', '', '', 'nobed'],
+      ['XP-004087', 'Arjun Gurung', 'Nepal', 'Security Guard', 'Security', 'Al Noor Facilities', 'Sonapur Camp 7', '204', 'B2', 'occ'],
+      ['XP-004102', 'Jose Dela Cruz', 'Philippines', 'Driver', 'Logistics', 'Desert Line Logistics', 'Mussafah M-12', '2B', 'B1', 'leave', 'Since 14 Sep 2026 · bed held'],
+      ['XP-004150', 'Imran Ali', 'Pakistan', 'Helper', 'Civil', 'Gulf Horizon Contracting', '', '', '', 'exit', 'Resigned · 1 Oct 2026'],
+      ['XP-004182', 'Bikash Tamang', 'Nepal', 'Scaffolder', 'Civil', 'Marina Build LLC', 'Sonapur Camp 7', '204', 'B3', 'occ'],
+      ['XP-004233', 'Sanjay Patel', 'India', 'HVAC Technician', 'MEP', 'Al Noor Facilities', 'Jebel Ali Labour Camp', '115', 'B1', 'occ'],
+      ['XP-004290', 'Shahid Mehmood', 'Pakistan', 'Forklift Operator', 'Warehouse', 'Desert Line Logistics', '', '', '', 'nobed'],
+      ['XP-004318', 'Manoj Pillai', 'India', 'Foreman', 'Civil', 'Gulf Horizon Contracting', 'Al Quoz Camp 3', '301 Sup.', 'B1', 'occ'],
+      ['XP-004355', 'Ganesh Lama', 'Nepal', 'Cleaner', 'Housekeeping', 'Al Noor Facilities', 'Sajja Industrial Camp', '12', 'B2', 'occ']
+    ];
+    var rows = data.map(function (d) {
+      var s = d[9];
+      var row = { occ: 'var(--card)', leave: 'var(--row-leave)', nobed: 'var(--row-nobed)', exit: 'var(--row-exited)' }[s];
+      var badge = {
+        occ: 'background: var(--status-occupied-bg); color: var(--status-occupied-fg); border: 1px solid var(--status-occupied-border)',
+        leave: 'background: var(--status-vacant-bg); color: var(--status-vacant-fg); border: 1px solid var(--status-vacant-border)',
+        nobed: 'background: var(--warning-bg); color: var(--warning-fg); border: 1px solid var(--warning-border)',
+        exit: 'background: var(--muted); color: var(--muted-foreground); border: 1px solid var(--border)'
+      }[s];
+      return {
+        emp: d[0], name: d[1], nat: d[2], pos: d[3], div: d[4], client: d[5], camp: d[6], room: d[7], bed: d[8],
+        hasBed: !!d[6], noBedText: d[6] ? '' : (s === 'exit' ? 'Bed released' : 'No bed'),
+        status: { occ: 'Occupied', leave: 'On leave', nobed: 'No bed', exit: 'Exited' }[s],
+        statusSub: d[10] || '',
+        rowStyle: 'background: ' + row + '; border-top: 1px solid var(--border);' + (s === 'exit' ? ' color: var(--muted-foreground);' : ''),
+        nameStyle: 'font-size: 13.5px; font-weight: 600; text-decoration: none; color: ' + (s === 'exit' ? 'var(--muted-foreground)' : 'var(--foreground)'),
+        badgeStyle: BADGE + badge,
+        canAssign: s === 'nobed', canLeave: s === 'occ', canReturn: s === 'leave', active: s !== 'exit', exited: s === 'exit'
+      };
+    });
+    var F = 'display: flex; align-items: center; gap: 6px; height: 36px; padding: 0 10px 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 13px; cursor: pointer;';
+    var filters = [
+      ['Client', 'All', false, ''], ['Division', 'All', true, 'Choose a client first'], ['Camp', 'All', false, ''],
+      ['Status', 'Active', false, ''], ['Leave', 'All', false, ''], ['Bed', 'All', false, '']
+    ].map(function (f) { return { label: f[0], value: f[1], disabled: f[2], tip: f[3], style: F + (f[2] ? ' opacity: .5; cursor: not-allowed;' : '') }; });
+    return { dark: dark, tv: xcVars(dark), rows: rows, filters: filters };
+  }
+}
+</script>
+</body>
+</html>

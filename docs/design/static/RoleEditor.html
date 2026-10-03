@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en"><head><style>
+    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
+      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
+      border-radius:2px;box-sizing:border-box;overflow:hidden}
+    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
+    html.sc-dc-streaming .sc-placeholder,
+    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
+      background:color-mix(in srgb,currentColor 5%,transparent);
+      border-color:transparent}
+    html.sc-dc-streaming .sc-placeholder::before,
+    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
+      position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
+      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
+    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
+    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
+      background:color-mix(in srgb,currentColor 8%,transparent)}
+    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
+      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
+    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
+      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
+      border-radius:2px;box-sizing:border-box;color:transparent;
+      user-select:none}
+    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
+      color:color-mix(in srgb,currentColor 50%,transparent);
+      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
+      padding:0 3px}
+    .sc-host.sc-has-error{position:relative}
+    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
+      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
+      border-radius:4px;white-space:pre-wrap;pointer-events:none}
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts — keep both
+       in sync until dc-runtime regains a build step. */
+    @media print {
+      @page { margin: 0.5cm; }
+      figure, table { break-inside: avoid; }
+      #dc-root, #dc-root > .sc-host { height: auto; }
+      *, *::before, *::after {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+    }
+  </style>
+<meta charset="utf-8">
+<title>Role editor and user dialogs</title>
+<style>x-dc{display:none!important}</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" data-dc-tpl="1"><style data-dc-tpl="2">body{margin:0}</style></head>
+<body>
+<div id="dc-root"><div class="sc-host" data-sc-name="RoleEditor"><div data-dc-tpl="3" style="--background: #F5F7FA; --foreground: #0E1B2C; --card: #FFFFFF; --popover: #FFFFFF; --primary: #00579F; --primary-foreground: #FFFFFF; --muted: #EEF1F5; --muted-foreground: #556274; --destructive: #C2302A; --destructive-foreground: #FFFFFF; --border: #DCE2EA; --input: #C9D2DE; --shadow-lg: 0 24px 48px rgba(14,27,44,.18),0 4px 12px rgba(14,27,44,.08); --overlay-solid: #3B4656; color-scheme: light; width: 1440px; min-height: 1560px; box-sizing: border-box; padding: 48px; background: var(--overlay-solid); color: var(--foreground); font-family: &quot;Plus Jakarta Sans&quot;, ui-sans-serif, system-ui, sans-serif; display: grid; grid-template-columns: 720px minmax(0px, 1fr); gap: 32px; align-items: start;">
+
+  <div data-dc-tpl="4" style="display: flex; flex-direction: column; gap: 12px;">
+    <span data-dc-tpl="5" style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: rgb(201, 214, 230);">Role editor</span>
+    <div data-dc-tpl="6" role="dialog" aria-labelledby="re" style="display: flex; flex-direction: column; gap: 18px; padding: 24px; border-radius: 16px; background: var(--popover); border: 1px solid var(--border); box-shadow: var(--shadow-lg);">
+      <h2 data-dc-tpl="7" id="re" style="margin: 0px; font-size: 20px; font-weight: 800;">Edit role · Camp Supervisor</h2>
+      <div data-dc-tpl="8" style="display: grid; grid-template-columns: 1fr 1.4fr; gap: 12px;">
+        <div data-dc-tpl="9" style="display: flex; flex-direction: column; gap: 6px;"><label data-dc-tpl="10" for="rn" style="font-size: 13px; font-weight: 600;">Name <span data-dc-tpl="11" style="color: var(--destructive);">*</span></label><input data-dc-tpl="12" id="rn" value="Camp Supervisor" style="height: 40px; box-sizing: border-box; padding: 0px 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 14px;"></div>
+        <div data-dc-tpl="13" style="display: flex; flex-direction: column; gap: 6px;"><label data-dc-tpl="14" for="rd" style="font-size: 13px; font-weight: 600;">Description</label><input data-dc-tpl="15" id="rd" value="Day-to-day bed moves and leave, in assigned camps only" style="height: 40px; box-sizing: border-box; padding: 0px 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 14px;"></div>
+      </div>
+      <fieldset data-dc-tpl="16" style="margin: 0px; padding: 0px; border: 0px; display: flex; flex-direction: column; gap: 8px;">
+        <legend data-dc-tpl="17" style="font-size: 13px; font-weight: 600; margin-bottom: 8px;">Camp access</legend>
+        <div data-dc-tpl="18" style="display: grid; grid-template-columns: repeat(2, minmax(0px, 1fr)); gap: 8px;">
+          <label data-dc-tpl="19" style="display: flex; align-items: flex-start; gap: 10px; padding: 12px; border-radius: 10px; border: 1px solid var(--border); font-size: 13.5px;"><input data-dc-tpl="20" type="radio" name="ca" style="margin: 2px 0px 0px; accent-color: var(--primary);"><span data-dc-tpl="21" style="display: flex; flex-direction: column; gap: 2px;"><strong data-dc-tpl="22">All camps</strong><span data-dc-tpl="23" style="font-size: 12px; color: var(--muted-foreground);">Every current and future camp</span></span></label>
+          <label data-dc-tpl="24" style="display: flex; align-items: flex-start; gap: 10px; padding: 12px; border-radius: 10px; border: 1.5px solid var(--primary); background: color-mix(in oklab, var(--primary) 7%, var(--card)); font-size: 13.5px;"><input data-dc-tpl="25" type="radio" name="ca" checked="" style="margin: 2px 0px 0px; accent-color: var(--primary);"><span data-dc-tpl="26" style="display: flex; flex-direction: column; gap: 2px;"><strong data-dc-tpl="27">Only camps assigned to each user</strong><span data-dc-tpl="28" style="font-size: 12px; color: var(--muted-foreground);">Chosen per user on the Users page</span></span></label>
+        </div>
+      </fieldset>
+      <div data-dc-tpl="29" style="display: flex; flex-direction: column; gap: 8px;">
+        <div data-dc-tpl="30" style="display: flex; align-items: baseline; justify-content: space-between;"><span data-dc-tpl="31" style="font-size: 13px; font-weight: 600;">Permissions</span><span data-dc-tpl="32" style="font-size: 12.5px; color: var(--muted-foreground);"><strong data-dc-tpl="33" style="color: var(--foreground);">5</strong> of 14 selected</span></div>
+        <div data-dc-tpl="34" style="display: grid; grid-template-columns: repeat(2, minmax(0px, 1fr)); gap: 10px;">
+          
+            <fieldset data-dc-tpl="36" style="margin: 0px; padding: 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); display: flex; flex-direction: column; gap: 4px;">
+              <legend data-dc-tpl="37" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px);"><span class="sc-interp">Camps</span></legend>
+              <div data-dc-tpl="38" style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 6px; margin-bottom: 4px; border-bottom: 1px solid var(--border);"><strong data-dc-tpl="39" style="font-size: 13px;"><span class="sc-interp">Camps</span></strong><label data-dc-tpl="40" style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--primary); cursor: pointer;"><input data-dc-tpl="41" type="checkbox" style="margin: 0px; accent-color: var(--primary);">Select all</label></div>
+              
+                <label data-dc-tpl="43" style="display: flex; align-items: center; gap: 10px; min-height: 30px; font-size: 13px; cursor: pointer;"><input data-dc-tpl="44" type="checkbox" checked="" style="width: 16px; height: 16px; margin: 0px; accent-color: var(--primary);"><span data-dc-tpl="45" style="font-weight: 600;"><span class="sc-interp">View camps</span></span></label>
+              
+                <label data-dc-tpl="43" style="display: flex; align-items: center; gap: 10px; min-height: 30px; font-size: 13px; cursor: pointer;"><input data-dc-tpl="44" type="checkbox" style="width: 16px; height: 16px; margin: 0px; accent-color: var(--primary);"><span data-dc-tpl="45" style="color: var(--muted-foreground);"><span class="sc-interp">Manage camps, rooms &amp; beds</span></span></label>
+              
+                <label data-dc-tpl="43" style="display: flex; align-items: center; gap: 10px; min-height: 30px; font-size: 13px; cursor: pointer;"><input data-dc-tpl="44" type="checkbox" checked="" style="width: 16px; height: 16px; margin: 0px; accent-color: var(--primary);"><span data-dc-tpl="45" style="font-weight: 600;"><span class="sc-interp">Assign &amp; move beds</span></span></label>
+              
+            </fieldset>
+          
+            <fieldset data-dc-tpl="36" style="margin: 0px; padding: 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); display: flex; flex-direction: column; gap: 4px;">
+              <legend data-dc-tpl="37" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px);"><span class="sc-interp">Workers</span></legend>
+              <div data-dc-tpl="38" style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 6px; margin-bottom: 4px; border-bottom: 1px solid var(--border);"><strong data-dc-tpl="39" style="font-size: 13px;"><span class="sc-interp">Workers</span></strong><label data-dc-tpl="40" style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--primary); cursor: pointer;"><input data-dc-tpl="41" type="checkbox" style="margin: 0px; accent-color: var(--primary);">Select all</label></div>
+              
+                <label data-dc-tpl="43" style="display: flex; align-items: center; gap: 10px; min-height: 30px; font-size: 13px; cursor: pointer;"><input data-dc-tpl="44" type="checkbox" checked="" style="width: 16px; height: 16px; margin: 0px; accent-color: var(--primary);"><span data-dc-tpl="45" style="font-weight: 600;"><span class="sc-interp">View workers</span></span></label>
+              
+                <label data-dc-tpl="43" style="display: flex; align-items: center; gap: 10px; min-height: 30px; font-size: 13px; cursor: pointer;"><input data-dc-tpl="44" type="checkbox" style="width: 16px; height: 16px; margin: 0px; accent-color: var(--primary);"><span data-dc-tpl="45" style="color: var(--muted-foreground);"><span class="sc-interp">Add &amp; edit workers</span></span></label>
+              
+                <label data-dc-tpl="43" style="display: flex; align-items: center; gap: 10px; min-height: 30px; font-size: 13px; cursor: pointer;"><input data-dc-tpl="44" type="checkbox" checked="" style="width: 16px; height: 16px; margin: 0px; accent-color: var(--primary);"><span data-dc-tpl="45" style="font-weight: 600;"><span class="sc-interp">Mark leave</span></span></label>
+              
+                <label data-dc-tpl="43" style="display: flex; align-items: center; gap: 10px; min-height: 30px; font-size: 13px; cursor: pointer;"><input data-dc-tpl="44" type="checkbox" style="width: 16px; height: 16px; margin: 0px; accent-color: var(--primary);"><span data-dc-tpl="45" style="color: var(--muted-foreground);"><span class="sc-interp">Exit workers</span></span></label>
+              
+                <label data-dc-tpl="43" style="display: flex; align-items: center; gap: 10px; min-height: 30px; font-size: 13px; cursor: pointer;"><input data-dc-tpl="44" type="checkbox" style="width: 16px; height: 16px; margin: 0px; accent-color: var(--primary);"><span data-dc-tpl="45" style="color: var(--muted-foreground);"><span class="sc-interp">See passport &amp; Emirates ID</span></span></label>
+              
+                <label data-dc-tpl="43" style="display: flex; align-items: center; gap: 10px; min-height: 30px; font-size: 13px; cursor: pointer;"><input data-dc-tpl="44" type="checkbox" style="width: 16px; height: 16px; margin: 0px; accent-color: var(--primary);"><span data-dc-tpl="45" style="color: var(--muted-foreground);"><span class="sc-interp">Export workers</span></span></label>
+              
+            </fieldset>
+          
+            <fieldset data-dc-tpl="36" style="margin: 0px; padding: 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); display: flex; flex-direction: column; gap: 4px;">
+              <legend data-dc-tpl="37" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px);"><span class="sc-interp">Reports</span></legend>
+              <div data-dc-tpl="38" style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 6px; margin-bottom: 4px; border-bottom: 1px solid var(--border);"><strong data-dc-tpl="39" style="font-size: 13px;"><span class="sc-interp">Reports</span></strong><label data-dc-tpl="40" style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--primary); cursor: pointer;"><input data-dc-tpl="41" type="checkbox" style="margin: 0px; accent-color: var(--primary);">Select all</label></div>
+              
+                <label data-dc-tpl="43" style="display: flex; align-items: center; gap: 10px; min-height: 30px; font-size: 13px; cursor: pointer;"><input data-dc-tpl="44" type="checkbox" style="width: 16px; height: 16px; margin: 0px; accent-color: var(--primary);"><span data-dc-tpl="45" style="color: var(--muted-foreground);"><span class="sc-interp">View &amp; export reports</span></span></label>
+              
+            </fieldset>
+          
+            <fieldset data-dc-tpl="36" style="margin: 0px; padding: 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); display: flex; flex-direction: column; gap: 4px;">
+              <legend data-dc-tpl="37" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px);"><span class="sc-interp">Administration</span></legend>
+              <div data-dc-tpl="38" style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 6px; margin-bottom: 4px; border-bottom: 1px solid var(--border);"><strong data-dc-tpl="39" style="font-size: 13px;"><span class="sc-interp">Administration</span></strong><label data-dc-tpl="40" style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--primary); cursor: pointer;"><input data-dc-tpl="41" type="checkbox" style="margin: 0px; accent-color: var(--primary);">Select all</label></div>
+              
+                <label data-dc-tpl="43" style="display: flex; align-items: center; gap: 10px; min-height: 30px; font-size: 13px; cursor: pointer;"><input data-dc-tpl="44" type="checkbox" style="width: 16px; height: 16px; margin: 0px; accent-color: var(--primary);"><span data-dc-tpl="45" style="color: var(--muted-foreground);"><span class="sc-interp">Manage custom fields</span></span></label>
+              
+                <label data-dc-tpl="43" style="display: flex; align-items: center; gap: 10px; min-height: 30px; font-size: 13px; cursor: pointer;"><input data-dc-tpl="44" type="checkbox" checked="" style="width: 16px; height: 16px; margin: 0px; accent-color: var(--primary);"><span data-dc-tpl="45" style="font-weight: 600;"><span class="sc-interp">View audit log</span></span></label>
+              
+                <label data-dc-tpl="43" style="display: flex; align-items: center; gap: 10px; min-height: 30px; font-size: 13px; cursor: pointer;"><input data-dc-tpl="44" type="checkbox" style="width: 16px; height: 16px; margin: 0px; accent-color: var(--primary);"><span data-dc-tpl="45" style="color: var(--muted-foreground);"><span class="sc-interp">Manage users</span></span></label>
+              
+                <label data-dc-tpl="43" style="display: flex; align-items: center; gap: 10px; min-height: 30px; font-size: 13px; cursor: pointer;"><input data-dc-tpl="44" type="checkbox" style="width: 16px; height: 16px; margin: 0px; accent-color: var(--primary);"><span data-dc-tpl="45" style="color: var(--muted-foreground);"><span class="sc-interp">Manage roles</span></span></label>
+              
+            </fieldset>
+          
+        </div>
+      </div>
+      <div data-dc-tpl="46" style="display: flex; justify-content: space-between; align-items: center; gap: 8px;"><span data-dc-tpl="47" style="font-size: 12.5px; color: var(--muted-foreground);">3 users have this role. Changes apply at their next page load.</span><div data-dc-tpl="48" style="display: flex; gap: 8px;"><button data-dc-tpl="49" type="button" style="height: 40px; padding: 0px 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 14px; font-weight: 600;">Cancel</button><button data-dc-tpl="50" type="button" style="height: 40px; padding: 0px 18px; border-radius: 8px; border: 0px; background: var(--primary); color: var(--primary-foreground); font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 14px; font-weight: 700;">Save role</button></div></div>
+    </div>
+  </div>
+
+  <div data-dc-tpl="51" style="display: flex; flex-direction: column; gap: 28px;">
+    <div data-dc-tpl="52" style="display: flex; flex-direction: column; gap: 12px;">
+      <span data-dc-tpl="53" style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: rgb(201, 214, 230);">New user</span>
+      <div data-dc-tpl="54" role="dialog" aria-labelledby="nu" style="display: flex; flex-direction: column; gap: 14px; padding: 24px; border-radius: 16px; background: var(--popover); border: 1px solid var(--border); box-shadow: var(--shadow-lg);">
+        <h2 data-dc-tpl="55" id="nu" style="margin: 0px; font-size: 19px; font-weight: 800;">New user</h2>
+        <div data-dc-tpl="56" style="display: grid; grid-template-columns: repeat(2, minmax(0px, 1fr)); gap: 12px;">
+          <div data-dc-tpl="57" style="display: flex; flex-direction: column; gap: 6px;"><label data-dc-tpl="58" for="un" style="font-size: 13px; font-weight: 600;">Name</label><input data-dc-tpl="59" id="un" value="Yusuf Haddad" style="height: 40px; box-sizing: border-box; padding: 0px 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 14px;"></div>
+          <div data-dc-tpl="60" style="display: flex; flex-direction: column; gap: 6px;"><label data-dc-tpl="61" for="ue" style="font-size: 13px; font-weight: 600;">Email</label><input data-dc-tpl="62" id="ue" value="yusuf.haddad@xperts.ae" style="height: 40px; box-sizing: border-box; padding: 0px 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 14px;"></div>
+          <div data-dc-tpl="63" style="display: flex; flex-direction: column; gap: 6px;"><label data-dc-tpl="64" for="up" style="font-size: 13px; font-weight: 600;">Temporary password</label><input data-dc-tpl="65" id="up" value="Camp-7429-Sand" style="height: 40px; box-sizing: border-box; padding: 0px 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font-family: &quot;JetBrains Mono&quot;, ui-monospace, monospace; font-size: 13.5px;"></div>
+          <div data-dc-tpl="66" style="display: flex; flex-direction: column; gap: 6px;"><span data-dc-tpl="67" style="font-size: 13px; font-weight: 600;">Role</span><button data-dc-tpl="68" type="button" style="height: 40px; display: flex; align-items: center; justify-content: space-between; padding: 0px 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 14px;">Camp Supervisor<svg data-dc-tpl="69" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="70" d="m6 9 6 6 6-6"></path></svg></button></div>
+        </div>
+        <fieldset data-dc-tpl="71" style="margin: 0px; padding: 12px; border-radius: 10px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 6px;">
+          <legend data-dc-tpl="72" style="padding: 0px 4px; font-size: 13px; font-weight: 600;">Camps <span data-dc-tpl="73" style="font-weight: 500; color: var(--muted-foreground);">· this role is limited to assigned camps</span></legend>
+          <div data-dc-tpl="74" style="display: grid; grid-template-columns: repeat(2, minmax(0px, 1fr)); gap: 4px 12px;">
+            <label data-dc-tpl="75" style="display: flex; align-items: center; gap: 8px; min-height: 28px; font-size: 13px;"><input data-dc-tpl="76" type="checkbox" style="margin: 0px; accent-color: var(--primary);">Al Quoz Camp 3</label>
+            <label data-dc-tpl="77" style="display: flex; align-items: center; gap: 8px; min-height: 28px; font-size: 13px;"><input data-dc-tpl="78" type="checkbox" style="margin: 0px; accent-color: var(--primary);">Jebel Ali Labour Camp</label>
+            <label data-dc-tpl="79" style="display: flex; align-items: center; gap: 8px; min-height: 28px; font-size: 13px;"><input data-dc-tpl="80" type="checkbox" style="margin: 0px; accent-color: var(--primary);">Sonapur Camp 7</label>
+            <label data-dc-tpl="81" style="display: flex; align-items: center; gap: 8px; min-height: 28px; font-size: 13px; font-weight: 600;"><input data-dc-tpl="82" type="checkbox" checked="" style="margin: 0px; accent-color: var(--primary);">Mussafah M-12</label>
+            <label data-dc-tpl="83" style="display: flex; align-items: center; gap: 8px; min-height: 28px; font-size: 13px;"><input data-dc-tpl="84" type="checkbox" style="margin: 0px; accent-color: var(--primary);">Sajja Industrial Camp</label>
+            <label data-dc-tpl="85" style="display: flex; align-items: center; gap: 8px; min-height: 28px; font-size: 13px;"><input data-dc-tpl="86" type="checkbox" style="margin: 0px; accent-color: var(--primary);">Al Jurf Camp</label>
+          </div>
+        </fieldset>
+        <div data-dc-tpl="87" style="display: flex; justify-content: flex-end; gap: 8px;"><button data-dc-tpl="88" type="button" style="height: 40px; padding: 0px 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 14px; font-weight: 600;">Cancel</button><button data-dc-tpl="89" type="button" style="height: 40px; padding: 0px 18px; border-radius: 8px; border: 0px; background: var(--primary); color: var(--primary-foreground); font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 14px; font-weight: 700;">Create user</button></div>
+      </div>
+    </div>
+
+    <div data-dc-tpl="90" style="display: grid; grid-template-columns: repeat(2, minmax(0px, 1fr)); gap: 20px;">
+      <div data-dc-tpl="91" style="display: flex; flex-direction: column; gap: 12px;">
+        <span data-dc-tpl="92" style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: rgb(201, 214, 230);">Set new password</span>
+        <div data-dc-tpl="93" role="dialog" aria-labelledby="pw" style="display: flex; flex-direction: column; gap: 14px; padding: 20px; border-radius: 16px; background: var(--popover); border: 1px solid var(--border); box-shadow: var(--shadow-lg);">
+          <div data-dc-tpl="94" style="display: flex; flex-direction: column; gap: 4px;"><h2 data-dc-tpl="95" id="pw" style="margin: 0px; font-size: 17px; font-weight: 800;">New password for Priya Menon</h2><p data-dc-tpl="96" style="margin: 0px; font-size: 12.5px; color: var(--muted-foreground); line-height: 18px;">Share it with her directly. She'll be asked to change it at next sign-in.</p></div>
+          <div data-dc-tpl="97" style="display: flex; flex-direction: column; gap: 6px;"><label data-dc-tpl="98" for="np" style="font-size: 13px; font-weight: 600;">New password</label><input data-dc-tpl="99" id="np" type="password" value="xxxxxxxxxxxx" style="height: 40px; box-sizing: border-box; padding: 0px 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 14px;"><span data-dc-tpl="100" style="font-size: 12px; color: var(--muted-foreground);">At least 10 characters</span></div>
+          <div data-dc-tpl="101" style="display: flex; justify-content: flex-end; gap: 8px;"><button data-dc-tpl="102" type="button" style="height: 38px; padding: 0px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 13.5px; font-weight: 600;">Cancel</button><button data-dc-tpl="103" type="button" style="height: 38px; padding: 0px 14px; border-radius: 8px; border: 0px; background: var(--primary); color: var(--primary-foreground); font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 13.5px; font-weight: 700;">Set password</button></div>
+        </div>
+      </div>
+      <div data-dc-tpl="104" style="display: flex; flex-direction: column; gap: 12px;">
+        <span data-dc-tpl="105" style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: rgb(201, 214, 230);">Deactivate</span>
+        <div data-dc-tpl="106" role="alertdialog" aria-labelledby="da" style="display: flex; flex-direction: column; gap: 14px; padding: 20px; border-radius: 16px; background: var(--popover); border: 1px solid var(--border); box-shadow: var(--shadow-lg);">
+          <div data-dc-tpl="107" style="display: flex; flex-direction: column; gap: 6px;"><h2 data-dc-tpl="108" id="da" style="margin: 0px; font-size: 17px; font-weight: 800;">Deactivate Yusuf Haddad?</h2><p data-dc-tpl="109" style="margin: 0px; font-size: 13px; color: var(--muted-foreground); line-height: 19px;">He'll be <strong data-dc-tpl="110" style="color: var(--foreground);">signed out everywhere</strong> straight away and can't sign in. Everything he did stays in the audit log. You can activate him again later.</p></div>
+          <div data-dc-tpl="111" style="display: flex; justify-content: flex-end; gap: 8px;"><button data-dc-tpl="112" type="button" style="height: 38px; padding: 0px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 13.5px; font-weight: 600;">Cancel</button><button data-dc-tpl="113" type="button" style="height: 38px; padding: 0px 14px; border-radius: 8px; border: 0px; background: var(--destructive); color: var(--destructive-foreground); font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 13.5px; font-weight: 700;">Deactivate</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div data-dc-tpl="114" style="display: flex; flex-direction: column; gap: 12px;">
+      <span data-dc-tpl="115" style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: rgb(201, 214, 230);">Add custom field</span>
+      <div data-dc-tpl="116" role="dialog" aria-labelledby="af" style="display: flex; flex-direction: column; gap: 14px; padding: 24px; border-radius: 16px; background: var(--popover); border: 1px solid var(--border); box-shadow: var(--shadow-lg);">
+        <h2 data-dc-tpl="117" id="af" style="margin: 0px; font-size: 19px; font-weight: 800;">Add field</h2>
+        <div data-dc-tpl="118" style="display: grid; grid-template-columns: repeat(2, minmax(0px, 1fr)); gap: 12px;">
+          <div data-dc-tpl="119" style="display: flex; flex-direction: column; gap: 6px;"><label data-dc-tpl="120" for="fl" style="font-size: 13px; font-weight: 600;">Label <span data-dc-tpl="121" style="color: var(--destructive);">*</span></label><input data-dc-tpl="122" id="fl" value="Shift" style="height: 40px; box-sizing: border-box; padding: 0px 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 14px;"><span data-dc-tpl="123" style="font-size: 12px; color: var(--muted-foreground);">Stored as <span data-dc-tpl="124" style="font-family: &quot;JetBrains Mono&quot;, ui-monospace, monospace;">shift</span></span></div>
+          <div data-dc-tpl="125" style="display: flex; flex-direction: column; gap: 6px;"><span data-dc-tpl="126" style="font-size: 13px; font-weight: 600;">Type</span><button data-dc-tpl="127" type="button" style="height: 40px; display: flex; align-items: center; justify-content: space-between; padding: 0px 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 14px;">Dropdown<svg data-dc-tpl="128" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="129" d="m6 9 6 6 6-6"></path></svg></button><span data-dc-tpl="130" style="font-size: 12px; color: var(--muted-foreground);">Text · Number · Date · Dropdown · Phone · Email · Yes/no</span></div>
+        </div>
+        <div data-dc-tpl="131" style="display: flex; flex-direction: column; gap: 6px;"><label data-dc-tpl="132" for="fo" style="font-size: 13px; font-weight: 600;">Options <span data-dc-tpl="133" style="font-weight: 500; color: var(--muted-foreground);">· one per line</span></label><textarea data-dc-tpl="134" id="fo" rows="3" style="box-sizing: border-box; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 14px; line-height: 20px; resize: none;">Day
+Night
+Rotating</textarea></div>
+        <label data-dc-tpl="135" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); font-size: 13.5px; font-weight: 600; cursor: pointer;"><span data-dc-tpl="136" style="display: flex; flex-direction: column; gap: 2px;">Required<span data-dc-tpl="137" style="font-size: 12px; font-weight: 500; color: var(--muted-foreground);">Staff must fill it when adding or editing a worker</span></span><span data-dc-tpl="138" style="position: relative; width: 36px; height: 20px; flex: 0 0 auto; border-radius: 999px; background: var(--input);"><span data-dc-tpl="139" style="position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 999px; background: rgb(255, 255, 255);"></span></span><input data-dc-tpl="140" type="checkbox" style="position: absolute; opacity: 0; width: 1px; height: 1px;"></label>
+        <div data-dc-tpl="141" style="display: flex; justify-content: flex-end; gap: 8px;"><button data-dc-tpl="142" type="button" style="height: 40px; padding: 0px 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 14px; font-weight: 600;">Cancel</button><button data-dc-tpl="143" type="button" style="height: 40px; padding: 0px 18px; border-radius: 8px; border: 0px; background: var(--primary); color: var(--primary-foreground); font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 14px; font-weight: 700;">Add field</button></div>
+      </div>
+    </div>
+  </div></div></div></div>
+
+
+
+</body></html>

@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>States</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+@keyframes xcShimmer{0%{opacity:.55}50%{opacity:1}100%{opacity:.55}}
+.xc-sk{animation:xcShimmer 1.4s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.xc-sk{animation:none}}
+</style>
+</helmet>
+<div style="{{tv}} width: 1440px; min-height: 1300px; box-sizing: border-box; padding: 48px; background: var(--background); color: var(--foreground); font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; align-content: start">
+
+  <div style="display: flex; flex-direction: column; gap: 10px">
+    <span style="font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted-foreground)">Loading · table skeleton</span>
+    <div aria-busy="true" aria-label="Loading workers" style="border-radius: 14px; background: var(--card); border: 1px solid var(--border); overflow: hidden">
+      <div style="height: 38px; background: var(--muted)"></div>
+      <sc-for list="{{sk}}" as="s" hint-placeholder-count="6">
+        <div style="display: grid; grid-template-columns: 70px 1fr 80px 64px; gap: 14px; align-items: center; padding: 14px 16px; border-top: 1px solid var(--border)">
+          <div class="xc-sk" style="height: 10px; border-radius: 6px; background: var(--muted)"></div>
+          <div style="display: flex; flex-direction: column; gap: 6px"><div class="xc-sk" style="height: 10px; width: {{s.w}}; border-radius: 6px; background: var(--muted)"></div><div class="xc-sk" style="height: 8px; width: 40%; border-radius: 6px; background: var(--muted)"></div></div>
+          <div class="xc-sk" style="height: 10px; border-radius: 6px; background: var(--muted)"></div>
+          <div class="xc-sk" style="height: 20px; border-radius: 999px; background: var(--muted)"></div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 10px">
+    <span style="font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted-foreground)">Loading · camp &amp; room cards</span>
+    <div aria-busy="true" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+      <sc-for list="{{skc}}" as="s" hint-placeholder-count="4">
+        <div style="display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 14px; background: var(--card); border: 1px solid var(--border)">
+          <div class="xc-sk" style="height: 12px; width: 60%; border-radius: 6px; background: var(--muted)"></div>
+          <div class="xc-sk" style="height: 8px; width: 40%; border-radius: 6px; background: var(--muted)"></div>
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px"><div class="xc-sk" style="height: 40px; border-radius: 8px; background: var(--muted)"></div><div class="xc-sk" style="height: 40px; border-radius: 8px; background: var(--muted)"></div><div class="xc-sk" style="height: 40px; border-radius: 8px; background: var(--muted)"></div><div class="xc-sk" style="height: 40px; border-radius: 8px; background: var(--muted)"></div><div class="xc-sk" style="height: 40px; border-radius: 8px; background: var(--muted)"></div></div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 10px">
+    <span style="font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted-foreground)">Error</span>
+    <div role="alert" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; padding: 36px 24px; border-radius: 14px; background: var(--card); border: 1px solid var(--border)">
+      <div style="width: 48px; height: 48px; border-radius: 14px; background: color-mix(in oklab, var(--destructive) 12%, var(--card)); color: var(--destructive); display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></div>
+      <h3 style="margin: 0; font-size: 16px; font-weight: 700">Couldn’t load workers</h3>
+      <p style="margin: 0; font-size: 13.5px; line-height: 20px; color: var(--muted-foreground); max-width: 300px">The connection dropped while loading. Nothing was changed. Try again, and if it keeps happening tell your administrator.</p>
+      <button type="button" style="height: 38px; padding: 0 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px; font-weight: 600">Try again</button>
+      <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: var(--muted-foreground)">ref 7f3a-21c9</span>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 10px">
+    <span style="font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted-foreground)">Empty · filters match nothing</span>
+    <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; padding: 36px 24px; border-radius: 14px; background: var(--card); border: 1px dashed var(--border)">
+      <div style="width: 48px; height: 48px; border-radius: 14px; background: var(--secondary); color: var(--secondary-foreground); display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
+      <h3 style="margin: 0; font-size: 16px; font-weight: 700">No workers match these filters</h3>
+      <p style="margin: 0; font-size: 13.5px; line-height: 20px; color: var(--muted-foreground)">Camp: Al Jurf · Leave: On leave · Bed: No bed</p>
+      <button type="button" style="height: 38px; padding: 0 16px; border-radius: 8px; border: 0; background: var(--primary); color: var(--primary-foreground); font: inherit; font-size: 14px; font-weight: 600">Clear filters</button>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 10px">
+    <span style="font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted-foreground)">Empty · new camp, no rooms</span>
+    <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; padding: 36px 24px; border-radius: 14px; background: var(--card); border: 1px dashed var(--border)">
+      <div style="display: grid; grid-template-columns: repeat(3, 22px); gap: 4px" aria-hidden="true"><span style="height: 16px; border-radius: 4px; border: 1.5px dashed var(--status-vacant-border)"></span><span style="height: 16px; border-radius: 4px; border: 1.5px dashed var(--status-vacant-border)"></span><span style="height: 16px; border-radius: 4px; border: 1.5px dashed var(--status-vacant-border)"></span><span style="height: 16px; border-radius: 4px; border: 1.5px dashed var(--status-vacant-border)"></span><span style="height: 16px; border-radius: 4px; border: 1.5px dashed var(--status-vacant-border)"></span><span style="height: 16px; border-radius: 4px; border: 1.5px dashed var(--status-vacant-border)"></span></div>
+      <h3 style="margin: 0; font-size: 16px; font-weight: 700">Al Quoz Camp 4 has no rooms yet</h3>
+      <p style="margin: 0; font-size: 13.5px; line-height: 20px; color: var(--muted-foreground); max-width: 300px">Add rooms, then add beds to each one. Workers can be put into beds once they exist.</p>
+      <button type="button" style="height: 38px; padding: 0 16px; border-radius: 8px; border: 0; background: var(--primary); color: var(--primary-foreground); font: inherit; font-size: 14px; font-weight: 600">Add first room</button>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 10px">
+    <span style="font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted-foreground)">Permission denied · redirect</span>
+    <div style="display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 14px; background: var(--background); border: 1px solid var(--border)">
+      <div role="status" style="display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border-radius: 10px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; color: var(--brand-ink); margin-top: 1px"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <div style="display: flex; flex-direction: column; gap: 3px; flex: 1"><strong style="font-size: 14px">You don’t have access to Users</strong><span style="font-size: 13px; line-height: 19px; color: var(--muted-foreground)">Your role (Camp Supervisor) can’t manage users, so we brought you to the dashboard. Ask an administrator if you need it.</span></div>
+        <button type="button" aria-label="Dismiss" style="width: 28px; height: 28px; border: 0; border-radius: 6px; background: transparent; color: var(--muted-foreground); display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px; padding: 4px 4px 0"><div style="height: 12px; width: 50%; border-radius: 6px; background: var(--muted)"></div><div style="height: 8px; width: 70%; border-radius: 6px; background: var(--muted)"></div></div>
+    </div>
+    <span style="font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted-foreground); margin-top: 10px">Disabled action + why</span>
+    <div style="position: relative; display: flex; flex-direction: column; gap: 8px; padding: 16px 16px 64px; border-radius: 14px; background: var(--card); border: 1px solid var(--border)">
+      <button type="button" disabled="disabled" aria-describedby="why" style="width: max-content; display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--destructive); font: inherit; font-size: 13.5px; font-weight: 600; opacity: .45; cursor: not-allowed"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg>Invalidate room</button>
+      <span id="why" role="tooltip" style="position: absolute; left: 16px; top: 60px; width: 270px; padding: 8px 10px; border-radius: 8px; background: var(--foreground); color: var(--background); font-size: 12px; line-height: 17px; box-shadow: var(--shadow-md)">7 beds are in use. Move or exit those workers first.</span>
+    </div>
+  </div>
+
+  <div style="grid-column: 1 / -1; display: flex; flex-direction: column; gap: 10px">
+    <span style="font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted-foreground)">Toasts · Sonner, bottom-right, 5 s (errors stay until dismissed)</span>
+    <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start">
+      <div role="status" style="width: 380px; display: flex; gap: 12px; padding: 14px 16px; border-radius: 12px; background: var(--popover); border: 1px solid var(--border); box-shadow: var(--shadow-md)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; color: var(--success); margin-top: 1px"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+        <div style="display: flex; flex-direction: column; gap: 2px; flex: 1"><strong style="font-size: 14px">Anil Kumar assigned</strong><span style="font-size: 13px; color: var(--muted-foreground)">Al Quoz Camp 3 · Room 101 · B7, from 3 Oct 2026</span></div>
+        <a href="WorkerDetail.dc.html" style="align-self: center; font-size: 13px; font-weight: 700; text-decoration: none">View</a>
+      </div>
+      <div role="status" style="width: 380px; display: flex; gap: 12px; padding: 14px 16px; border-radius: 12px; background: var(--popover); border: 1px solid var(--border); box-shadow: var(--shadow-md)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; color: var(--success); margin-top: 1px"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+        <div style="display: flex; flex-direction: column; gap: 2px; flex: 1"><strong style="font-size: 14px">Bikash Tamang exited · Resigned</strong><span style="font-size: 13px; color: var(--muted-foreground)">Sonapur Camp 7 · 204 · B3 is now vacant</span></div>
+      </div>
+      <div role="alert" style="width: 380px; display: flex; gap: 12px; padding: 14px 16px; border-radius: 12px; background: var(--popover); border: 1px solid color-mix(in oklab, var(--destructive) 40%, var(--border)); box-shadow: var(--shadow-md)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; color: var(--destructive); margin-top: 1px"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+        <div style="display: flex; flex-direction: column; gap: 2px; flex: 1"><strong style="font-size: 14px">B7 was just taken</strong><span style="font-size: 13px; color: var(--muted-foreground)">Rajesh Kumar assigned it a moment ago. Pick another bed.</span></div>
+        <button type="button" aria-label="Dismiss" style="width: 26px; height: 26px; border: 0; border-radius: 6px; background: transparent; color: var(--muted-foreground)">×</button>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":1300}}'>
+const XC_L='background:#F5F7FA;foreground:#0E1B2C;card:#FFFFFF;popover:#FFFFFF;primary:#00579F;primary-foreground:#FFFFFF;secondary:#E9EFF6;secondary-foreground:#0E2A4A;muted:#EEF1F5;muted-foreground:#556274;brand-ink:#A85A00;destructive:#C2302A;success:#1E8A52;border:#DCE2EA;input:#C9D2DE;status-vacant-border:#84CDA4;shadow-sm:0 1px 2px rgba(14,27,44,.06),0 1px 3px rgba(14,27,44,.05);shadow-md:0 4px 12px rgba(14,27,44,.08),0 1px 3px rgba(14,27,44,.06)';
+const XC_D='background:#0A111C;foreground:#E5ECF5;card:#101A28;popover:#132034;primary:#4D9DE8;primary-foreground:#04111F;secondary:#18263A;secondary-foreground:#DCE6F2;muted:#152234;muted-foreground:#93A2B6;brand-ink:#FFB861;destructive:#EF6A5F;success:#3CC27F;border:#213149;input:#2A3D58;status-vacant-border:#2A7650;shadow-sm:0 1px 2px rgba(0,0,0,.4);shadow-md:0 6px 16px rgba(0,0,0,.45)';
+function xcVars(d){return (d?XC_D:XC_L).split(';').map(function(s){return '--'+s;}).join(';')+';color-scheme:'+(d?'dark':'light')+';';}
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      tv: xcVars(this.props.dark ?? false),
+      sk: ['70%', '55%', '80%', '62%', '74%', '50%'].map(function (w) { return { w: w }; }),
+      skc: [1, 2, 3, 4]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Camp, room and bed dialogs</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div style="{{tv}} width: 1440px; min-height: 1260px; box-sizing: border-box; padding: 48px; background: var(--overlay-solid); color: var(--foreground); font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 32px; align-items: start">
+
+  <div style="display: flex; flex-direction: column; gap: 12px">
+    <span style="font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #C9D6E6">New camp</span>
+    <div role="dialog" aria-labelledby="c1" style="display: flex; flex-direction: column; gap: 16px; padding: 24px; border-radius: 16px; background: var(--popover); border: 1px solid var(--border); box-shadow: var(--shadow-lg)">
+      <h2 id="c1" style="margin: 0; font-size: 19px; font-weight: 800">New camp</h2>
+      <div style="display: flex; flex-direction: column; gap: 6px"><label for="cn" style="font-size: 13px; font-weight: 600">Name <span style="color: var(--destructive)">*</span></label><input id="cn" value="Al Quoz Camp 4" style="height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px"></div>
+      <div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; font-weight: 600">Emirate <span style="color: var(--destructive)">*</span></span><button type="button" style="height: 40px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px">Dubai<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><span style="font-size: 12px; color: var(--muted-foreground)">Abu Dhabi · Dubai · Sharjah · Ajman · Umm Al Quwain · Ras Al Khaimah · Fujairah</span></div>
+      <div style="display: flex; flex-direction: column; gap: 6px"><label for="ca" style="font-size: 13px; font-weight: 600">Address</label><input id="ca" value="Al Quoz Industrial Area 4, Street 9" style="height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px"></div>
+      <div style="display: flex; flex-direction: column; gap: 6px"><label for="cm" style="font-size: 13px; font-weight: 600">Square metres per worker</label><input id="cm" placeholder="3.7 (Dubai default)" style="height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px"><span style="font-size: 12px; line-height: 17px; color: var(--muted-foreground)">Leave empty to use 3.7 m² in Dubai, 3.0 elsewhere. Only used to warn about crowded rooms.</span></div>
+      <div style="display: flex; justify-content: flex-end; gap: 8px"><button type="button" style="height: 40px; padding: 0 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px; font-weight: 600">Cancel</button><button type="button" style="height: 40px; padding: 0 18px; border-radius: 8px; border: 0; background: var(--primary); color: var(--primary-foreground); font: inherit; font-size: 14px; font-weight: 700">Create camp</button></div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 12px">
+    <span style="font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #C9D6E6">Add room</span>
+    <div role="dialog" aria-labelledby="c2" style="display: flex; flex-direction: column; gap: 16px; padding: 24px; border-radius: 16px; background: var(--popover); border: 1px solid var(--border); box-shadow: var(--shadow-lg)">
+      <div style="display: flex; flex-direction: column; gap: 4px"><h2 id="c2" style="margin: 0; font-size: 19px; font-weight: 800">Add room</h2><p style="margin: 0; font-size: 13px; color: var(--muted-foreground)">Al Quoz Camp 3</p></div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+        <div style="display: flex; flex-direction: column; gap: 6px"><label for="rn" style="font-size: 13px; font-weight: 600">Room number <span style="color: var(--destructive)">*</span></label><input id="rn" value="105" style="height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px"><span style="font-size: 12px; color: var(--muted-foreground)">Any text: 101, 2B, G-12, 301 Sup.</span></div>
+        <div style="display: flex; flex-direction: column; gap: 6px"><label for="rc" style="font-size: 13px; font-weight: 600">Bed map columns</label>
+          <div style="display: flex; height: 40px; border-radius: 8px; border: 1px solid var(--input); overflow: hidden"><button type="button" aria-label="Fewer columns" style="width: 40px; border: 0; border-right: 1px solid var(--input); background: var(--muted); color: var(--foreground); font: inherit; font-size: 18px">−</button><input id="rc" value="4" style="flex: 1; min-width: 0; border: 0; text-align: center; background: var(--card); color: var(--foreground); font: inherit; font-size: 14px; font-weight: 700"><button type="button" aria-label="More columns" style="width: 40px; border: 0; border-left: 1px solid var(--input); background: var(--muted); color: var(--foreground); font: inherit; font-size: 18px">+</button></div>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px"><label for="ra" style="font-size: 13px; font-weight: 600">Area (m²)</label><input id="ra" value="35" style="height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px"><span style="display: flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--primary); font-weight: 600"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>Fits about 9 beds at 3.7 m² per worker</span></div>
+      <div style="display: flex; flex-direction: column; gap: 6px"><label for="rnote" style="font-size: 13px; font-weight: 600">Notes</label><textarea id="rnote" rows="2" placeholder="e.g. Near washroom block B" style="box-sizing: border-box; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px; resize: none"></textarea></div>
+      <div style="display: flex; justify-content: flex-end; gap: 8px"><button type="button" style="height: 40px; padding: 0 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px; font-weight: 600">Cancel</button><button type="button" style="height: 40px; padding: 0 18px; border-radius: 8px; border: 0; background: var(--primary); color: var(--primary-foreground); font: inherit; font-size: 14px; font-weight: 700">Add room</button></div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 12px">
+    <span style="font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #C9D6E6">Add beds</span>
+    <div role="dialog" aria-labelledby="c3" style="display: flex; flex-direction: column; gap: 16px; padding: 24px; border-radius: 16px; background: var(--popover); border: 1px solid var(--border); box-shadow: var(--shadow-lg)">
+      <div style="display: flex; flex-direction: column; gap: 4px"><h2 id="c3" style="margin: 0; font-size: 19px; font-weight: 800">Add beds to Room 201</h2><p style="margin: 0; font-size: 13px; color: var(--muted-foreground)">Room has 8 beds · 32 m² · fits about 8</p></div>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+        <div style="display: flex; flex-direction: column; gap: 6px"><label for="bh" style="font-size: 13px; font-weight: 600">How many</label><input id="bh" value="2" style="height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px"></div>
+        <div style="display: flex; flex-direction: column; gap: 6px"><label for="bp" style="font-size: 13px; font-weight: 600">Label prefix</label><input id="bp" value="B" style="height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px"></div>
+      </div>
+      <fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: 8px">
+        <legend style="font-size: 13px; font-weight: 600; margin-bottom: 8px">Type</legend>
+        <label style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border); font-size: 13.5px"><input type="radio" name="bt" style="margin: 0; accent-color: var(--primary)">Single beds</label>
+        <label style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px; border: 1.5px solid var(--primary); background: color-mix(in oklab, var(--primary) 7%, var(--card)); font-size: 13.5px; font-weight: 600"><input type="radio" name="bt" checked="checked" style="margin: 0; accent-color: var(--primary)">Bunk pairs <span style="font-weight: 500; color: var(--muted-foreground)">· lower + upper</span></label>
+        <label style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border); font-size: 13.5px"><input type="radio" name="bt" style="margin: 0; accent-color: var(--primary)">Unspecified</label>
+      </fieldset>
+      <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 12.5px; color: var(--muted-foreground)">Adds
+        <span style="padding: 4px 9px; border-radius: 7px; background: var(--status-vacant-bg); border: 1px solid var(--status-vacant-border); color: var(--status-vacant-fg); font-weight: 700">B9 · Lower</span>
+        <span style="padding: 4px 9px; border-radius: 7px; background: var(--status-vacant-bg); border: 1px solid var(--status-vacant-border); color: var(--status-vacant-fg); font-weight: 700">B10 · Upper</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 8px; background: var(--warning-bg); border: 1px solid var(--warning-border); color: var(--warning-fg); font-size: 12.5px; font-weight: 600"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>10 beds; area fits about 8</div>
+      <div style="display: flex; justify-content: flex-end; gap: 8px"><button type="button" style="height: 40px; padding: 0 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px; font-weight: 600">Cancel</button><button type="button" style="height: 40px; padding: 0 18px; border-radius: 8px; border: 0; background: var(--primary); color: var(--primary-foreground); font: inherit; font-size: 14px; font-weight: 700">Add 2 beds</button></div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 12px">
+    <span style="font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #C9D6E6">Reorder beds · dragging</span>
+    <div role="dialog" aria-labelledby="c4" style="display: flex; flex-direction: column; gap: 14px; padding: 24px; border-radius: 16px; background: var(--popover); border: 1px solid var(--border); box-shadow: var(--shadow-lg)">
+      <div style="display: flex; flex-direction: column; gap: 4px"><h2 id="c4" style="margin: 0; font-size: 19px; font-weight: 800">Reorder beds · Room 102</h2><p style="margin: 0; font-size: 13px; color: var(--muted-foreground)">Drag to change the order on the bed map. Labels don&#39;t change.</p></div>
+      <ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px">
+        <sc-for list="{{order}}" as="o" hint-placeholder-count="8">
+          <li style="{{o.style}}">
+            <sc-if value="{{o.drop}}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="position: absolute; left: 0; right: 0; top: -5px; height: 3px; border-radius: 999px; background: var(--primary)"></span></sc-if>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--muted-foreground)"><circle cx="9" cy="5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="19" r="1"/></svg>
+            <strong style="width: 30px">{{o.label}}</strong><span style="flex: 1; color: var(--muted-foreground)">{{o.type}}</span><span style="font-size: 12.5px">{{o.who}}</span>
+          </li>
+        </sc-for>
+      </ol>
+      <div style="display: flex; justify-content: flex-end; gap: 8px"><button type="button" style="height: 40px; padding: 0 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px; font-weight: 600">Cancel</button><button type="button" style="height: 40px; padding: 0 18px; border-radius: 8px; border: 0; background: var(--primary); color: var(--primary-foreground); font: inherit; font-size: 14px; font-weight: 700">Save order</button></div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 12px">
+    <span style="font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #C9D6E6">Invalidate · reason required</span>
+    <div role="alertdialog" aria-labelledby="c5" style="display: flex; flex-direction: column; gap: 16px; padding: 24px; border-radius: 16px; background: var(--popover); border: 1px solid var(--border); box-shadow: var(--shadow-lg)">
+      <div style="width: 44px; height: 44px; border-radius: 12px; background: color-mix(in oklab, var(--destructive) 12%, var(--card)); color: var(--destructive); display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg></div>
+      <div style="display: flex; flex-direction: column; gap: 8px"><h2 id="c5" style="margin: 0; font-size: 19px; font-weight: 800">Invalidate Room G-04?</h2><p style="margin: 0; font-size: 14px; line-height: 21px; color: var(--muted-foreground)">Nothing is deleted. The room and its 6 beds stay visible, greyed out, with who invalidated them, when and why. All 6 beds are vacant.</p></div>
+      <div style="display: flex; flex-direction: column; gap: 6px"><label for="ir" style="font-size: 13px; font-weight: 600">Reason <span style="color: var(--destructive)">*</span></label><textarea id="ir" rows="3" aria-invalid="true" aria-describedby="ir-err" placeholder="e.g. Water damage, closed by facilities" style="box-sizing: border-box; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--destructive); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px; resize: none; box-shadow: 0 0 0 3px color-mix(in oklab, var(--destructive) 16%, transparent)"></textarea><span id="ir-err" style="font-size: 12.5px; color: var(--destructive); font-weight: 600">Enter a reason to invalidate this room.</span></div>
+      <div style="display: flex; justify-content: flex-end; gap: 8px"><button type="button" style="height: 40px; padding: 0 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px; font-weight: 600">Cancel</button><button type="button" style="height: 40px; padding: 0 18px; border-radius: 8px; border: 0; background: var(--destructive); color: var(--destructive-foreground); font: inherit; font-size: 14px; font-weight: 700">Invalidate room</button></div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 12px">
+    <span style="font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #C9D6E6">Edit room</span>
+    <div role="dialog" aria-labelledby="c6" style="display: flex; flex-direction: column; gap: 16px; padding: 24px; border-radius: 16px; background: var(--popover); border: 1px solid var(--border); box-shadow: var(--shadow-lg)">
+      <h2 id="c6" style="margin: 0; font-size: 19px; font-weight: 800">Edit Room 102</h2>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+        <div style="display: flex; flex-direction: column; gap: 6px"><label for="er" style="font-size: 13px; font-weight: 600">Room number</label><input id="er" value="102" style="height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px"></div>
+        <div style="display: flex; flex-direction: column; gap: 6px"><label for="ec" style="font-size: 13px; font-weight: 600">Bed map columns</label><input id="ec" value="4" style="height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px"></div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px"><label for="ea" style="font-size: 13px; font-weight: 600">Area (m²)</label><input id="ea" value="28" style="height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px"><span style="font-size: 12.5px; color: var(--warning-fg); font-weight: 600">Fits about 7 beds — this room has 8</span></div>
+      <div style="display: flex; justify-content: flex-end; gap: 8px"><button type="button" style="height: 40px; padding: 0 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px; font-weight: 600">Cancel</button><button type="button" style="height: 40px; padding: 0 18px; border-radius: 8px; border: 0; background: var(--primary); color: var(--primary-foreground); font: inherit; font-size: 14px; font-weight: 700">Save changes</button></div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":1260}}'>
+const XC_L='background:#F5F7FA;foreground:#0E1B2C;card:#FFFFFF;popover:#FFFFFF;primary:#00579F;primary-foreground:#FFFFFF;secondary:#E9EFF6;muted:#EEF1F5;muted-foreground:#556274;destructive:#C2302A;destructive-foreground:#FFFFFF;border:#DCE2EA;input:#C9D2DE;ring:#3584CF;status-vacant-bg:#E2F4EA;status-vacant-border:#84CDA4;status-vacant-fg:#0B5C33;warning-bg:#FFF3DE;warning-border:#F1C16A;warning-fg:#7A4400;shadow-md:0 4px 12px rgba(14,27,44,.08),0 1px 3px rgba(14,27,44,.06);shadow-lg:0 24px 48px rgba(14,27,44,.18),0 4px 12px rgba(14,27,44,.08);overlay-solid:#3B4656';
+const XC_D='background:#0A111C;foreground:#E5ECF5;card:#101A28;popover:#132034;primary:#4D9DE8;primary-foreground:#04111F;secondary:#18263A;muted:#152234;muted-foreground:#93A2B6;destructive:#EF6A5F;destructive-foreground:#1C0605;border:#213149;input:#2A3D58;ring:#4D9DE8;status-vacant-bg:#0D2F21;status-vacant-border:#2A7650;status-vacant-fg:#93E3B9;warning-bg:#2F210B;warning-border:#7E5A1C;warning-fg:#FFCE85;shadow-md:0 6px 16px rgba(0,0,0,.45);shadow-lg:0 24px 60px rgba(0,0,0,.6);overlay-solid:#04080F';
+function xcVars(d){return (d?XC_D:XC_L).split(';').map(function(s){return '--'+s;}).join(';')+';color-scheme:'+(d?'dark':'light')+';';}
+class Component extends DCLogic {
+  renderVals() {
+    var L = [['B1', 'Lower', 'Shamim A.'], ['B2', 'Upper', 'Jamal U.'], ['B5', 'Lower', 'Alamgir H.', 'drag'], ['B3', 'Lower', 'Sohel R.', 'drop'], ['B4', 'Upper', 'Rafiqul I.'], ['B6', 'Upper', 'Vacant'], ['B7', 'Lower', 'Nurul A.'], ['B8', 'Upper', 'Masud R.']];
+    var order = L.map(function (o) {
+      var drag = o[3] === 'drag';
+      return {
+        label: o[0], type: o[1], who: o[2], drop: o[3] === 'drop',
+        style: 'position: relative; display: flex; align-items: center; gap: 10px; height: 38px; padding: 0 12px; border-radius: 8px; font-size: 13.5px; cursor: grab; ' + (drag ? 'background: var(--card); border: 1.5px solid var(--primary); box-shadow: var(--shadow-md); transform: translateX(10px) rotate(-1deg); z-index: 2;' : 'background: var(--background); border: 1px solid var(--border);')
+      };
+    });
+    return { tv: xcVars(this.props.dark ?? false), order: order };
+  }
+}
+</script>
+</body>
+</html>

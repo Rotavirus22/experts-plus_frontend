@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Audit log</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div style="{{tv}} min-height: 100vh; display: flex; flex-wrap: wrap; background: var(--background); color: var(--foreground); font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif">
+  <div style="flex: 0 0 248px; display: flex; flex-direction: column"><dc-import name="Sidebar" active="audit" dark="{{dark}}" hint-size="248px,100%"></dc-import></div>
+  <div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column">
+    <dc-import name="Topbar" crumbs="Administration / Audit log" dark="{{dark}}" hint-size="100%,64px"></dc-import>
+    <main style="box-sizing: border-box; width: 100%; max-width: 1440px; padding: 28px 32px 48px; display: flex; flex-direction: column; gap: 18px">
+      <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px">
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <h1 style="margin: 0; font-size: 26px; line-height: 34px; font-weight: 800; letter-spacing: -0.02em">Audit log</h1>
+          <p style="margin: 0; font-size: 14px; color: var(--muted-foreground)">Every change, who made it and what it was before. Times in Dubai (GST).</p>
+        </div>
+        <button type="button" style="display: flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px; font-weight: 600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>Export</button>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px; padding: 14px; border-radius: 14px; background: var(--card); border: 1px solid var(--border)">
+        <button type="button" style="display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 13px; font-weight: 600"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--muted-foreground)"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>1 Sep – 3 Oct 2026</button>
+        <sc-for list="{{filters}}" as="f" hint-placeholder-count="3">
+          <button type="button" style="display: flex; align-items: center; gap: 6px; height: 36px; padding: 0 10px 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 13px"><span style="color: var(--muted-foreground)">{{f.k}}</span><strong>{{f.v}}</strong><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--muted-foreground)"><path d="m6 9 6 6 6-6"/></svg></button>
+        </sc-for>
+        <label style="display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 12px; flex: 1 1 220px; border-radius: 8px; border: 1px solid var(--input); background: var(--background); color: var(--muted-foreground)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input type="search" placeholder="Worker, room, Emp No…" aria-label="Search the audit log" style="flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font: inherit; font-size: 13.5px; color: var(--foreground)"></label>
+      </div>
+
+      <section style="border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm); overflow: hidden">
+        <sc-for list="{{entries}}" as="e" hint-placeholder-count="10">
+          <div style="{{e.wrap}}">
+            <sc-if value="{{e.day}}" hint-placeholder-val="{{ false }}"><div style="padding: 9px 18px; background: var(--muted); font-size: 12px; font-weight: 700; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: .05em">{{e.day}}</div></sc-if>
+            <sc-if value="{{e.who}}" hint-placeholder-val="{{ true }}">
+              <div style="display: grid; grid-template-columns: 64px 170px 120px minmax(0, 1fr) 24px; gap: 14px; align-items: center; padding: 11px 18px; font-size: 13.5px">
+                <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: var(--muted-foreground)">{{e.time}}</span>
+                <span style="font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{e.who}}</span>
+                <span><span style="{{e.badge}}">{{e.action}}</span></span>
+                <span style="min-width: 0"><a href="{{e.href}}" style="font-weight: 600; color: var(--foreground)">{{e.entity}}</a><span style="color: var(--muted-foreground)"> · {{e.summary}}</span></span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--muted-foreground)"><path d="{{e.chev}}"/></svg>
+              </div>
+            </sc-if>
+            <sc-if value="{{e.diff}}" hint-placeholder-val="{{ false }}">
+              <div style="margin: 0 18px 14px 96px; border-radius: 10px; border: 1px solid var(--border); overflow: hidden; font-size: 13px">
+                <div style="display: grid; grid-template-columns: 160px minmax(0, 1fr) minmax(0, 1fr); background: var(--muted); color: var(--muted-foreground); font-size: 12px; font-weight: 600"><span style="padding: 7px 12px">Field</span><span style="padding: 7px 12px">Before</span><span style="padding: 7px 12px">After</span></div>
+                <sc-for list="{{e.diff}}" as="d" hint-placeholder-count="3">
+                  <div style="display: grid; grid-template-columns: 160px minmax(0, 1fr) minmax(0, 1fr); border-top: 1px solid var(--border)"><span style="padding: 8px 12px; font-weight: 600">{{d.f}}</span><span style="padding: 8px 12px; background: color-mix(in oklab, var(--destructive) 7%, var(--card)); text-decoration: line-through; text-decoration-color: color-mix(in oklab, var(--destructive) 50%, transparent)">{{d.b}}</span><span style="padding: 8px 12px; background: color-mix(in oklab, var(--success) 9%, var(--card)); font-weight: 600">{{d.a}}</span></div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+        <div style="padding: 12px 18px; border-top: 1px solid var(--border); display: flex; justify-content: center"><button type="button" style="height: 34px; padding: 0 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font: inherit; font-size: 13px; font-weight: 600">Load older entries</button></div>
+      </section>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":1200}}'>
+const XC_L='background:#F5F7FA;foreground:#0E1B2C;card:#FFFFFF;primary:#00579F;primary-foreground:#FFFFFF;secondary:#E9EFF6;secondary-foreground:#0E2A4A;muted:#EEF1F5;muted-foreground:#556274;destructive:#C2302A;success:#1E8A52;border:#DCE2EA;input:#C9D2DE;status-occupied-bg:#E5F1FC;status-occupied-fg:#0B4C85;status-held-bg:#FCF1D2;status-held-fg:#694000;status-vacant-bg:#E2F4EA;status-vacant-fg:#0B5C33;status-invalid-bg:#F1F3F6;status-invalid-fg:#66707D;shadow-sm:0 1px 2px rgba(14,27,44,.06),0 1px 3px rgba(14,27,44,.05)';
+const XC_D='background:#0A111C;foreground:#E5ECF5;card:#101A28;primary:#4D9DE8;primary-foreground:#04111F;secondary:#18263A;secondary-foreground:#DCE6F2;muted:#152234;muted-foreground:#93A2B6;destructive:#EF6A5F;success:#3CC27F;border:#213149;input:#2A3D58;status-occupied-bg:#0F2A45;status-occupied-fg:#A6D3FA;status-held-bg:#33270B;status-held-fg:#F6D57A;status-vacant-bg:#0D2F21;status-vacant-fg:#93E3B9;status-invalid-bg:#121A26;status-invalid-fg:#7F8A9B;shadow-sm:0 1px 2px rgba(0,0,0,.4)';
+function xcVars(d){return (d?XC_D:XC_L).split(';').map(function(s){return '--'+s;}).join(';')+';color-scheme:'+(d?'dark':'light')+';';}
+var P = 'display: inline-flex; align-items: center; height: 22px; padding: 0 9px; border-radius: 999px; font-size: 11.5px; font-weight: 700; white-space: nowrap; ';
+var KIND = {
+  move: ['Moved', 'background: var(--status-occupied-bg); color: var(--status-occupied-fg)'],
+  exit: ['Exited', 'background: color-mix(in oklab, var(--destructive) 12%, var(--card)); color: var(--destructive)'],
+  leave: ['Leave started', 'background: var(--status-held-bg); color: var(--status-held-fg)'],
+  ret: ['Returned', 'background: var(--status-vacant-bg); color: var(--status-vacant-fg)'],
+  inv: ['Invalidated', 'background: var(--status-invalid-bg); color: var(--status-invalid-fg)'],
+  add: ['Created', 'background: var(--secondary); color: var(--secondary-foreground)'],
+  edit: ['Updated', 'background: var(--secondary); color: var(--secondary-foreground)']
+};
+class Component extends DCLogic {
+  renderVals() {
+    var dark = this.props.dark ?? false;
+    var E = [
+      ['D', 'Today · Saturday 3 Oct 2026'],
+      ['10:42', 'Rajesh Kumar', 'move', 'Bikash Tamang', 'Sonapur 7 · 110 · B4 → 204 · B3', 'WorkerDetail.dc.html', [['Bed', 'Sonapur Camp 7 · 110 · B4', 'Sonapur Camp 7 · 204 · B3'], ['Bed from', '—', '3 Oct 2026']]],
+      ['09:15', 'Mariam Al Hashimi', 'exit', 'Abdul Karim', 'Visa Cancelled · freed Sajja · 12 · B3', 'WorkerDetail.dc.html'],
+      ['08:02', 'Rajesh Kumar', 'leave', 'Suresh Yadav', 'bed 302 · B4 now held', 'WorkerDetail.dc.html'],
+      ['D', 'Yesterday · Friday 2 Oct 2026'],
+      ['17:30', 'Aisha Noor', 'add', 'Room 118 · Jebel Ali', '6 beds added (B7–B12, bunk pairs)', 'CampDetail.dc.html'],
+      ['16:04', 'Aisha Noor', 'inv', 'Room G-04 · Al Quoz 3', '“Water damage, closed by facilities”', 'CampDetail.dc.html'],
+      ['11:48', 'Mariam Al Hashimi', 'edit', 'Role · Camp Supervisor', '+ View audit log', 'Roles.dc.html'],
+      ['09:20', 'Yusuf Haddad', 'ret', 'Mohammed Asif Khan', 'back in Jebel Ali · 115 · B5', 'WorkerDetail.dc.html'],
+      ['D', 'Thursday 1 Oct 2026'],
+      ['14:12', 'Mariam Al Hashimi', 'add', 'Dil Kumar Magar', 'XP-005102 · Helper · no bed yet', 'WorkerDetail.dc.html'],
+      ['10:05', 'Priya Menon', 'edit', 'Anil Kumar', 'UAE Contact No changed', 'WorkerDetail.dc.html']
+    ];
+    var entries = E.map(function (e, ix) {
+      if (e[0] === 'D') return { day: e[1], who: '', diff: null, wrap: ix ? 'border-top: 1px solid var(--border)' : '' };
+      var k = KIND[e[2]], open = !!e[6];
+      return {
+        day: '', time: e[0], who: e[1], action: k[0], badge: P + k[1], entity: e[3], summary: e[4], href: e[5],
+        diff: open ? e[6].map(function (d) { return { f: d[0], b: d[1], a: d[2] }; }) : null,
+        chev: open ? 'm6 9 6 6 6-6' : 'm9 18 6-6-6-6',
+        wrap: 'border-top: 1px solid var(--border);' + (open ? ' background: color-mix(in oklab, var(--primary) 4%, var(--card));' : '')
+      };
+    });
+    return { dark: dark, tv: xcVars(dark), entries: entries, filters: [{ k: 'User', v: 'Anyone' }, { k: 'Action', v: 'All' }, { k: 'Entity', v: 'All' }] };
+  }
+}
+</script>
+</body>
+</html>

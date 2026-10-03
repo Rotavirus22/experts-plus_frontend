@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Component sheet</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+@keyframes xcSpin{to{transform:rotate(360deg)}}
+.xc-spin{animation:xcSpin .8s linear infinite}
+@media (prefers-reduced-motion: reduce){.xc-spin{animation-duration:2.4s}}
+</style>
+</helmet>
+<div style="{{tv}} width: 1440px; box-sizing: border-box; padding: 56px 64px 80px; background: var(--background); color: var(--foreground); font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif; display: flex; flex-direction: column; gap: 40px">
+  <header style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border)">
+    <div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--brand-ink)">Xperts Camps</span><h1 style="margin: 0; font-size: 36px; font-weight: 800; letter-spacing: -0.02em">Component sheet</h1></div>
+    <p style="margin: 0; max-width: 520px; font-size: 14px; line-height: 21px; color: var(--muted-foreground)">shadcn/ui (base-nova) primitives restyled with the Xperts tokens. Use the Tweaks panel to see every component in dark.</p>
+  </header>
+
+  <section style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px">
+    <div style="display: flex; flex-direction: column; gap: 16px; padding: 24px; border-radius: 16px; background: var(--card); border: 1px solid var(--border)">
+      <h2 style="margin: 0; font-size: 18px; font-weight: 700">Buttons</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center">
+        <button type="button" style="height: 38px; padding: 0 16px; border-radius: 8px; border: 0; background: var(--primary); color: var(--primary-foreground); font: inherit; font-size: 14px; font-weight: 600">Primary</button>
+        <button type="button" style="height: 38px; padding: 0 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px; font-weight: 600">Outline</button>
+        <button type="button" style="height: 38px; padding: 0 16px; border-radius: 8px; border: 0; background: var(--secondary); color: var(--secondary-foreground); font: inherit; font-size: 14px; font-weight: 600">Secondary</button>
+        <button type="button" style="height: 38px; padding: 0 16px; border-radius: 8px; border: 0; background: transparent; color: var(--foreground); font: inherit; font-size: 14px; font-weight: 600">Ghost</button>
+        <button type="button" style="height: 38px; padding: 0 16px; border-radius: 8px; border: 0; background: var(--destructive); color: var(--destructive-foreground); font: inherit; font-size: 14px; font-weight: 600">Exit worker</button>
+        <button type="button" style="height: 38px; padding: 0 16px; border-radius: 8px; border: 1px solid color-mix(in oklab, var(--destructive) 40%, var(--border)); background: var(--card); color: var(--destructive); font: inherit; font-size: 14px; font-weight: 600">Invalidate…</button>
+        <a href="#" style="font-size: 14px; font-weight: 600">Link</a>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center">
+        <button type="button" style="height: 30px; padding: 0 10px; border-radius: 7px; border: 0; background: var(--primary); color: var(--primary-foreground); font: inherit; font-size: 12.5px; font-weight: 600">Small</button>
+        <button type="button" style="height: 38px; padding: 0 16px; border-radius: 8px; border: 0; background: var(--primary); color: var(--primary-foreground); font: inherit; font-size: 14px; font-weight: 600">Default</button>
+        <button type="button" style="height: 46px; padding: 0 20px; border-radius: 9px; border: 0; background: var(--primary); color: var(--primary-foreground); font: inherit; font-size: 15px; font-weight: 700">Large</button>
+        <button type="button" aria-label="Edit" style="width: 38px; height: 38px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.17 6.81a1 1 0 0 0-3.99-3.99L3.84 16.17a2 2 0 0 0-.5.83l-1.32 4.35a.5.5 0 0 0 .62.62l4.35-1.32a2 2 0 0 0 .83-.5z"/><path d="m15 5 4 4"/></svg></button>
+        <button type="button" style="height: 38px; padding: 0 16px; border-radius: 8px; border: 0; background: var(--primary); color: var(--primary-foreground); font: inherit; font-size: 14px; font-weight: 600; box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--ring)">Focus ring</button>
+        <button type="button" disabled="disabled" style="height: 38px; padding: 0 16px; border-radius: 8px; border: 0; background: var(--primary); color: var(--primary-foreground); font: inherit; font-size: 14px; font-weight: 600; opacity: .45; cursor: not-allowed">Disabled</button>
+        <button type="button" aria-busy="true" style="height: 38px; padding: 0 16px; border-radius: 8px; border: 0; background: var(--primary); color: var(--primary-foreground); font: inherit; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; opacity: .85"><svg class="xc-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-6.22-8.56"/></svg>Saving…</button>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 16px; padding: 24px; border-radius: 16px; background: var(--card); border: 1px solid var(--border)">
+      <h2 style="margin: 0; font-size: 18px; font-weight: 700">Badges</h2>
+      <div style="display: flex; flex-direction: column; gap: 10px">
+        <div style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center"><span style="width: 92px; font-size: 12px; color: var(--muted-foreground)">Bed</span><sc-for list="{{bBed}}" as="b" hint-placeholder-count="4"><span style="{{b.s}}">{{b.t}}</span></sc-for></div>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center"><span style="width: 92px; font-size: 12px; color: var(--muted-foreground)">Worker</span><sc-for list="{{bWorker}}" as="b" hint-placeholder-count="4"><span style="{{b.s}}">{{b.t}}</span></sc-for></div>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center"><span style="width: 92px; font-size: 12px; color: var(--muted-foreground)">Exit type</span><sc-for list="{{bExit}}" as="b" hint-placeholder-count="5"><span style="{{b.s}}">{{b.t}}</span></sc-for></div>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center"><span style="width: 92px; font-size: 12px; color: var(--muted-foreground)">Admin</span><sc-for list="{{bAdmin}}" as="b" hint-placeholder-count="6"><span style="{{b.s}}">{{b.t}}</span></sc-for></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 16px; padding: 24px; border-radius: 16px; background: var(--card); border: 1px solid var(--border)">
+    <h2 style="margin: 0; font-size: 18px; font-weight: 700">Form controls</h2>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px">
+      <div style="display: flex; flex-direction: column; gap: 6px"><label for="i1" style="font-size: 13px; font-weight: 600">Input</label><input id="i1" placeholder="Room number" style="height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px"><span style="font-size: 12px; color: var(--muted-foreground)">Helper text</span></div>
+      <div style="display: flex; flex-direction: column; gap: 6px"><label for="i2" style="font-size: 13px; font-weight: 600">Focused</label><input id="i2" value="G-12" style="height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; border: 1px solid var(--ring); box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 22%, transparent); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px"></div>
+      <div style="display: flex; flex-direction: column; gap: 6px"><label for="i3" style="font-size: 13px; font-weight: 600">Error</label><input id="i3" value="XP-004021" aria-invalid="true" style="height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; border: 1px solid var(--destructive); box-shadow: 0 0 0 3px color-mix(in oklab, var(--destructive) 16%, transparent); background: var(--card); color: var(--foreground); font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 14px"><span style="font-size: 12px; font-weight: 600; color: var(--destructive)">Emp No already in use</span></div>
+      <div style="display: flex; flex-direction: column; gap: 6px"><label for="i4" style="font-size: 13px; font-weight: 600; color: var(--muted-foreground)">Disabled</label><input id="i4" disabled="disabled" value="Choose a client first" style="height: 40px; box-sizing: border-box; padding: 0 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--muted); color: var(--muted-foreground); font: inherit; font-size: 14px; opacity: .8"></div>
+      <div style="display: flex; flex-direction: column; gap: 6px; position: relative"><span style="font-size: 13px; font-weight: 600">Select · open</span><button type="button" aria-expanded="true" style="height: 40px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; border-radius: 8px; border: 1px solid var(--ring); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px">Dubai<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg></button>
+        <div role="listbox" style="display: flex; flex-direction: column; padding: 4px; border-radius: 10px; border: 1px solid var(--border); background: var(--popover); box-shadow: var(--shadow-md)">
+          <span role="option" style="height: 32px; padding: 0 10px; display: flex; align-items: center; font-size: 13px">Abu Dhabi</span>
+          <span role="option" aria-selected="true" style="height: 32px; padding: 0 10px; display: flex; align-items: center; justify-content: space-between; border-radius: 6px; background: var(--muted); font-size: 13px; font-weight: 600">Dubai<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
+          <span role="option" style="height: 32px; padding: 0 10px; display: flex; align-items: center; font-size: 13px">Sharjah</span>
+          <span role="option" style="height: 32px; padding: 0 10px; display: flex; align-items: center; font-size: 13px">Ajman</span>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px"><span style="font-size: 13px; font-weight: 600">Checkbox · radio</span>
+        <label style="display: flex; align-items: center; gap: 10px; font-size: 13.5px"><input type="checkbox" checked="checked" style="width: 16px; height: 16px; margin: 0; accent-color: var(--primary)">Assign &amp; move beds</label>
+        <label style="display: flex; align-items: center; gap: 10px; font-size: 13.5px"><input type="checkbox" style="width: 16px; height: 16px; margin: 0; accent-color: var(--primary)">Exit workers</label>
+        <label style="display: flex; align-items: center; gap: 10px; font-size: 13.5px"><input type="radio" name="r" checked="checked" style="width: 16px; height: 16px; margin: 0; accent-color: var(--primary)">All camps</label>
+        <label style="display: flex; align-items: center; gap: 10px; font-size: 13.5px"><input type="radio" name="r" style="width: 16px; height: 16px; margin: 0; accent-color: var(--primary)">Assigned camps only</label>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px"><span style="font-size: 13px; font-weight: 600">Switch</span>
+        <label style="display: flex; align-items: center; gap: 10px; font-size: 13.5px"><span style="position: relative; width: 36px; height: 20px; border-radius: 999px; background: var(--primary)"><span style="position: absolute; top: 2px; left: 18px; width: 16px; height: 16px; border-radius: 999px; background: #FFFFFF"></span></span>Invalidated rooms (2)</label>
+        <label style="display: flex; align-items: center; gap: 10px; font-size: 13.5px"><span style="position: relative; width: 36px; height: 20px; border-radius: 999px; background: var(--input)"><span style="position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 999px; background: #FFFFFF"></span></span>Required</label>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px"><label for="ta" style="font-size: 13px; font-weight: 600">Textarea</label><textarea id="ta" rows="4" placeholder="Reason (required)" style="box-sizing: border-box; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font: inherit; font-size: 14px; resize: none"></textarea></div>
+    </div>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 16px; padding: 24px; border-radius: 16px; background: var(--card); border: 1px solid var(--border)">
+    <div style="display: flex; align-items: baseline; justify-content: space-between"><h2 style="margin: 0; font-size: 18px; font-weight: 700">Bed tile · 4 states × types</h2><span style="font-size: 13px; color: var(--muted-foreground)">Min 72×56. Whole tile is the button; focus ring 2 px --ring.</span></div>
+    <div style="display: grid; grid-template-columns: 120px repeat(4, minmax(0, 1fr)); gap: 10px; align-items: center">
+      <span></span><span style="font-size: 12px; font-weight: 700; color: var(--muted-foreground)">Lower</span><span style="font-size: 12px; font-weight: 700; color: var(--muted-foreground)">Upper</span><span style="font-size: 12px; font-weight: 700; color: var(--muted-foreground)">Single</span><span style="font-size: 12px; font-weight: 700; color: var(--muted-foreground)">Unspecified</span>
+      <sc-for list="{{tileRows}}" as="row" hint-placeholder-count="4">
+        <span style="font-size: 13px; font-weight: 600">{{row.name}}</span>
+        <sc-for list="{{row.tiles}}" as="t" hint-placeholder-count="4">
+          <button type="button" style="{{t.style}}"><span style="display: flex; justify-content: space-between; align-items: baseline"><span style="{{t.ls}}">{{t.label}}</span><span style="font-size: 10.5px; font-weight: 600; opacity: .85">{{t.type}}</span></span><span style="font-size: 12px; font-weight: 600; text-align: left">{{t.who}}</span></button>
+        </sc-for>
+      </sc-for>
+      <span style="font-size: 13px; font-weight: 600">Interaction</span>
+      <button type="button" style="display: flex; flex-direction: column; gap: 3px; padding: 8px 10px; border-radius: 8px; background: var(--status-vacant-bg); border: 1px solid var(--status-vacant-border); color: var(--status-vacant-fg); font: inherit; box-shadow: var(--shadow-md); transform: translateY(-1px)"><span style="font-size: 13px; font-weight: 800; text-align: left">B7 · hover</span><span style="font-size: 12px; font-weight: 600; text-align: left">Vacant</span></button>
+      <button type="button" style="display: flex; flex-direction: column; gap: 3px; padding: 8px 10px; border-radius: 8px; background: var(--status-vacant-bg); border: 1px solid var(--status-vacant-border); color: var(--status-vacant-fg); font: inherit; box-shadow: 0 0 0 2px var(--card), 0 0 0 4px var(--ring)"><span style="font-size: 13px; font-weight: 800; text-align: left">B7 · focus</span><span style="font-size: 12px; font-weight: 600; text-align: left">Vacant</span></button>
+      <button type="button" style="display: flex; flex-direction: column; gap: 3px; padding: 8px 10px; border-radius: 8px; background: var(--primary); border: 1px solid var(--primary); color: var(--primary-foreground); font: inherit"><span style="font-size: 13px; font-weight: 800; text-align: left">B7 · selected</span><span style="font-size: 12px; font-weight: 600; text-align: left">In bed picker</span></button>
+      <button type="button" style="display: flex; flex-direction: column; gap: 3px; padding: 8px 10px; border-radius: 8px; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg); font: inherit; opacity: .5"><span style="font-size: 13px; font-weight: 800; text-align: left">B3 · disabled</span><span style="font-size: 12px; font-weight: 600; text-align: left">Not selectable</span></button>
+    </div>
+  </section>
+
+  <section style="display: grid; grid-template-columns: 1.15fr 1fr 1fr; gap: 24px; align-items: start">
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <span style="font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted-foreground)">Room card</span>
+      <article style="display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm)">
+        <div style="display: flex; justify-content: space-between; gap: 10px"><div style="display: flex; flex-direction: column; gap: 2px"><h3 style="margin: 0; font-size: 15.5px; font-weight: 700">Room G-12</h3><span style="font-size: 12.5px; color: var(--muted-foreground)">7 occupied · 1 held · 0 vacant · 22 m²</span></div><button type="button" aria-label="Room actions" style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--muted-foreground); display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></button></div>
+        <div style="display: flex; align-items: center; gap: 8px; padding: 7px 10px; border-radius: 8px; background: var(--warning-bg); border: 1px solid var(--warning-border); color: var(--warning-fg); font-size: 12.5px; font-weight: 600"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>8 beds; area fits about 5</div>
+        <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px">
+          <sc-for list="{{roomTiles}}" as="t" hint-placeholder-count="8"><span style="{{t.style}}"><span style="font-size: 12px; font-weight: 800">{{t.label}}</span><span style="font-size: 11px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{t.who}}</span></span></sc-for>
+        </div>
+      </article>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <span style="font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted-foreground)">Camp card</span>
+      <article style="display: flex; flex-direction: column; gap: 14px; padding: 20px; border-radius: 16px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm)">
+        <div style="display: flex; flex-direction: column; gap: 3px"><h3 style="margin: 0; font-size: 18px; font-weight: 700">Sonapur Camp 7</h3><span style="font-size: 13px; color: var(--muted-foreground)">Dubai · Muhaisnah 2, Sonapur</span></div>
+        <div style="display: flex; height: 10px; border-radius: 999px; overflow: hidden; background: var(--muted); gap: 2px"><div style="width: 89.2%; background: var(--status-occupied)"></div><div style="width: 7.5%; background: var(--status-held)"></div><div style="width: 3.3%; background: var(--status-vacant)"></div></div>
+        <div style="font-size: 13px; color: var(--muted-foreground)"><strong style="color: var(--foreground)">240 beds</strong> · 96.7% in use</div>
+        <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; padding-top: 12px; border-top: 1px solid var(--border)"><div style="display: flex; flex-direction: column"><span style="font-size: 11.5px; color: var(--muted-foreground); font-weight: 600">Rooms</span><strong>30</strong></div><div style="display: flex; flex-direction: column"><span style="font-size: 11.5px; color: var(--status-occupied-fg); font-weight: 600">Occ.</span><strong>214</strong></div><div style="display: flex; flex-direction: column"><span style="font-size: 11.5px; color: var(--status-held-fg); font-weight: 600">Held</span><strong>18</strong></div><div style="display: flex; flex-direction: column"><span style="font-size: 11.5px; color: var(--status-vacant-fg); font-weight: 600">Vacant</span><strong>8</strong></div></div>
+      </article>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <span style="font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted-foreground)">KPI card · occupancy bar</span>
+      <div style="display: flex; flex-direction: column; gap: 8px; padding: 16px 18px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm)"><div style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--muted-foreground)"><span style="width: 8px; height: 8px; border-radius: 999px; background: var(--brand)"></span>Without a bed</div><div style="font-size: 30px; line-height: 36px; font-weight: 800">41</div><div style="font-size: 12px; color: var(--muted-foreground)">Need assigning</div></div>
+      <div style="display: flex; flex-direction: column; gap: 10px; padding: 16px 18px; border-radius: 14px; background: var(--card); border: 1px solid var(--border)">
+        <div style="display: flex; height: 14px; border-radius: 999px; overflow: hidden; background: var(--muted); gap: 2px"><div style="width: 70%; background: var(--status-occupied)"></div><div style="width: 12%; background: var(--status-held)"></div><div style="width: 18%; background: var(--status-vacant)"></div></div>
+        <div style="display: flex; height: 8px; border-radius: 999px; overflow: hidden; background: var(--muted); gap: 2px"><div style="width: 70%; background: var(--status-occupied)"></div><div style="width: 12%; background: var(--status-held)"></div><div style="width: 18%; background: var(--status-vacant)"></div></div>
+        <span style="font-size: 12px; color: var(--muted-foreground)">14 px page · 10 px cards · 8 px inline. 2 px gaps between segments.</span>
+      </div>
+    </div>
+  </section>
+
+  <section style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 24px; align-items: start">
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <span style="font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted-foreground)">Data table · tinted rows · filter bar</span>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; border-radius: 12px; background: var(--card); border: 1px solid var(--border)">
+        <span style="flex: 1 1 200px; display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 10px; border-radius: 8px; border: 1px solid var(--input); color: var(--muted-foreground); font-size: 13px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>Search Emp No, name or phone</span>
+        <span style="display: flex; align-items: center; gap: 6px; height: 34px; padding: 0 10px; border-radius: 8px; border: 1px solid var(--primary); background: color-mix(in oklab, var(--primary) 8%, var(--card)); font-size: 13px"><span style="color: var(--muted-foreground)">Bed</span><strong>No bed</strong><span aria-hidden="true">×</span></span>
+        <span style="display: flex; align-items: center; gap: 6px; height: 34px; padding: 0 10px; border-radius: 8px; border: 1px solid var(--input); font-size: 13px"><span style="color: var(--muted-foreground)">Leave</span><strong>All</strong></span>
+      </div>
+      <div style="border-radius: 12px; border: 1px solid var(--border); overflow: hidden; font-size: 13px">
+        <div style="display: grid; grid-template-columns: 100px 1fr 140px 110px; gap: 12px; padding: 8px 14px; background: var(--muted); color: var(--muted-foreground); font-size: 12px; font-weight: 600"><span>Emp No</span><span>Name</span><span>Bed</span><span>Status</span></div>
+        <sc-for list="{{miniRows}}" as="r" hint-placeholder-count="4">
+          <div style="{{r.style}}"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px">{{r.emp}}</span><span style="font-weight: 600">{{r.name}}</span><span>{{r.bed}}</span><span><span style="{{r.badge}}">{{r.status}}</span></span></div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <span style="font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted-foreground)">Timeline · toast</span>
+      <div style="display: flex; flex-direction: column; padding: 16px; border-radius: 12px; background: var(--card); border: 1px solid var(--border)">
+        <div style="display: grid; grid-template-columns: 20px 1fr; gap: 12px"><div style="display: flex; flex-direction: column; align-items: center"><span style="width: 12px; height: 12px; margin-top: 4px; border-radius: 999px; background: var(--primary); box-shadow: 0 0 0 4px color-mix(in oklab, var(--primary) 20%, transparent)"></span><span style="flex: 1; width: 2px; margin-top: 4px; background: var(--border)"></span></div><div style="display: flex; flex-direction: column; gap: 2px; padding-bottom: 16px"><span style="display: flex; gap: 8px; align-items: center"><strong style="font-size: 14px">Ram Prasad Adhikari</strong><span style="font-size: 11px; font-weight: 700; padding: 1px 8px; border-radius: 999px; background: var(--primary); color: var(--primary-foreground)">Current</span></span><span style="font-size: 13px">12 Mar 2025 → now</span><span style="font-size: 12px; color: var(--muted-foreground)">In by Rajesh Kumar</span></div></div>
+        <div style="display: grid; grid-template-columns: 20px 1fr; gap: 12px"><div style="display: flex; flex-direction: column; align-items: center"><span style="width: 12px; height: 12px; margin-top: 4px; box-sizing: border-box; border-radius: 999px; border: 2px solid var(--muted-foreground); background: var(--card)"></span></div><div style="display: flex; flex-direction: column; gap: 2px"><strong style="font-size: 14px">Bikram Shahi</strong><span style="font-size: 13px">3 Jan 2024 → 28 Feb 2025 <span style="color: var(--muted-foreground)">· exited · Resigned</span></span><span style="font-size: 12px; color: var(--muted-foreground)">In by Aisha Noor · out by Mariam Al Hashimi</span></div></div>
+      </div>
+      <div role="status" style="display: flex; gap: 12px; padding: 14px 16px; border-radius: 12px; background: var(--popover); border: 1px solid var(--border); box-shadow: var(--shadow-md)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; color: var(--success); margin-top: 1px"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg><div style="display: flex; flex-direction: column; gap: 2px"><strong style="font-size: 14px">Room 105 added</strong><span style="font-size: 13px; color: var(--muted-foreground)">Add beds to start using it.</span></div></div>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":2500}}'>
+const XC_L='background:#F5F7FA;foreground:#0E1B2C;card:#FFFFFF;popover:#FFFFFF;primary:#00579F;primary-foreground:#FFFFFF;secondary:#E9EFF6;secondary-foreground:#0E2A4A;muted:#EEF1F5;muted-foreground:#556274;accent:#FFF1DC;accent-foreground:#8A4A00;destructive:#C2302A;destructive-foreground:#FFFFFF;border:#DCE2EA;input:#C9D2DE;ring:#3584CF;brand:#F39314;brand-ink:#A85A00;success:#1E8A52;status-occupied:#2A8BD6;status-occupied-bg:#E5F1FC;status-occupied-border:#8FC2EE;status-occupied-fg:#0B4C85;status-held:#DDA00F;status-held-bg:#FCF1D2;status-held-border:#E6BA4C;status-held-fg:#694000;status-vacant:#23A162;status-vacant-bg:#E2F4EA;status-vacant-border:#84CDA4;status-vacant-fg:#0B5C33;status-invalid-bg:#F1F3F6;status-invalid-border:#AEB7C3;status-invalid-fg:#66707D;row-leave:#EBF7F0;row-nobed:#FFEFDD;row-exited:#F2F3F5;warning-bg:#FFF3DE;warning-border:#F1C16A;warning-fg:#7A4400;shadow-sm:0 1px 2px rgba(14,27,44,.06),0 1px 3px rgba(14,27,44,.05);shadow-md:0 4px 12px rgba(14,27,44,.08),0 1px 3px rgba(14,27,44,.06)';
+const XC_D='background:#0A111C;foreground:#E5ECF5;card:#101A28;popover:#132034;primary:#4D9DE8;primary-foreground:#04111F;secondary:#18263A;secondary-foreground:#DCE6F2;muted:#152234;muted-foreground:#93A2B6;accent:#33240E;accent-foreground:#FFC47A;destructive:#EF6A5F;destructive-foreground:#1C0605;border:#213149;input:#2A3D58;ring:#4D9DE8;brand:#F5A23A;brand-ink:#FFB861;success:#3CC27F;status-occupied:#4BA8F0;status-occupied-bg:#0F2A45;status-occupied-border:#2B679F;status-occupied-fg:#A6D3FA;status-held:#E8B53A;status-held-bg:#33270B;status-held-border:#866619;status-held-fg:#F6D57A;status-vacant:#3CC27F;status-vacant-bg:#0D2F21;status-vacant-border:#2A7650;status-vacant-fg:#93E3B9;status-invalid-bg:#121A26;status-invalid-border:#3A4659;status-invalid-fg:#7F8A9B;row-leave:#0F261C;row-nobed:#2E1F0E;row-exited:#0E1520;warning-bg:#2F210B;warning-border:#7E5A1C;warning-fg:#FFCE85;shadow-sm:0 1px 2px rgba(0,0,0,.4);shadow-md:0 6px 16px rgba(0,0,0,.45)';
+function xcVars(d){return (d?XC_D:XC_L).split(';').map(function(s){return '--'+s;}).join(';')+';color-scheme:'+(d?'dark':'light')+';';}
+var P = 'display: inline-flex; align-items: center; height: 22px; padding: 0 9px; border-radius: 999px; font-size: 11.5px; font-weight: 700; white-space: nowrap; ';
+var S = {
+  o: 'background: var(--status-occupied-bg); color: var(--status-occupied-fg); border: 1px solid var(--status-occupied-border);',
+  h: 'background: var(--status-held-bg); color: var(--status-held-fg); border: 1px solid var(--status-held-border);',
+  v: 'background: var(--status-vacant-bg); color: var(--status-vacant-fg); border: 1px solid var(--status-vacant-border);',
+  x: 'background: var(--status-invalid-bg); color: var(--status-invalid-fg); border: 1px dashed var(--status-invalid-border);',
+  w: 'background: var(--warning-bg); color: var(--warning-fg); border: 1px solid var(--warning-border);',
+  g: 'background: var(--muted); color: var(--muted-foreground); border: 1px solid var(--border);',
+  a: 'background: var(--accent); color: var(--accent-foreground); border: 1px solid transparent;',
+  p: 'background: var(--primary); color: var(--primary-foreground); border: 1px solid transparent;',
+  s: 'background: var(--secondary); color: var(--secondary-foreground); border: 1px solid transparent;'
+};
+function b(list) { return list.map(function (x) { return { t: x[0], s: P + S[x[1]] + (x[1] === 'x' ? ' text-decoration: line-through;' : '') }; }); }
+class Component extends DCLogic {
+  renderVals() {
+    var states = [['Occupied', 'o', 'Ram A.'], ['Held', 'h', 'Ram T. · leave'], ['Vacant', 'v', 'Vacant'], ['Invalidated', 'x', 'Broken frame']];
+    var types = ['Lower', 'Upper', 'Single', ''];
+    var tileRows = states.map(function (s) {
+      return {
+        name: s[0],
+        tiles: types.map(function (t, i) {
+          return { label: 'B' + (i + 1), type: t, who: s[2], ls: 'font-size: 13px; font-weight: 800;' + (s[1] === 'x' ? ' text-decoration: line-through;' : ''), style: 'display: flex; flex-direction: column; gap: 3px; min-height: 56px; padding: 8px 10px; border-radius: 8px; font: inherit; cursor: pointer; ' + S[s[1]] };
+        })
+      };
+    });
+    var rt = 'oooohooo'.split('').map(function (c, i) {
+      var who = ['Ramesh S.', 'Dil K.', 'Ganesh L.', 'Prem T.', 'Sagar B.', 'Kiran R.', 'Bijay K.', 'Raju S.'][i];
+      return { label: 'B' + (i + 1), who: who, style: 'display: flex; flex-direction: column; gap: 2px; min-width: 0; padding: 6px 7px; border-radius: 8px; ' + S[c] };
+    });
+    var R = 'display: grid; grid-template-columns: 100px 1fr 140px 110px; gap: 12px; align-items: center; padding: 9px 14px; border-top: 1px solid var(--border); ';
+    return {
+      tv: xcVars(this.props.dark ?? false),
+      bBed: b([['Occupied', 'o'], ['Held', 'h'], ['Vacant', 'v'], ['Invalidated', 'x']]),
+      bWorker: b([['Occupied', 'o'], ['On leave', 'v'], ['No bed', 'w'], ['Exited', 'g']]),
+      bExit: b([['Resigned', 'g'], ['Terminated', 'g'], ['Absconded', 'g'], ['Visa Cancelled', 'g'], ['Transferred Out', 'g']]),
+      bAdmin: b([['Locked', 'a'], ['Restricted', 'a'], ['Automatic', 'o'], ['Visible', 'v'], ['Hidden', 'g'], ['Current', 'p'], ['Deactivated', 'g'], ['Over capacity', 'w']]),
+      tileRows: tileRows,
+      roomTiles: rt,
+      miniRows: [
+        { emp: 'XP-003904', name: 'Ram Prasad Adhikari', bed: '101 · B1', status: 'Occupied', badge: P + S.o, style: R + 'background: var(--card)' },
+        { emp: 'XP-003912', name: 'Ram Bahadur Thapa', bed: '101 · B2', status: 'On leave', badge: P + S.v, style: R + 'background: var(--row-leave)' },
+        { emp: 'XP-004021', name: 'Anil Kumar', bed: '—', status: 'No bed', badge: P + S.w, style: R + 'background: var(--row-nobed)' },
+        { emp: 'XP-004150', name: 'Imran Ali', bed: '—', status: 'Exited', badge: P + S.g, style: R + 'background: var(--row-exited); color: var(--muted-foreground)' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

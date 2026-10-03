@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Xperts Camps design system</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#00579F}a:hover{color:#003E73}
+@keyframes xcGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes xcFade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.xc-grow{transform-origin:left center;animation:xcGrow .6s cubic-bezier(.2,.8,.2,1) both}
+.xc-fade{animation:xcFade .32s cubic-bezier(.2,.8,.2,1) both}
+@media (prefers-reduced-motion: reduce){.xc-grow,.xc-fade{animation:none}}
+</style>
+</helmet>
+<div style="{{tv}} width: 1440px; box-sizing: border-box; background: var(--background); color: var(--foreground); font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif; padding: 64px 72px 96px; display: flex; flex-direction: column; gap: 56px">
+
+  <header style="display: flex; align-items: center; justify-content: space-between; gap: 32px; padding-bottom: 32px; border-bottom: 1px solid var(--border)">
+    <div style="display: flex; align-items: center; gap: 24px">
+      <div style="width: 216px; height: 70px; overflow: hidden; background: #FFFFFF; border-radius: 12px; box-shadow: var(--shadow-sm); border: 1px solid var(--border)">
+        <img src="../public/xperts-logo.jpg" alt="Xperts Plus Recruitment Services" style="display: block; width: 220px; height: 220px; margin: -76px 0 0 -2px">
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 4px">
+        <div style="font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--brand-ink)">Design system · v1.0</div>
+        <h1 style="margin: 0; font-size: 40px; line-height: 48px; font-weight: 800; letter-spacing: -0.02em">Xperts Camps</h1>
+        <div style="font-size: 15px; color: var(--muted-foreground)">Tokens map 1:1 to shadcn/ui CSS variables · Tailwind CSS v4 · lucide icons · light and dark</div>
+      </div>
+    </div>
+    <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end">
+      <span style="font-size: 12px; font-weight: 600; padding: 6px 10px; border-radius: 999px; background: var(--secondary); color: var(--secondary-foreground)">base-nova</span>
+      <span style="font-size: 12px; font-weight: 600; padding: 6px 10px; border-radius: 999px; background: var(--secondary); color: var(--secondary-foreground)">Base UI primitives</span>
+      <span style="font-size: 12px; font-weight: 600; padding: 6px 10px; border-radius: 999px; background: var(--accent); color: var(--accent-foreground)">--radius 0.625rem</span>
+    </div>
+  </header>
+
+  <section style="display: flex; flex-direction: column; gap: 20px">
+    <div style="display: flex; flex-direction: column; gap: 4px">
+      <h2 style="margin: 0; font-size: 22px; font-weight: 700">Brand, from the logo</h2>
+      <p style="margin: 0; font-size: 14px; color: var(--muted-foreground); max-width: 820px">Blue carries authority and drives every primary action. Orange is the logo&#39;s warmth: used sparingly for the sidebar&#39;s active marker, the brand mark and highlights — never for statuses, so it can&#39;t be confused with Held.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px">
+      <div style="border-radius: 14px; overflow: hidden; border: 1px solid var(--border); background: var(--card)">
+        <div style="height: 120px; background: #00579F"></div>
+        <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 2px"><strong style="font-size: 14px">Xperts Blue</strong><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: var(--muted-foreground)">#00579F · the X</span><span style="font-size: 12px; color: var(--muted-foreground)">--primary (light)</span></div>
+      </div>
+      <div style="border-radius: 14px; overflow: hidden; border: 1px solid var(--border); background: var(--card)">
+        <div style="height: 120px; background: #F39314"></div>
+        <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 2px"><strong style="font-size: 14px">Xperts Orange</strong><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: var(--muted-foreground)">#F39314 · “e·perts”</span><span style="font-size: 12px; color: var(--muted-foreground)">--brand, --sidebar-primary</span></div>
+      </div>
+      <div style="border-radius: 14px; overflow: hidden; border: 1px solid var(--border); background: var(--card)">
+        <div style="height: 120px; background: #0A2342"></div>
+        <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 2px"><strong style="font-size: 14px">Camp Navy</strong><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: var(--muted-foreground)">#0A2342 · derived</span><span style="font-size: 12px; color: var(--muted-foreground)">--sidebar</span></div>
+      </div>
+      <div style="border-radius: 14px; border: 1px solid var(--border); background: var(--card); padding: 16px; display: flex; flex-direction: column; gap: 12px">
+        <div style="font-size: 12px; font-weight: 600; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: .06em">Favicon / app mark</div>
+        <div style="display: flex; align-items: flex-end; gap: 14px">
+          <div style="width: 64px; height: 64px; border-radius: 14px; overflow: hidden; background: #FFFFFF; border: 1px solid var(--border)"><img src="../public/xperts-logo.jpg" alt="" style="display: block; width: 228px; height: 228px; margin: -78px 0 0 -6px"></div>
+          <div style="width: 32px; height: 32px; border-radius: 8px; overflow: hidden; background: #FFFFFF; border: 1px solid var(--border)"><img src="../public/xperts-logo.jpg" alt="" style="display: block; width: 114px; height: 114px; margin: -39px 0 0 -3px"></div>
+          <div style="width: 16px; height: 16px; border-radius: 4px; overflow: hidden; background: #FFFFFF; border: 1px solid var(--border)"><img src="../public/xperts-logo.jpg" alt="" style="display: block; width: 57px; height: 57px; margin: -19px 0 0 -2px"></div>
+        </div>
+        <div style="font-size: 12px; color: var(--muted-foreground)">“eX” cropped from the wordmark on a white tile, 16–512 px.</div>
+      </div>
+      <div style="border-radius: 14px; border: 1px solid var(--border); background: var(--card); padding: 16px; display: flex; flex-direction: column; gap: 10px">
+        <div style="font-size: 12px; font-weight: 600; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: .06em">Type pairing</div>
+        <div style="font-size: 30px; font-weight: 700; letter-spacing: -0.02em; line-height: 1">Aa Plus Jakarta</div>
+        <div style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 18px; font-weight: 500">XP-004182</div>
+        <div style="font-size: 12px; color: var(--muted-foreground)">Jakarta&#39;s rounded geometry echoes the wordmark; JetBrains Mono keeps Emp No and dates aligned in dense tables.</div>
+      </div>
+    </div>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 20px">
+    <div style="display: flex; flex-direction: column; gap: 4px">
+      <h2 style="margin: 0; font-size: 22px; font-weight: 700">Colour tokens → shadcn variables</h2>
+      <p style="margin: 0; font-size: 14px; color: var(--muted-foreground)">Cool-tinted neutrals so dense tables stay calm. All text pairs meet 4.5:1.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px">
+      <div style="border-radius: 16px; border: 1px solid var(--border); background: #FFFFFF; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+        <div style="display: flex; align-items: center; justify-content: space-between"><strong style="font-size: 15px; color: #0E1B2C">Light · :root</strong><span style="font-size: 12px; color: #556274">{{coreL.length}} tokens</span></div>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 16px">
+          <sc-for list="{{coreL}}" as="t" hint-placeholder-count="34">
+            <div style="display: flex; align-items: center; gap: 10px; min-width: 0">
+              <div style="width: 32px; height: 32px; flex: none; border-radius: 8px; border: 1px solid rgba(14,27,44,.12); background: {{t.v}}"></div>
+              <div style="display: flex; flex-direction: column; min-width: 0"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #0E1B2C; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">--{{t.k}}</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #556274">{{t.v}}</span></div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="border-radius: 16px; border: 1px solid #213149; background: #0A111C; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+        <div style="display: flex; align-items: center; justify-content: space-between"><strong style="font-size: 15px; color: #E5ECF5">Dark · .dark</strong><span style="font-size: 12px; color: #93A2B6">{{coreD.length}} tokens</span></div>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 16px">
+          <sc-for list="{{coreD}}" as="t" hint-placeholder-count="34">
+            <div style="display: flex; align-items: center; gap: 10px; min-width: 0">
+              <div style="width: 32px; height: 32px; flex: none; border-radius: 8px; border: 1px solid rgba(255,255,255,.12); background: {{t.v}}"></div>
+              <div style="display: flex; flex-direction: column; min-width: 0"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #E5ECF5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">--{{t.k}}</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #93A2B6">{{t.v}}</span></div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 20px">
+    <div style="display: flex; flex-direction: column; gap: 4px">
+      <h2 style="margin: 0; font-size: 22px; font-weight: 700">Semantic status colours</h2>
+      <p style="margin: 0; font-size: 14px; color: var(--muted-foreground); max-width: 900px">Bed states differ in lightness as well as hue, and each also carries a text label, so they read in greyscale and for colour-blind staff. Invalidated adds a dashed border and struck-through label.</p>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px">
+      <sc-for list="{{themes}}" as="th" hint-placeholder-count="2">
+        <div style="{{th.vars}} border-radius: 16px; border: 1px solid var(--border); background: var(--background); color: var(--foreground); padding: 20px; display: flex; flex-direction: column; gap: 18px">
+          <strong style="font-size: 15px">{{th.name}}</strong>
+          <div style="font-size: 12px; font-weight: 600; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: .06em">Bed status · --status-*</div>
+          <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px">
+            <div style="border-radius: 10px; padding: 10px 12px; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg); display: flex; flex-direction: column; gap: 4px"><div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 700"><span>B1</span><span style="font-weight: 500; opacity: .85">Lower</span></div><span style="font-size: 13px; font-weight: 600">R. Thapa</span><span style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em">Occupied</span></div>
+            <div style="border-radius: 10px; padding: 10px 12px; background: var(--status-held-bg); border: 1px solid var(--status-held-border); color: var(--status-held-fg); display: flex; flex-direction: column; gap: 4px"><div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 700"><span>B2</span><span style="font-weight: 500; opacity: .85">Upper</span></div><span style="font-size: 13px; font-weight: 600">S. Khan</span><span style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em">Held · on leave</span></div>
+            <div style="border-radius: 10px; padding: 10px 12px; background: var(--status-vacant-bg); border: 1px solid var(--status-vacant-border); color: var(--status-vacant-fg); display: flex; flex-direction: column; gap: 4px"><div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 700"><span>B3</span><span style="font-weight: 500; opacity: .85">Single</span></div><span style="font-size: 13px; font-weight: 600">Vacant</span><span style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em">Free</span></div>
+            <div style="border-radius: 10px; padding: 10px 12px; background: var(--status-invalid-bg); border: 1px dashed var(--status-invalid-border); color: var(--status-invalid-fg); display: flex; flex-direction: column; gap: 4px"><div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 700"><span style="text-decoration: line-through">B4</span><span style="font-weight: 500">Lower</span></div><span style="font-size: 13px; font-weight: 600">Broken frame</span><span style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em">Invalidated</span></div>
+          </div>
+          <div style="font-size: 12px; font-weight: 600; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: .06em">Worker rows · --row-*</div>
+          <div style="display: flex; flex-direction: column; border-radius: 10px; overflow: hidden; border: 1px solid var(--border)">
+            <div style="display: flex; justify-content: space-between; padding: 10px 14px; background: var(--card); font-size: 13px; border-bottom: 1px solid var(--border)"><span><b>Occupied</b> · neutral row</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; color: var(--muted-foreground)">--card</span></div>
+            <div style="display: flex; justify-content: space-between; padding: 10px 14px; background: var(--row-leave); font-size: 13px; border-bottom: 1px solid var(--border)"><span><b>On leave</b> · green tint</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; color: var(--muted-foreground)">--row-leave</span></div>
+            <div style="display: flex; justify-content: space-between; padding: 10px 14px; background: var(--row-nobed); font-size: 13px; border-bottom: 1px solid var(--border)"><span><b>No bed</b> · orange tint</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; color: var(--muted-foreground)">--row-nobed</span></div>
+            <div style="display: flex; justify-content: space-between; padding: 10px 14px; background: var(--row-exited); font-size: 13px; color: var(--muted-foreground)"><span><b>Exited</b> · muted text</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace">--row-exited</span></div>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+            <div style="border-radius: 10px; padding: 10px 12px; background: var(--warning-bg); border: 1px solid var(--warning-border); color: var(--warning-fg); font-size: 12px; font-weight: 600">Warning · over capacity</div>
+            <div style="border-radius: 10px; padding: 10px 12px; background: var(--destructive); color: var(--destructive-foreground); font-size: 12px; font-weight: 600">Destructive · Exit</div>
+            <div style="border-radius: 10px; padding: 10px 12px; background: var(--card); border: 1px solid var(--border); color: var(--success); font-size: 12px; font-weight: 700">Success · toast icon</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px">
+    <div style="border-radius: 16px; border: 1px solid var(--border); background: var(--card); padding: 24px; display: flex; flex-direction: column; gap: 14px">
+      <h2 style="margin: 0 0 6px; font-size: 22px; font-weight: 700">Type scale</h2>
+      <div style="display: flex; align-items: baseline; gap: 16px; border-bottom: 1px solid var(--border); padding-bottom: 12px"><span style="width: 120px; flex: none; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: var(--muted-foreground)">display 30/36 · 800</span><span style="font-size: 30px; line-height: 36px; font-weight: 800; letter-spacing: -0.02em">1,284 workers</span></div>
+      <div style="display: flex; align-items: baseline; gap: 16px; border-bottom: 1px solid var(--border); padding-bottom: 12px"><span style="width: 120px; flex: none; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: var(--muted-foreground)">h1 24/32 · 700</span><span style="font-size: 24px; line-height: 32px; font-weight: 700; letter-spacing: -0.015em">Al Quoz Camp 3</span></div>
+      <div style="display: flex; align-items: baseline; gap: 16px; border-bottom: 1px solid var(--border); padding-bottom: 12px"><span style="width: 120px; flex: none; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: var(--muted-foreground)">h2 18/26 · 700</span><span style="font-size: 18px; line-height: 26px; font-weight: 700">Bed history</span></div>
+      <div style="display: flex; align-items: baseline; gap: 16px; border-bottom: 1px solid var(--border); padding-bottom: 12px"><span style="width: 120px; flex: none; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: var(--muted-foreground)">h3 15/22 · 600</span><span style="font-size: 15px; line-height: 22px; font-weight: 600">Room 101</span></div>
+      <div style="display: flex; align-items: baseline; gap: 16px; border-bottom: 1px solid var(--border); padding-bottom: 12px"><span style="width: 120px; flex: none; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: var(--muted-foreground)">body 14/20 · 400</span><span style="font-size: 14px; line-height: 20px">Leave never frees a bed. The bed is held until the worker returns.</span></div>
+      <div style="display: flex; align-items: baseline; gap: 16px; border-bottom: 1px solid var(--border); padding-bottom: 12px"><span style="width: 120px; flex: none; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: var(--muted-foreground)">table 13/18 · 400</span><span style="font-size: 13px; line-height: 18px">Steel Fixer · Al Futtaim / Projects</span></div>
+      <div style="display: flex; align-items: baseline; gap: 16px; border-bottom: 1px solid var(--border); padding-bottom: 12px"><span style="width: 120px; flex: none; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: var(--muted-foreground)">caption 12/16 · 500</span><span style="font-size: 12px; line-height: 16px; font-weight: 500; color: var(--muted-foreground)">Since 14 Sep 2026</span></div>
+      <div style="display: flex; align-items: baseline; gap: 16px"><span style="width: 120px; flex: none; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: var(--muted-foreground)">mono 13/18 · 500</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; font-weight: 500">XP-004182 · 784-1990-1234567-1</span></div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 24px">
+      <div style="border-radius: 16px; border: 1px solid var(--border); background: var(--card); padding: 24px; display: flex; flex-direction: column; gap: 14px">
+        <h2 style="margin: 0; font-size: 18px; font-weight: 700">Spacing · 4 px base</h2>
+        <div style="display: flex; align-items: flex-end; gap: 14px">
+          <sc-for list="{{spaces}}" as="s" hint-placeholder-count="9">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><div style="width: {{s.px}}; height: {{s.px}}; background: var(--primary); border-radius: 3px; opacity: .85"></div><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: var(--muted-foreground)">{{s.n}}</span></div>
+          </sc-for>
+        </div>
+        <div style="font-size: 13px; color: var(--muted-foreground)">Page gutter 24 (desktop) / 16 (mobile). Card padding 20. Table cell 10×12, compact 6×10.</div>
+      </div>
+      <div style="border-radius: 16px; border: 1px solid var(--border); background: var(--card); padding: 24px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px">
+        <div style="display: flex; flex-direction: column; gap: 12px">
+          <h2 style="margin: 0; font-size: 18px; font-weight: 700">Radius</h2>
+          <div style="display: flex; gap: 12px; align-items: flex-end">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><div style="width: 44px; height: 44px; border: 2px solid var(--primary); border-radius: 6px"></div><span style="font-size: 11px; color: var(--muted-foreground)">sm 6</span></div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><div style="width: 44px; height: 44px; border: 2px solid var(--primary); border-radius: 8px"></div><span style="font-size: 11px; color: var(--muted-foreground)">md 8</span></div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><div style="width: 44px; height: 44px; border: 2px solid var(--primary); border-radius: 10px"></div><span style="font-size: 11px; color: var(--muted-foreground)">lg 10</span></div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><div style="width: 44px; height: 44px; border: 2px solid var(--primary); border-radius: 14px"></div><span style="font-size: 11px; color: var(--muted-foreground)">xl 14</span></div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 6px"><div style="width: 44px; height: 44px; border: 2px solid var(--primary); border-radius: 999px"></div><span style="font-size: 11px; color: var(--muted-foreground)">full</span></div>
+          </div>
+          <div style="font-size: 12px; color: var(--muted-foreground)">Inputs/buttons md · cards lg→xl · bed tiles md · badges full</div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px">
+          <h2 style="margin: 0; font-size: 18px; font-weight: 700">Elevation</h2>
+          <div style="display: flex; gap: 14px; padding: 6px 0">
+            <div style="width: 64px; height: 52px; border-radius: 10px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--muted-foreground)">sm</div>
+            <div style="width: 64px; height: 52px; border-radius: 10px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-md); display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--muted-foreground)">md</div>
+            <div style="width: 64px; height: 52px; border-radius: 10px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-lg); display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--muted-foreground)">lg</div>
+          </div>
+          <div style="font-size: 12px; color: var(--muted-foreground)">Cards sm · popovers md · dialogs, drawer lg</div>
+        </div>
+      </div>
+      <div style="border-radius: 16px; border: 1px solid var(--border); background: var(--card); padding: 24px; display: flex; flex-direction: column; gap: 14px">
+        <h2 style="margin: 0; font-size: 18px; font-weight: 700">Icons · lucide, 1.75 stroke</h2>
+        <div style="display: flex; gap: 18px; color: var(--foreground)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m16 3 4 4-4 4"/><path d="M20 7H4"/><path d="m8 21-4-4 4-4"/><path d="M4 17h16"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m17 8 5 5"/><path d="m22 8-5 5"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+        </div>
+        <div style="font-size: 12px; color: var(--muted-foreground)">16 px in tables and buttons, 18 px in nav, 20 px in headers. Leave = plane · Exit = user-x · Move = arrows · Invalidate = ban.</div>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-radius: 16px; border: 1px solid var(--border); background: var(--card); padding: 24px; display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 32px">
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <h2 style="margin: 0; font-size: 22px; font-weight: 700">Motion</h2>
+      <div style="font-size: 13px; color: var(--muted-foreground); line-height: 20px">Ease <span style="font-family: 'JetBrains Mono', ui-monospace, monospace">cubic-bezier(.2,.8,.2,1)</span>. Micro 120 ms · fade-in 320 ms (40 ms stagger, max 8) · drawer 280 ms · occupancy bars 600 ms. With <span style="font-family: 'JetBrains Mono', ui-monospace, monospace">prefers-reduced-motion</span>: no transforms, opacity only.</div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 16px">
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <div style="font-size: 12px; font-weight: 600; color: var(--muted-foreground)">Occupancy bar grows on load</div>
+        <div style="display: flex; height: 12px; border-radius: 999px; overflow: hidden; background: var(--muted)">
+          <div class="xc-grow" style="width: 68%; background: var(--status-occupied)"></div>
+          <div class="xc-grow" style="width: 9%; background: var(--status-held); animation-delay: .1s"></div>
+          <div class="xc-grow" style="width: 23%; background: var(--status-vacant); animation-delay: .2s"></div>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px">
+        <div class="xc-fade" style="height: 56px; border-radius: 10px; background: var(--secondary)"></div>
+        <div class="xc-fade" style="height: 56px; border-radius: 10px; background: var(--secondary); animation-delay: 40ms"></div>
+        <div class="xc-fade" style="height: 56px; border-radius: 10px; background: var(--secondary); animation-delay: 80ms"></div>
+        <div class="xc-fade" style="height: 56px; border-radius: 10px; background: var(--secondary); animation-delay: 120ms"></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 16px">
+    <div style="display: flex; flex-direction: column; gap: 4px">
+      <h2 style="margin: 0; font-size: 22px; font-weight: 700">globals.css</h2>
+      <p style="margin: 0; font-size: 14px; color: var(--muted-foreground)">Paste into <span style="font-family: 'JetBrains Mono', ui-monospace, monospace">app/globals.css</span>; expose custom tokens to Tailwind via <span style="font-family: 'JetBrains Mono', ui-monospace, monospace">@theme inline</span> (e.g. <span style="font-family: 'JetBrains Mono', ui-monospace, monospace">--color-status-held: var(--status-held)</span>).</p>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+      <pre style="margin: 0; padding: 20px; border-radius: 14px; background: #0A111C; color: #C9D6E6; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; line-height: 15px; white-space: pre-wrap; overflow: hidden">{{cssL}}</pre>
+      <pre style="margin: 0; padding: 20px; border-radius: 14px; background: #0A111C; color: #C9D6E6; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; line-height: 15px; white-space: pre-wrap; overflow: hidden">{{cssD}}</pre>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":4700}}'>
+const XC_L='background:#F5F7FA;foreground:#0E1B2C;card:#FFFFFF;card-foreground:#0E1B2C;popover:#FFFFFF;popover-foreground:#0E1B2C;primary:#00579F;primary-foreground:#FFFFFF;secondary:#E9EFF6;secondary-foreground:#0E2A4A;muted:#EEF1F5;muted-foreground:#556274;accent:#FFF1DC;accent-foreground:#8A4A00;destructive:#C2302A;destructive-foreground:#FFFFFF;border:#DCE2EA;input:#C9D2DE;ring:#3584CF;chart-1:#00579F;chart-2:#F39314;chart-3:#3AA0E4;chart-4:#23A162;chart-5:#8A96A8;sidebar:#0A2342;sidebar-foreground:#C6D3E3;sidebar-primary:#F39314;sidebar-primary-foreground:#1F1100;sidebar-accent:#12345E;sidebar-accent-foreground:#FFFFFF;sidebar-border:#1A3B66;sidebar-ring:#F39314;brand:#F39314;brand-ink:#A85A00;status-occupied:#2A8BD6;status-occupied-bg:#E5F1FC;status-occupied-border:#8FC2EE;status-occupied-fg:#0B4C85;status-held:#DDA00F;status-held-bg:#FCF1D2;status-held-border:#E6BA4C;status-held-fg:#694000;status-vacant:#23A162;status-vacant-bg:#E2F4EA;status-vacant-border:#84CDA4;status-vacant-fg:#0B5C33;status-invalid:#8A94A3;status-invalid-bg:#F1F3F6;status-invalid-border:#AEB7C3;status-invalid-fg:#66707D;row-leave:#EBF7F0;row-nobed:#FFEFDD;row-exited:#F2F3F5;warning:#D97A06;warning-bg:#FFF3DE;warning-border:#F1C16A;warning-fg:#7A4400;success:#1E8A52;shadow-sm:0 1px 2px rgba(14,27,44,.06),0 1px 3px rgba(14,27,44,.05);shadow-md:0 4px 12px rgba(14,27,44,.08),0 1px 3px rgba(14,27,44,.06);shadow-lg:0 24px 48px rgba(14,27,44,.18),0 4px 12px rgba(14,27,44,.08);overlay:rgba(10,20,35,.48)';
+const XC_D='background:#0A111C;foreground:#E5ECF5;card:#101A28;card-foreground:#E5ECF5;popover:#132034;popover-foreground:#E5ECF5;primary:#4D9DE8;primary-foreground:#04111F;secondary:#18263A;secondary-foreground:#DCE6F2;muted:#152234;muted-foreground:#93A2B6;accent:#33240E;accent-foreground:#FFC47A;destructive:#EF6A5F;destructive-foreground:#1C0605;border:#213149;input:#2A3D58;ring:#4D9DE8;chart-1:#4D9DE8;chart-2:#F5A23A;chart-3:#6CC0F5;chart-4:#3CC27F;chart-5:#7C8BA0;sidebar:#070D17;sidebar-foreground:#B4C2D4;sidebar-primary:#F5A23A;sidebar-primary-foreground:#1F1100;sidebar-accent:#122138;sidebar-accent-foreground:#FFFFFF;sidebar-border:#172538;sidebar-ring:#F5A23A;brand:#F5A23A;brand-ink:#FFB861;status-occupied:#4BA8F0;status-occupied-bg:#0F2A45;status-occupied-border:#2B679F;status-occupied-fg:#A6D3FA;status-held:#E8B53A;status-held-bg:#33270B;status-held-border:#866619;status-held-fg:#F6D57A;status-vacant:#3CC27F;status-vacant-bg:#0D2F21;status-vacant-border:#2A7650;status-vacant-fg:#93E3B9;status-invalid:#6C7789;status-invalid-bg:#121A26;status-invalid-border:#3A4659;status-invalid-fg:#7F8A9B;row-leave:#0F261C;row-nobed:#2E1F0E;row-exited:#0E1520;warning:#F0A23A;warning-bg:#2F210B;warning-border:#7E5A1C;warning-fg:#FFCE85;success:#3CC27F;shadow-sm:0 1px 2px rgba(0,0,0,.4);shadow-md:0 6px 16px rgba(0,0,0,.45);shadow-lg:0 24px 60px rgba(0,0,0,.6);overlay:rgba(2,6,12,.66)';
+function xcVars(d){return (d?XC_D:XC_L).split(';').map(function(s){return '--'+s;}).join(';')+';color-scheme:'+(d?'dark':'light')+';';}
+function xcList(s){return s.split(';').map(function(p){var i=p.indexOf(':');return {k:p.slice(0,i),v:p.slice(i+1)};});}
+function xcCore(s){return xcList(s).filter(function(t){return !/^(status-|row-|warning|success|shadow|overlay)/.test(t.k);});}
+function xcCss(sel,s){return sel+' {\n  --radius: 0.625rem;\n'+xcList(s).map(function(t){return '  --'+t.k+': '+t.v+';';}).join('\n')+'\n}';}
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      tv: xcVars(false),
+      coreL: xcCore(XC_L),
+      coreD: xcCore(XC_D),
+      themes: [{ name: 'Light', vars: xcVars(false) }, { name: 'Dark', vars: xcVars(true) }],
+      spaces: [4, 8, 12, 16, 20, 24, 32, 40, 48].map(function (n) { return { n: n, px: n + 'px' }; }),
+      cssL: xcCss(':root', XC_L),
+      cssD: xcCss('.dark', XC_D)
+    };
+  }
+}
+</script>
+</body>
+</html>

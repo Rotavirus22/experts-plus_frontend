@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Roles and permissions</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div style="{{tv}} min-height: 100vh; display: flex; flex-wrap: wrap; background: var(--background); color: var(--foreground); font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif">
+  <div style="flex: 0 0 248px; display: flex; flex-direction: column"><dc-import name="Sidebar" active="roles" dark="{{dark}}" hint-size="248px,100%"></dc-import></div>
+  <div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column">
+    <dc-import name="Topbar" crumbs="Administration / Roles &amp; permissions" dark="{{dark}}" hint-size="100%,64px"></dc-import>
+    <main style="box-sizing: border-box; width: 100%; max-width: 1440px; padding: 28px 32px 48px; display: flex; flex-direction: column; gap: 20px">
+      <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px">
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <h1 style="margin: 0; font-size: 26px; line-height: 34px; font-weight: 800; letter-spacing: -0.02em">Roles &amp; permissions</h1>
+          <p style="margin: 0; font-size: 14px; color: var(--muted-foreground)">Roles decide which pages and actions staff see, and which camps they can work in.</p>
+        </div>
+        <a href="RoleEditor.dc.html" style="display: flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px; border-radius: 8px; background: var(--primary); color: var(--primary-foreground); text-decoration: none; font-size: 14px; font-weight: 600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>New role</a>
+      </div>
+      <div style="border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm); overflow: visible">
+        <table style="width: 100%; border-collapse: collapse; font-size: 13.5px">
+          <thead><tr style="background: var(--muted); text-align: left; color: var(--muted-foreground)">
+            <th scope="col" style="padding: 10px 16px; font-size: 12px; font-weight: 600; border-radius: 14px 0 0 0">Role</th>
+            <th scope="col" style="padding: 10px 16px; font-size: 12px; font-weight: 600">Permissions</th>
+            <th scope="col" style="padding: 10px 16px; font-size: 12px; font-weight: 600">Camps</th>
+            <th scope="col" style="padding: 10px 16px; font-size: 12px; font-weight: 600">Active users</th>
+            <th scope="col" style="padding: 10px 16px; font-size: 12px; font-weight: 600">Status</th>
+            <th scope="col" style="padding: 10px 16px; font-size: 12px; font-weight: 600; text-align: right; border-radius: 0 14px 0 0">Actions</th>
+          </tr></thead>
+          <tbody>
+            <sc-for list="{{roles}}" as="r" hint-placeholder-count="6">
+              <tr style="{{r.row}}">
+                <td style="padding: 12px 16px; max-width: 360px"><div style="display: flex; flex-direction: column; gap: 2px"><span style="display: flex; align-items: center; gap: 6px; font-weight: 700"><sc-if value="{{r.locked}}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Locked" style="color: var(--brand-ink)"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></sc-if>{{r.name}}</span><span style="font-size: 12.5px; color: var(--muted-foreground)">{{r.desc}}</span></div></td>
+                <td style="padding: 12px 16px"><div style="display: flex; align-items: center; gap: 10px"><div style="width: 72px; height: 6px; border-radius: 999px; background: var(--muted); overflow: hidden"><div style="width: {{r.pw}}; height: 100%; background: var(--primary)"></div></div><span style="font-weight: 600; white-space: nowrap">{{r.n}} of 14</span></div></td>
+                <td style="padding: 12px 16px; white-space: nowrap">{{r.camps}}</td>
+                <td style="padding: 12px 16px; font-weight: 600">{{r.users}}</td>
+                <td style="padding: 12px 16px"><span style="position: relative; display: inline-flex"><span title="{{r.reason}}" style="{{r.statusStyle}}">{{r.status}}</span>
+                  <sc-if value="{{r.showReason}}" hint-placeholder-val="{{ false }}"><span role="tooltip" style="position: absolute; left: 0; top: 28px; z-index: 5; width: 240px; padding: 8px 10px; border-radius: 8px; background: var(--foreground); color: var(--background); font-size: 12px; line-height: 17px; box-shadow: var(--shadow-md)">{{r.reason}}</span></sc-if></span></td>
+                <td style="padding: 10px 16px"><div style="display: flex; justify-content: flex-end; gap: 6px; position: relative">
+                  <sc-if value="{{r.editable}}" hint-placeholder-val="{{ true }}"><a href="RoleEditor.dc.html" style="height: 30px; padding: 0 10px; display: flex; align-items: center; border-radius: 7px; border: 1px solid var(--border); color: var(--foreground); text-decoration: none; font-size: 12.5px; font-weight: 600">Edit</a>
+                  <button type="button" disabled="{{r.invDisabled}}" title="{{r.invTip}}" style="{{r.invStyle}}">Invalidate</button></sc-if>
+                  <sc-if value="{{r.showInvTip}}" hint-placeholder-val="{{ false }}"><span role="tooltip" style="position: absolute; right: 0; top: 36px; z-index: 5; width: 230px; padding: 8px 10px; border-radius: 8px; background: var(--foreground); color: var(--background); font-size: 12px; line-height: 17px; text-align: left; box-shadow: var(--shadow-md)">{{r.invTip}}</span></sc-if>
+                </div></td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":1000}}'>
+const XC_L='background:#F5F7FA;foreground:#0E1B2C;card:#FFFFFF;primary:#00579F;primary-foreground:#FFFFFF;secondary:#E9EFF6;secondary-foreground:#0E2A4A;muted:#EEF1F5;muted-foreground:#556274;accent:#FFF1DC;accent-foreground:#8A4A00;brand-ink:#A85A00;destructive:#C2302A;border:#DCE2EA;input:#C9D2DE;row-exited:#F2F3F5;status-vacant-bg:#E2F4EA;status-vacant-border:#84CDA4;status-vacant-fg:#0B5C33;status-invalid-bg:#F1F3F6;status-invalid-border:#AEB7C3;status-invalid-fg:#66707D;shadow-sm:0 1px 2px rgba(14,27,44,.06),0 1px 3px rgba(14,27,44,.05);shadow-md:0 4px 12px rgba(14,27,44,.08),0 1px 3px rgba(14,27,44,.06)';
+const XC_D='background:#0A111C;foreground:#E5ECF5;card:#101A28;primary:#4D9DE8;primary-foreground:#04111F;secondary:#18263A;secondary-foreground:#DCE6F2;muted:#152234;muted-foreground:#93A2B6;accent:#33240E;accent-foreground:#FFC47A;brand-ink:#FFB861;destructive:#EF6A5F;border:#213149;input:#2A3D58;row-exited:#0E1520;status-vacant-bg:#0D2F21;status-vacant-border:#2A7650;status-vacant-fg:#93E3B9;status-invalid-bg:#121A26;status-invalid-border:#3A4659;status-invalid-fg:#7F8A9B;shadow-sm:0 1px 2px rgba(0,0,0,.4);shadow-md:0 6px 16px rgba(0,0,0,.45)';
+function xcVars(d){return (d?XC_D:XC_L).split(';').map(function(s){return '--'+s;}).join(';')+';color-scheme:'+(d?'dark':'light')+';';}
+var P = 'display: inline-flex; align-items: center; height: 22px; padding: 0 9px; border-radius: 999px; font-size: 11.5px; font-weight: 700; white-space: nowrap; cursor: default; ';
+class Component extends DCLogic {
+  renderVals() {
+    var dark = this.props.dark ?? false;
+    var R = [
+      ['Administrator', 'Full access. Can’t be edited or invalidated.', 14, 'All camps', 1, 'locked'],
+      ['HR Operations', 'Workers, leave, exits and reports across every camp', 10, 'All camps', 1, 'active'],
+      ['Camp Supervisor', 'Day-to-day bed moves and leave, in assigned camps only', 5, 'Assigned only', 3, 'active', 'tip'],
+      ['Reports Viewer', 'Read-only workers and reports', 4, 'All camps', 1, 'active'],
+      ['Site Coordinator', 'Draft role for the Hatta project', 3, 'Assigned only', 0, 'active'],
+      ['Onboarding Clerk', 'Bulk worker entry during 2025 intake', 2, 'All camps', 0, 'invalid', 'reason']
+    ];
+    var roles = R.map(function (r) {
+      var st = r[5], users = r[4];
+      var inv = st === 'invalid';
+      return {
+        name: r[0], desc: r[1], n: r[2], pw: Math.round(r[2] / 14 * 100) + '%', camps: r[3], users: users, locked: st === 'locked',
+        status: { locked: 'Locked', active: 'Active', invalid: 'Invalidated' }[st],
+        statusStyle: P + { locked: 'background: var(--accent); color: var(--accent-foreground);', active: 'background: var(--status-vacant-bg); color: var(--status-vacant-fg); border: 1px solid var(--status-vacant-border);', invalid: 'background: var(--status-invalid-bg); color: var(--status-invalid-fg); border: 1px dashed var(--status-invalid-border);' }[st],
+        reason: inv ? 'Invalidated 12 Jan 2026 by Mariam Al Hashimi · “2025 intake finished”' : '',
+        showReason: r[6] === 'reason',
+        editable: st === 'active',
+        invDisabled: users > 0,
+        invTip: users > 0 ? users + (users === 1 ? ' user has' : ' users have') + ' this role. Move them to another role first.' : '',
+        showInvTip: r[6] === 'tip',
+        invStyle: 'height: 30px; padding: 0 10px; border-radius: 7px; border: 0; background: transparent; color: var(--destructive); font: inherit; font-size: 12.5px; font-weight: 600;' + (users > 0 ? ' opacity: .4; cursor: not-allowed;' : ' cursor: pointer;'),
+        row: 'border-top: 1px solid var(--border);' + (inv ? ' background: var(--row-exited); color: var(--muted-foreground);' : '')
+      };
+    });
+    return { dark: dark, tv: xcVars(dark), roles: roles };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en"><head><style>
+    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
+      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
+      border-radius:2px;box-sizing:border-box;overflow:hidden}
+    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
+    html.sc-dc-streaming .sc-placeholder,
+    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
+      background:color-mix(in srgb,currentColor 5%,transparent);
+      border-color:transparent}
+    html.sc-dc-streaming .sc-placeholder::before,
+    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
+      position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
+      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
+    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
+    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
+      background:color-mix(in srgb,currentColor 8%,transparent)}
+    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
+      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
+    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
+      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
+      border-radius:2px;box-sizing:border-box;color:transparent;
+      user-select:none}
+    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
+      color:color-mix(in srgb,currentColor 50%,transparent);
+      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
+      padding:0 3px}
+    .sc-host.sc-has-error{position:relative}
+    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
+      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
+      border-radius:4px;white-space:pre-wrap;pointer-events:none}
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts — keep both
+       in sync until dc-runtime regains a build step. */
+    @media print {
+      @page { margin: 0.5cm; }
+      figure, table { break-inside: avoid; }
+      #dc-root, #dc-root > .sc-host { height: auto; }
+      *, *::before, *::after {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+    }
+  </style>
+<meta charset="utf-8">
+<title>Mobile navigation drawer</title>
+<style>x-dc{display:none!important}</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" data-dc-tpl="1"><style data-dc-tpl="2">body{margin:0}</style><style data-dc-tpl="2">body{margin:0}</style><style data-dc-tpl="2">body{margin:0}</style></head>
+<body>
+<div id="dc-root"><div class="sc-host" data-sc-name="MobileNav"><div data-dc-tpl="3" style="position: relative; width: 390px; height: 844px; overflow: hidden; background: rgb(10, 17, 28); font-family: &quot;Plus Jakarta Sans&quot;, ui-sans-serif, system-ui, sans-serif;">
+  <div data-dc-tpl="4" aria-hidden="true" style="position: absolute; inset: 0px; pointer-events: none;"><div class="sc-host" data-sc-name="MobileDashboard" data-dc-tpl="5"><div data-dc-tpl="3" style="--background: #0A111C; --foreground: #E5ECF5; --card: #101A28; --primary: #4D9DE8; --primary-foreground: #04111F; --muted: #152234; --muted-foreground: #93A2B6; --accent: #33240E; --accent-foreground: #FFC47A; --border: #213149; --brand: #F5A23A; --warning: #F0A23A; --warning-fg: #FFCE85; --status-occupied: #4BA8F0; --status-held: #E8B53A; --status-vacant: #3CC27F; color-scheme: dark; width: 390px; height: 844px; overflow: hidden; box-sizing: border-box; background: var(--background); color: var(--foreground); font-family: &quot;Plus Jakarta Sans&quot;, ui-sans-serif, system-ui, sans-serif; display: flex; flex-direction: column;">
+  <header data-dc-tpl="4" style="display: flex; align-items: center; gap: 10px; height: 60px; padding: 0px 12px; background: var(--card); border-bottom: 1px solid var(--border); flex: 0 0 auto;">
+    <a data-dc-tpl="5" href="MobileNav.html" aria-label="Open menu" style="width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--foreground);"><svg data-dc-tpl="6" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="7" d="M4 12h16"></path><path data-dc-tpl="8" d="M4 6h16"></path><path data-dc-tpl="9" d="M4 18h16"></path></svg></a>
+    <div data-dc-tpl="10" style="width: 30px; height: 30px; border-radius: 8px; overflow: hidden; background: rgb(255, 255, 255); border: 1px solid var(--border);"><img data-dc-tpl="11" src="xperts-logo.jpg" alt="Xperts" style="display: block; width: 106px; height: 106px; margin: -37px 0px 0px -3px;"></div>
+    <strong data-dc-tpl="12" style="flex: 1 1 0%; font-size: 16px;">Dashboard</strong>
+    <div data-dc-tpl="13" style="width: 34px; height: 34px; border-radius: 999px; background: var(--accent); color: var(--accent-foreground); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">RK</div>
+  </header>
+  <main data-dc-tpl="14" style="flex: 1 1 0%; overflow: hidden; padding: 16px; display: flex; flex-direction: column; gap: 14px;">
+    <div data-dc-tpl="15" style="display: flex; flex-direction: column; gap: 2px;"><h1 data-dc-tpl="16" style="margin: 0px; font-size: 21px; font-weight: 800; letter-spacing: -0.015em;">Good morning, Rajesh</h1><span data-dc-tpl="17" style="font-size: 13px; color: var(--muted-foreground);">Sat 3 Oct · Camp Supervisor · 2 camps</span></div>
+    <div data-dc-tpl="18" style="display: grid; grid-template-columns: repeat(2, minmax(0px, 1fr)); gap: 10px;">
+      
+        <div data-dc-tpl="20" style="display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; border-radius: 12px; background: var(--card); border: 1px solid var(--border);"><span data-dc-tpl="21" style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--muted-foreground);"><span data-dc-tpl="22" style="width: 7px; height: 7px; border-radius: 999px; background: var(--status-occupied);"></span><span class="sc-interp">Workers housed</span></span><span data-dc-tpl="23" style="font-size: 24px; font-weight: 800; letter-spacing: -0.02em;"><span class="sc-interp">482</span></span></div>
+      
+        <div data-dc-tpl="20" style="display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; border-radius: 12px; background: var(--card); border: 1px solid var(--border);"><span data-dc-tpl="21" style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--muted-foreground);"><span data-dc-tpl="22" style="width: 7px; height: 7px; border-radius: 999px; background: var(--brand);"></span><span class="sc-interp">Without a bed</span></span><span data-dc-tpl="23" style="font-size: 24px; font-weight: 800; letter-spacing: -0.02em;"><span class="sc-interp">9</span></span></div>
+      
+        <div data-dc-tpl="20" style="display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; border-radius: 12px; background: var(--card); border: 1px solid var(--border);"><span data-dc-tpl="21" style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--muted-foreground);"><span data-dc-tpl="22" style="width: 7px; height: 7px; border-radius: 999px; background: var(--status-vacant);"></span><span class="sc-interp">On leave</span></span><span data-dc-tpl="23" style="font-size: 24px; font-weight: 800; letter-spacing: -0.02em;"><span class="sc-interp">40</span></span></div>
+      
+        <div data-dc-tpl="20" style="display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; border-radius: 12px; background: var(--card); border: 1px solid var(--border);"><span data-dc-tpl="21" style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--muted-foreground);"><span data-dc-tpl="22" style="width: 7px; height: 7px; border-radius: 999px; background: var(--status-vacant);"></span><span class="sc-interp">Vacant beds</span></span><span data-dc-tpl="23" style="font-size: 24px; font-weight: 800; letter-spacing: -0.02em;"><span class="sc-interp">30</span></span></div>
+      
+    </div>
+    <section data-dc-tpl="24" style="display: flex; flex-direction: column; gap: 12px; padding: 14px; border-radius: 12px; background: var(--card); border: 1px solid var(--border);">
+      <h2 data-dc-tpl="25" style="margin: 0px; font-size: 15px; font-weight: 700;">My camps</h2>
+      
+        <a data-dc-tpl="27" href="MobileCamp.html" style="display: flex; flex-direction: column; gap: 6px; text-decoration: none; color: var(--foreground);">
+          <div data-dc-tpl="28" style="display: flex; justify-content: space-between; font-size: 13.5px;"><strong data-dc-tpl="29"><span class="sc-interp">Al Quoz Camp 3</span></strong><span data-dc-tpl="30" style="font-weight: 700;"><span class="sc-interp">93.0%</span></span></div>
+          <div data-dc-tpl="31" style="display: flex; height: 10px; border-radius: 999px; overflow: hidden; background: var(--muted); gap: 2px;"><div data-dc-tpl="32" style="width: 85.9%; background: var(--status-occupied);"></div><div data-dc-tpl="33" style="width: 7.05%; background: var(--status-held);"></div><div data-dc-tpl="34" style="width: 7.05%; background: var(--status-vacant);"></div></div>
+          <span data-dc-tpl="35" style="font-size: 12px; color: var(--muted-foreground);"><span class="sc-interp">312 beds · 268 occupied · 22 held · 22 vacant</span></span>
+        </a>
+      
+        <a data-dc-tpl="27" href="MobileCamp.html" style="display: flex; flex-direction: column; gap: 6px; text-decoration: none; color: var(--foreground);">
+          <div data-dc-tpl="28" style="display: flex; justify-content: space-between; font-size: 13.5px;"><strong data-dc-tpl="29"><span class="sc-interp">Sonapur Camp 7</span></strong><span data-dc-tpl="30" style="font-weight: 700;"><span class="sc-interp">96.7%</span></span></div>
+          <div data-dc-tpl="31" style="display: flex; height: 10px; border-radius: 999px; overflow: hidden; background: var(--muted); gap: 2px;"><div data-dc-tpl="32" style="width: 89.2%; background: var(--status-occupied);"></div><div data-dc-tpl="33" style="width: 7.5%; background: var(--status-held);"></div><div data-dc-tpl="34" style="width: 3.3%; background: var(--status-vacant);"></div></div>
+          <span data-dc-tpl="35" style="font-size: 12px; color: var(--muted-foreground);"><span class="sc-interp">240 beds · 214 occupied · 18 held · 8 vacant</span></span>
+        </a>
+      
+    </section>
+    <section data-dc-tpl="36" style="display: flex; flex-direction: column; gap: 4px; padding: 14px; border-radius: 12px; background: var(--card); border: 1px solid var(--border);">
+      <h2 data-dc-tpl="37" style="margin: 0px 0px 6px; font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px;"><svg data-dc-tpl="38" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--warning);"><path data-dc-tpl="39" d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path data-dc-tpl="40" d="M12 9v4"></path><path data-dc-tpl="41" d="M12 17h.01"></path></svg>Rooms over capacity</h2>
+      <a data-dc-tpl="42" href="MobileCamp.html" style="display: flex; justify-content: space-between; padding: 10px 0px; border-top: 1px solid var(--border); text-decoration: none; color: var(--foreground); font-size: 13.5px;"><span data-dc-tpl="43"><strong data-dc-tpl="44">Room 204</strong> <span data-dc-tpl="45" style="color: var(--muted-foreground);">· Sonapur 7</span></span><span data-dc-tpl="46" style="color: var(--warning-fg); font-weight: 600; font-size: 12.5px;">10 beds · fits ~7</span></a>
+      <a data-dc-tpl="47" href="MobileCamp.html" style="display: flex; justify-content: space-between; padding: 10px 0px; border-top: 1px solid var(--border); text-decoration: none; color: var(--foreground); font-size: 13.5px;"><span data-dc-tpl="48"><strong data-dc-tpl="49">Room G-12</strong> <span data-dc-tpl="50" style="color: var(--muted-foreground);">· Al Quoz 3</span></span><span data-dc-tpl="51" style="color: var(--warning-fg); font-weight: 600; font-size: 12.5px;">8 beds · fits ~5</span></a>
+    </section>
+  </main></div></div></div>
+  <div data-dc-tpl="6" style="position: absolute; inset: 0px; background: rgba(2, 6, 12, 0.66);"></div>
+  <div data-dc-tpl="7" style="position: absolute; top: 0px; bottom: 0px; left: 0px; width: 248px; box-shadow: rgba(0, 0, 0, 0.6) 0px 0px 60px; overflow: hidden;">
+    <div class="sc-host" data-sc-name="Sidebar" data-dc-tpl="8"><nav data-dc-tpl="3" aria-label="Main navigation" style="--background: #0A111C; --foreground: #E5ECF5; --card: #101A28; --card-foreground: #E5ECF5; --popover: #132034; --popover-foreground: #E5ECF5; --primary: #4D9DE8; --primary-foreground: #04111F; --secondary: #18263A; --secondary-foreground: #DCE6F2; --muted: #152234; --muted-foreground: #93A2B6; --accent: #33240E; --accent-foreground: #FFC47A; --destructive: #EF6A5F; --destructive-foreground: #1C0605; --border: #213149; --input: #2A3D58; --ring: #4D9DE8; --chart-1: #4D9DE8; --chart-2: #F5A23A; --chart-3: #6CC0F5; --chart-4: #3CC27F; --chart-5: #7C8BA0; --sidebar: #070D17; --sidebar-foreground: #B4C2D4; --sidebar-primary: #F5A23A; --sidebar-primary-foreground: #1F1100; --sidebar-accent: #122138; --sidebar-accent-foreground: #FFFFFF; --sidebar-border: #172538; --sidebar-ring: #F5A23A; --brand: #F5A23A; --brand-ink: #FFB861; --status-occupied: #4BA8F0; --status-occupied-bg: #0F2A45; --status-occupied-border: #2B679F; --status-occupied-fg: #A6D3FA; --status-held: #E8B53A; --status-held-bg: #33270B; --status-held-border: #866619; --status-held-fg: #F6D57A; --status-vacant: #3CC27F; --status-vacant-bg: #0D2F21; --status-vacant-border: #2A7650; --status-vacant-fg: #93E3B9; --status-invalid: #6C7789; --status-invalid-bg: #121A26; --status-invalid-border: #3A4659; --status-invalid-fg: #7F8A9B; --row-leave: #0F261C; --row-nobed: #2E1F0E; --row-exited: #0E1520; --warning: #F0A23A; --warning-bg: #2F210B; --warning-border: #7E5A1C; --warning-fg: #FFCE85; --success: #3CC27F; --shadow-sm: 0 1px 2px rgba(0,0,0,.4); --shadow-md: 0 6px 16px rgba(0,0,0,.45); --shadow-lg: 0 24px 60px rgba(0,0,0,.6); --overlay: rgba(2,6,12,.66); color-scheme: dark; width: 248px; height: 100%; min-height: 100vh; box-sizing: border-box; background: var(--sidebar); color: var(--sidebar-foreground); font-family: &quot;Plus Jakarta Sans&quot;, ui-sans-serif, system-ui, sans-serif; display: flex; flex-direction: column; gap: 22px; padding: 16px 14px; border-right: 1px solid var(--sidebar-border);">
+  <div data-dc-tpl="4" style="display: flex; flex-direction: column; gap: 10px;">
+    <div data-dc-tpl="5" style="width: 216px; height: 64px; overflow: hidden; background: rgb(255, 255, 255); border-radius: 10px;">
+      <img data-dc-tpl="6" src="xperts-logo.jpg" alt="Xperts Plus Recruitment Services" style="display: block; width: 214px; height: 214px; margin: -76px 0px 0px;">
+    </div>
+    <div data-dc-tpl="7" style="display: flex; align-items: center; justify-content: space-between; padding: 0px 4px;">
+      <div data-dc-tpl="8" style="display: flex; flex-direction: column;"><span data-dc-tpl="9" style="font-size: 15px; font-weight: 700; color: var(--sidebar-accent-foreground);">Xperts Camps</span><span data-dc-tpl="10" style="font-size: 11px; color: var(--sidebar-foreground); opacity: 0.8;">Accommodation · UAE</span></div>
+      <button data-dc-tpl="11" type="button" aria-label="Collapse sidebar" style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--sidebar-border); background: transparent; color: var(--sidebar-foreground); display: flex; align-items: center; justify-content: center; cursor: pointer;"><svg data-dc-tpl="12" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect data-dc-tpl="13" width="18" height="18" x="3" y="3" rx="2"></rect><path data-dc-tpl="14" d="M9 3v18"></path><path data-dc-tpl="15" d="m16 15-3-3 3-3"></path></svg></button>
+    </div>
+  </div>
+
+  <div data-dc-tpl="16" style="display: flex; flex-direction: column; gap: 2px;">
+    <div data-dc-tpl="17" style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; padding: 0px 10px 6px;">Main</div>
+    <a data-dc-tpl="18" href="Dashboard.html" style="position: relative; display: flex; align-items: center; gap: 12px; height: 40px; padding: 0px 10px 0px 14px; border-radius: 10px; text-decoration: none; font-size: 14px; font-weight: 600; color: var(--sidebar-accent-foreground); background: var(--sidebar-accent); transition: background 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.2s;"><span data-dc-tpl="19" style="position: absolute; left: 0px; top: 10px; bottom: 10px; width: 3px; border-radius: 999px; background: var(--sidebar-primary); opacity: 1; transition: opacity 0.2s, transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);"></span><svg data-dc-tpl="20" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect data-dc-tpl="21" width="7" height="9" x="3" y="3" rx="1"></rect><rect data-dc-tpl="22" width="7" height="5" x="14" y="3" rx="1"></rect><rect data-dc-tpl="23" width="7" height="9" x="14" y="12" rx="1"></rect><rect data-dc-tpl="24" width="7" height="5" x="3" y="16" rx="1"></rect></svg><span data-dc-tpl="25" style="flex: 1 1 0%;">Dashboard</span></a>
+    <a data-dc-tpl="26" href="Workers.html" style="position: relative; display: flex; align-items: center; gap: 12px; height: 40px; padding: 0px 10px 0px 14px; border-radius: 10px; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--sidebar-foreground); background: transparent; transition: background 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.2s;"><span data-dc-tpl="27" style="position: absolute; left: 0px; top: 10px; bottom: 10px; width: 3px; border-radius: 999px; background: var(--sidebar-primary); opacity: 0; transition: opacity 0.2s, transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);"></span><svg data-dc-tpl="28" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="29" d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle data-dc-tpl="30" cx="9" cy="7" r="4"></circle><path data-dc-tpl="31" d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path data-dc-tpl="32" d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg><span data-dc-tpl="33" style="flex: 1 1 0%;">Workers</span><span data-dc-tpl="34" style="font-size: 11px; font-weight: 600; font-family: &quot;JetBrains Mono&quot;, ui-monospace, monospace; opacity: 0.75;">1,258</span></a>
+    <a data-dc-tpl="35" href="Camps.html" style="position: relative; display: flex; align-items: center; gap: 12px; height: 40px; padding: 0px 10px 0px 14px; border-radius: 10px; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--sidebar-foreground); background: transparent; transition: background 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.2s;"><span data-dc-tpl="36" style="position: absolute; left: 0px; top: 10px; bottom: 10px; width: 3px; border-radius: 999px; background: var(--sidebar-primary); opacity: 0; transition: opacity 0.2s, transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);"></span><svg data-dc-tpl="37" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="38" d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path><path data-dc-tpl="39" d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path><path data-dc-tpl="40" d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path><path data-dc-tpl="41" d="M10 6h4"></path><path data-dc-tpl="42" d="M10 10h4"></path><path data-dc-tpl="43" d="M10 14h4"></path><path data-dc-tpl="44" d="M10 18h4"></path></svg><span data-dc-tpl="45" style="flex: 1 1 0%;">Camps</span><span data-dc-tpl="46" style="font-size: 11px; font-weight: 600; font-family: &quot;JetBrains Mono&quot;, ui-monospace, monospace; opacity: 0.75;">6</span></a>
+    
+  </div>
+
+  
+
+  <div data-dc-tpl="95" style="flex: 1 1 0%;"></div></nav></div>
+  </div>
+  <button data-dc-tpl="9" type="button" aria-label="Close menu" style="position: absolute; top: 12px; left: 262px; width: 44px; height: 44px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.08); color: rgb(255, 255, 255); display: flex; align-items: center; justify-content: center;"><svg data-dc-tpl="10" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="11" d="M18 6 6 18"></path><path data-dc-tpl="12" d="m6 6 12 12"></path></svg></button></div></div></div>
+
+
+
+</body></html>

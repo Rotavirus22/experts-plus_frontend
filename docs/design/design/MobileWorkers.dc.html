@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mobile workers</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<div style="{{tv}} width: 390px; height: 844px; overflow: hidden; box-sizing: border-box; background: var(--background); color: var(--foreground); font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif; display: flex; flex-direction: column">
+  <header style="display: flex; align-items: center; gap: 10px; height: 60px; padding: 0 12px; background: var(--card); border-bottom: 1px solid var(--border); flex: none">
+    <a href="MobileNav.dc.html" aria-label="Open menu" style="width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--foreground)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16"/><path d="M4 6h16"/><path d="M4 18h16"/></svg></a>
+    <strong style="flex: 1; font-size: 16px">Workers</strong>
+    <a href="WorkerForm.dc.html" aria-label="Add worker" style="width: 44px; height: 44px; border-radius: 10px; background: var(--primary); color: var(--primary-foreground); display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg></a>
+  </header>
+  <div style="flex: none; padding: 12px 16px 8px; display: flex; flex-direction: column; gap: 10px; background: var(--card); border-bottom: 1px solid var(--border)">
+    <label style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--input); background: var(--background); color: var(--muted-foreground)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input type="search" placeholder="Emp No, name or phone" aria-label="Search workers" style="flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font: inherit; font-size: 15px; color: var(--foreground)"></label>
+    <div style="display: flex; gap: 8px; overflow: hidden">
+      <button type="button" style="flex: none; display: flex; align-items: center; gap: 6px; height: 36px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--primary); background: color-mix(in oklab, var(--primary) 8%, var(--card)); color: var(--foreground); font: inherit; font-size: 13px; font-weight: 600"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M7 12h10"/><path d="M10 18h4"/></svg>Filters · 1</button>
+      <span style="flex: none; display: flex; align-items: center; height: 36px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--input); font-size: 13px">Status: <strong style="margin-left: 4px">Active</strong></span>
+      <span style="flex: none; display: flex; align-items: center; height: 36px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--input); font-size: 13px">Camp: <strong style="margin-left: 4px">All</strong></span>
+      <span style="flex: none; display: flex; align-items: center; height: 36px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--input); font-size: 13px">Bed</span>
+    </div>
+    <span style="font-size: 12.5px; color: var(--muted-foreground)"><strong style="color: var(--foreground)">522</strong> matching in your camps</span>
+  </div>
+  <main style="flex: 1; overflow: hidden; padding: 12px 16px; display: flex; flex-direction: column; gap: 10px">
+    <sc-for list="{{rows}}" as="r" hint-placeholder-count="4">
+      <article style="{{r.card}}">
+        <div style="display: flex; justify-content: space-between; gap: 10px; align-items: flex-start">
+          <div style="display: flex; flex-direction: column; min-width: 0"><a href="WorkerDetail.dc.html" style="font-size: 15px; font-weight: 700; color: var(--foreground); text-decoration: none">{{r.name}}</a><span style="font-size: 12.5px; color: var(--muted-foreground)"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace">{{r.emp}}</span> · {{r.pos}}</span></div>
+          <span style="{{r.badge}}">{{r.status}}</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px; font-size: 13px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--muted-foreground)"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg><span>{{r.bed}}</span></div>
+        <sc-if value="{{r.sub}}" hint-placeholder-val="{{ false }}"><span style="font-size: 12px; color: var(--muted-foreground)">{{r.sub}}</span></sc-if>
+        <div style="display: flex; gap: 8px">
+          <a href="{{r.href}}" style="{{r.primaryStyle}}">{{r.primary}}</a>
+          <button type="button" aria-label="More actions for {{r.name}}" style="width: 44px; height: 40px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></button>
+        </div>
+      </article>
+    </sc-for>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":844}}'>
+const XC_L='background:#F5F7FA;foreground:#0E1B2C;card:#FFFFFF;primary:#00579F;primary-foreground:#FFFFFF;muted:#EEF1F5;muted-foreground:#556274;border:#DCE2EA;input:#C9D2DE;row-leave:#EBF7F0;row-nobed:#FFEFDD;status-occupied-bg:#E5F1FC;status-occupied-border:#8FC2EE;status-occupied-fg:#0B4C85;status-vacant-bg:#E2F4EA;status-vacant-border:#84CDA4;status-vacant-fg:#0B5C33;warning-bg:#FFF3DE;warning-border:#F1C16A;warning-fg:#7A4400';
+const XC_D='background:#0A111C;foreground:#E5ECF5;card:#101A28;primary:#4D9DE8;primary-foreground:#04111F;muted:#152234;muted-foreground:#93A2B6;border:#213149;input:#2A3D58;row-leave:#0F261C;row-nobed:#2E1F0E;status-occupied-bg:#0F2A45;status-occupied-border:#2B679F;status-occupied-fg:#A6D3FA;status-vacant-bg:#0D2F21;status-vacant-border:#2A7650;status-vacant-fg:#93E3B9;warning-bg:#2F210B;warning-border:#7E5A1C;warning-fg:#FFCE85';
+function xcVars(d){return (d?XC_D:XC_L).split(';').map(function(s){return '--'+s;}).join(';')+';color-scheme:'+(d?'dark':'light')+';';}
+var P = 'flex: none; display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 999px; font-size: 12px; font-weight: 700; white-space: nowrap; ';
+var BTN = 'flex: 1; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 14px; font-weight: 600; ';
+class Component extends DCLogic {
+  renderVals() {
+    var D = [
+      ['Anil Kumar', 'XP-004021', 'Plumber', 'No bed', '', 'n'],
+      ['Ram Bahadur Thapa', 'XP-003912', 'Mason', 'Al Quoz 3 · 101 · B2 (held)', 'On leave since 23 Aug 2026', 'l'],
+      ['Arjun Gurung', 'XP-004087', 'Security Guard', 'Sonapur 7 · 204 · B2', '', 'o'],
+      ['Bikash Tamang', 'XP-004182', 'Scaffolder', 'Sonapur 7 · 204 · B3', '', 'o']
+    ];
+    var rows = D.map(function (d) {
+      var s = d[5];
+      return {
+        name: d[0], emp: d[1], pos: d[2], bed: d[3], sub: d[4],
+        status: { n: 'No bed', l: 'On leave', o: 'Occupied' }[s],
+        badge: P + { n: 'background: var(--warning-bg); color: var(--warning-fg); border: 1px solid var(--warning-border)', l: 'background: var(--status-vacant-bg); color: var(--status-vacant-fg); border: 1px solid var(--status-vacant-border)', o: 'background: var(--status-occupied-bg); color: var(--status-occupied-fg); border: 1px solid var(--status-occupied-border)' }[s],
+        card: 'display: flex; flex-direction: column; gap: 10px; padding: 14px; border-radius: 12px; border: 1px solid var(--border); background: ' + { n: 'var(--row-nobed)', l: 'var(--row-leave)', o: 'var(--card)' }[s],
+        primary: { n: 'Assign bed', l: 'Mark returned', o: 'On leave' }[s],
+        href: { n: 'BedPicker.dc.html', l: 'WorkerDialogs.dc.html', o: 'WorkerDialogs.dc.html' }[s],
+        primaryStyle: BTN + (s === 'n' ? 'background: var(--primary); color: var(--primary-foreground);' : 'background: var(--card); color: var(--foreground); border: 1px solid var(--border);')
+      };
+    });
+    return { tv: xcVars(this.props.dark ?? false), rows: rows };
+  }
+}
+</script>
+</body>
+</html>

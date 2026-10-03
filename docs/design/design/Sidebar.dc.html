@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sidebar</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+<style>body{margin:0}</style>
+</helmet>
+<nav aria-label="Main navigation" style="{{tv}} width: 248px; height: 100%; min-height: 100vh; box-sizing: border-box; background: var(--sidebar); color: var(--sidebar-foreground); font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif; display: flex; flex-direction: column; gap: 22px; padding: 16px 14px; border-right: 1px solid var(--sidebar-border)">
+  <div style="display: flex; flex-direction: column; gap: 10px">
+    <div style="width: 216px; height: 64px; overflow: hidden; background: #FFFFFF; border-radius: 10px">
+      <img src="../public/xperts-logo.jpg" alt="Xperts Plus Recruitment Services" style="display: block; width: 214px; height: 214px; margin: -76px 0 0 0">
+    </div>
+    <div style="display: flex; align-items: center; justify-content: space-between; padding: 0 4px">
+      <div style="display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 700; color: var(--sidebar-accent-foreground)">Xperts Camps</span><span style="font-size: 11px; color: var(--sidebar-foreground); opacity: .8">Accommodation · UAE</span></div>
+      <button type="button" aria-label="Collapse sidebar" style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--sidebar-border); background: transparent; color: var(--sidebar-foreground); display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="m16 15-3-3 3-3"/></svg></button>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 2px">
+    <div style="font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; opacity: .6; padding: 0 10px 6px">Main</div>
+    <a href="Dashboard.dc.html" style="{{n.dashboard}}"><span style="{{i.dashboard}}"></span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg><span style="flex: 1">Dashboard</span></a>
+    <a href="Workers.dc.html" style="{{n.workers}}"><span style="{{i.workers}}"></span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span style="flex: 1">Workers</span><span style="font-size: 11px; font-weight: 600; font-family: 'JetBrains Mono', ui-monospace, monospace; opacity: .75">1,258</span></a>
+    <a href="Camps.dc.html" style="{{n.camps}}"><span style="{{i.camps}}"></span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg><span style="flex: 1">Camps</span><span style="font-size: 11px; font-weight: 600; font-family: 'JetBrains Mono', ui-monospace, monospace; opacity: .75">6</span></a>
+    <sc-if value="{{isAdmin}}" hint-placeholder-val="{{ true }}">
+      <a href="Reports.dc.html" style="{{n.reports}}"><span style="{{i.reports}}"></span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M8 18v-2"/><path d="M12 18v-4"/><path d="M16 18v-6"/></svg><span style="flex: 1">Reports</span></a>
+    </sc-if>
+  </div>
+
+  <sc-if value="{{isAdmin}}" hint-placeholder-val="{{ true }}">
+    <div style="display: flex; flex-direction: column; gap: 2px">
+      <div style="font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; opacity: .6; padding: 0 10px 6px">Administration</div>
+      <a href="Fields.dc.html" style="{{n.fields}}"><span style="{{i.fields}}"></span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 12H3"/><path d="M16 6H3"/><path d="M16 18H3"/><path d="M18 9v6"/><path d="M21 12h-6"/></svg><span style="flex: 1">Custom fields</span></a>
+      <a href="Users.dc.html" style="{{n.users}}"><span style="{{i.users}}"></span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="7" r="4"/><path d="M10.3 15H7a4 4 0 0 0-4 4v2"/><circle cx="17" cy="17" r="3"/><path d="M17 12.5v1.5"/><path d="M17 20v1.5"/><path d="m20.9 14.8-1.3.7"/><path d="m14.4 18.5-1.3.7"/><path d="m20.9 19.2-1.3-.7"/><path d="m14.4 15.5-1.3-.7"/></svg><span style="flex: 1">Users</span></a>
+      <a href="Roles.dc.html" style="{{n.roles}}"><span style="{{i.roles}}"></span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg><span style="flex: 1">Roles &amp; permissions</span></a>
+      <a href="Audit.dc.html" style="{{n.audit}}"><span style="{{i.audit}}"></span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg><span style="flex: 1">Audit log</span></a>
+    </div>
+  </sc-if>
+
+  <div style="flex: 1"></div>
+</nav>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"active":{"editor":"enum","options":["dashboard","workers","camps","reports","fields","users","roles","audit"],"default":"dashboard"},"supervisor":{"editor":"boolean","default":false},"dark":{"editor":"boolean","default":false},"$preview":{"width":248,"height":900}}'>
+const XC_L='background:#F5F7FA;foreground:#0E1B2C;card:#FFFFFF;card-foreground:#0E1B2C;popover:#FFFFFF;popover-foreground:#0E1B2C;primary:#00579F;primary-foreground:#FFFFFF;secondary:#E9EFF6;secondary-foreground:#0E2A4A;muted:#EEF1F5;muted-foreground:#556274;accent:#FFF1DC;accent-foreground:#8A4A00;destructive:#C2302A;destructive-foreground:#FFFFFF;border:#DCE2EA;input:#C9D2DE;ring:#3584CF;chart-1:#00579F;chart-2:#F39314;chart-3:#3AA0E4;chart-4:#23A162;chart-5:#8A96A8;sidebar:#0A2342;sidebar-foreground:#C6D3E3;sidebar-primary:#F39314;sidebar-primary-foreground:#1F1100;sidebar-accent:#12345E;sidebar-accent-foreground:#FFFFFF;sidebar-border:#1A3B66;sidebar-ring:#F39314;brand:#F39314;brand-ink:#A85A00;status-occupied:#2A8BD6;status-occupied-bg:#E5F1FC;status-occupied-border:#8FC2EE;status-occupied-fg:#0B4C85;status-held:#DDA00F;status-held-bg:#FCF1D2;status-held-border:#E6BA4C;status-held-fg:#694000;status-vacant:#23A162;status-vacant-bg:#E2F4EA;status-vacant-border:#84CDA4;status-vacant-fg:#0B5C33;status-invalid:#8A94A3;status-invalid-bg:#F1F3F6;status-invalid-border:#AEB7C3;status-invalid-fg:#66707D;row-leave:#EBF7F0;row-nobed:#FFEFDD;row-exited:#F2F3F5;warning:#D97A06;warning-bg:#FFF3DE;warning-border:#F1C16A;warning-fg:#7A4400;success:#1E8A52;shadow-sm:0 1px 2px rgba(14,27,44,.06),0 1px 3px rgba(14,27,44,.05);shadow-md:0 4px 12px rgba(14,27,44,.08),0 1px 3px rgba(14,27,44,.06);shadow-lg:0 24px 48px rgba(14,27,44,.18),0 4px 12px rgba(14,27,44,.08);overlay:rgba(10,20,35,.48)';
+const XC_D='background:#0A111C;foreground:#E5ECF5;card:#101A28;card-foreground:#E5ECF5;popover:#132034;popover-foreground:#E5ECF5;primary:#4D9DE8;primary-foreground:#04111F;secondary:#18263A;secondary-foreground:#DCE6F2;muted:#152234;muted-foreground:#93A2B6;accent:#33240E;accent-foreground:#FFC47A;destructive:#EF6A5F;destructive-foreground:#1C0605;border:#213149;input:#2A3D58;ring:#4D9DE8;chart-1:#4D9DE8;chart-2:#F5A23A;chart-3:#6CC0F5;chart-4:#3CC27F;chart-5:#7C8BA0;sidebar:#070D17;sidebar-foreground:#B4C2D4;sidebar-primary:#F5A23A;sidebar-primary-foreground:#1F1100;sidebar-accent:#122138;sidebar-accent-foreground:#FFFFFF;sidebar-border:#172538;sidebar-ring:#F5A23A;brand:#F5A23A;brand-ink:#FFB861;status-occupied:#4BA8F0;status-occupied-bg:#0F2A45;status-occupied-border:#2B679F;status-occupied-fg:#A6D3FA;status-held:#E8B53A;status-held-bg:#33270B;status-held-border:#866619;status-held-fg:#F6D57A;status-vacant:#3CC27F;status-vacant-bg:#0D2F21;status-vacant-border:#2A7650;status-vacant-fg:#93E3B9;status-invalid:#6C7789;status-invalid-bg:#121A26;status-invalid-border:#3A4659;status-invalid-fg:#7F8A9B;row-leave:#0F261C;row-nobed:#2E1F0E;row-exited:#0E1520;warning:#F0A23A;warning-bg:#2F210B;warning-border:#7E5A1C;warning-fg:#FFCE85;success:#3CC27F;shadow-sm:0 1px 2px rgba(0,0,0,.4);shadow-md:0 6px 16px rgba(0,0,0,.45);shadow-lg:0 24px 60px rgba(0,0,0,.6);overlay:rgba(2,6,12,.66)';
+function xcVars(d){return (d?XC_D:XC_L).split(';').map(function(s){return '--'+s;}).join(';')+';color-scheme:'+(d?'dark':'light')+';';}
+class Component extends DCLogic {
+  renderVals() {
+    var active = this.props.active ?? 'dashboard';
+    var sup = this.props.supervisor ?? false;
+    var keys = ['dashboard', 'workers', 'camps', 'reports', 'fields', 'users', 'roles', 'audit'];
+    var n = {}, i = {};
+    keys.forEach(function (k) {
+      var on = k === active;
+      n[k] = 'position: relative; display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 10px 0 14px; border-radius: 10px; text-decoration: none; font-size: 14px; font-weight: ' + (on ? '600' : '500') + '; color: ' + (on ? 'var(--sidebar-accent-foreground)' : 'var(--sidebar-foreground)') + '; background: ' + (on ? 'var(--sidebar-accent)' : 'transparent') + '; transition: background .2s cubic-bezier(.2,.8,.2,1), color .2s;';
+      i[k] = 'position: absolute; left: 0; top: 10px; bottom: 10px; width: 3px; border-radius: 999px; background: var(--sidebar-primary); opacity: ' + (on ? '1' : '0') + '; transition: opacity .2s, transform .28s cubic-bezier(.2,.8,.2,1);';
+    });
+    return {
+      tv: xcVars(this.props.dark ?? false),
+      n: n, i: i,
+      isAdmin: !sup,
+      initials: sup ? 'RK' : 'MA',
+      userName: sup ? 'Rajesh Kumar' : 'Mariam Al Hashimi',
+      roleName: sup ? 'Camp Supervisor · 2 camps' : 'Administrator · all camps'
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,766 @@
+<!doctype html>
+<html lang="en"><head><style>
+    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
+      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
+      border-radius:2px;box-sizing:border-box;overflow:hidden}
+    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
+    html.sc-dc-streaming .sc-placeholder,
+    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
+      background:color-mix(in srgb,currentColor 5%,transparent);
+      border-color:transparent}
+    html.sc-dc-streaming .sc-placeholder::before,
+    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
+      position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
+      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
+    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
+    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
+      background:color-mix(in srgb,currentColor 8%,transparent)}
+    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
+      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
+    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
+      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
+      border-radius:2px;box-sizing:border-box;color:transparent;
+      user-select:none}
+    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
+      color:color-mix(in srgb,currentColor 50%,transparent);
+      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
+      padding:0 3px}
+    .sc-host.sc-has-error{position:relative}
+    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
+      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
+      border-radius:4px;white-space:pre-wrap;pointer-events:none}
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts — keep both
+       in sync until dc-runtime regains a build step. */
+    @media print {
+      @page { margin: 0.5cm; }
+      figure, table { break-inside: avoid; }
+      #dc-root, #dc-root > .sc-host { height: auto; }
+      *, *::before, *::after {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+    }
+  </style>
+<meta charset="utf-8">
+<title>Bed drawer (vacant)</title>
+<style>x-dc{display:none!important}</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" data-dc-tpl="1"><style data-dc-tpl="2">body{margin:0}</style><style data-dc-tpl="2">body{margin:0}</style><style data-dc-tpl="2">body{margin:0}</style><style data-dc-tpl="2">body{margin:0}</style><style data-dc-tpl="2">body{margin:0}</style></head>
+<body>
+<div id="dc-root"><div class="sc-host" data-sc-name="BedDrawerVacant"><div data-dc-tpl="3" style="width: 1440px; height: 1000px; overflow: hidden;">
+  <div class="sc-host" data-sc-name="BedDrawer" data-dc-tpl="4"><div data-dc-tpl="3" style="--background: #F5F7FA; --foreground: #0E1B2C; --card: #FFFFFF; --card-foreground: #0E1B2C; --popover: #FFFFFF; --popover-foreground: #0E1B2C; --primary: #00579F; --primary-foreground: #FFFFFF; --secondary: #E9EFF6; --secondary-foreground: #0E2A4A; --muted: #EEF1F5; --muted-foreground: #556274; --accent: #FFF1DC; --accent-foreground: #8A4A00; --destructive: #C2302A; --destructive-foreground: #FFFFFF; --border: #DCE2EA; --input: #C9D2DE; --ring: #3584CF; --brand: #F39314; --status-occupied: #2A8BD6; --status-occupied-bg: #E5F1FC; --status-occupied-border: #8FC2EE; --status-occupied-fg: #0B4C85; --status-held: #DDA00F; --status-held-bg: #FCF1D2; --status-held-border: #E6BA4C; --status-held-fg: #694000; --status-vacant: #23A162; --status-vacant-bg: #E2F4EA; --status-vacant-border: #84CDA4; --status-vacant-fg: #0B5C33; --status-invalid: #8A94A3; --status-invalid-bg: #F1F3F6; --status-invalid-border: #AEB7C3; --status-invalid-fg: #66707D; --warning-bg: #FFF3DE; --warning-border: #F1C16A; --warning-fg: #7A4400; --shadow-sm: 0 1px 2px rgba(14,27,44,.06),0 1px 3px rgba(14,27,44,.05); --shadow-md: 0 4px 12px rgba(14,27,44,.08),0 1px 3px rgba(14,27,44,.06); --shadow-lg: 0 24px 48px rgba(14,27,44,.18),0 4px 12px rgba(14,27,44,.08); --overlay: rgba(10,20,35,.48); color-scheme: light; position: relative; width: 1440px; height: 1000px; overflow: hidden; background: var(--background); color: var(--foreground); font-family: &quot;Plus Jakarta Sans&quot;, ui-sans-serif, system-ui, sans-serif;">
+  <div data-dc-tpl="4" aria-hidden="true" style="position: absolute; inset: 0px; pointer-events: none;"><div class="sc-host" data-sc-name="CampDetail" data-dc-tpl="5"><div data-dc-tpl="3" style="--background: #F5F7FA; --foreground: #0E1B2C; --card: #FFFFFF; --card-foreground: #0E1B2C; --popover: #FFFFFF; --popover-foreground: #0E1B2C; --primary: #00579F; --primary-foreground: #FFFFFF; --secondary: #E9EFF6; --secondary-foreground: #0E2A4A; --muted: #EEF1F5; --muted-foreground: #556274; --accent: #FFF1DC; --accent-foreground: #8A4A00; --destructive: #C2302A; --destructive-foreground: #FFFFFF; --border: #DCE2EA; --input: #C9D2DE; --ring: #3584CF; --chart-1: #00579F; --chart-2: #F39314; --chart-3: #3AA0E4; --chart-4: #23A162; --chart-5: #8A96A8; --sidebar: #0A2342; --sidebar-foreground: #C6D3E3; --sidebar-primary: #F39314; --sidebar-primary-foreground: #1F1100; --sidebar-accent: #12345E; --sidebar-accent-foreground: #FFFFFF; --sidebar-border: #1A3B66; --sidebar-ring: #F39314; --brand: #F39314; --brand-ink: #A85A00; --status-occupied: #2A8BD6; --status-occupied-bg: #E5F1FC; --status-occupied-border: #8FC2EE; --status-occupied-fg: #0B4C85; --status-held: #DDA00F; --status-held-bg: #FCF1D2; --status-held-border: #E6BA4C; --status-held-fg: #694000; --status-vacant: #23A162; --status-vacant-bg: #E2F4EA; --status-vacant-border: #84CDA4; --status-vacant-fg: #0B5C33; --status-invalid: #8A94A3; --status-invalid-bg: #F1F3F6; --status-invalid-border: #AEB7C3; --status-invalid-fg: #66707D; --row-leave: #EBF7F0; --row-nobed: #FFEFDD; --row-exited: #F2F3F5; --warning: #D97A06; --warning-bg: #FFF3DE; --warning-border: #F1C16A; --warning-fg: #7A4400; --success: #1E8A52; --shadow-sm: 0 1px 2px rgba(14,27,44,.06),0 1px 3px rgba(14,27,44,.05); --shadow-md: 0 4px 12px rgba(14,27,44,.08),0 1px 3px rgba(14,27,44,.06); --shadow-lg: 0 24px 48px rgba(14,27,44,.18),0 4px 12px rgba(14,27,44,.08); --overlay: rgba(10,20,35,.48); color-scheme: light; min-height: 100vh; display: flex; flex-wrap: wrap; background: var(--background); color: var(--foreground); font-family: &quot;Plus Jakarta Sans&quot;, ui-sans-serif, system-ui, sans-serif;">
+  <div data-dc-tpl="4" style="flex: 0 0 248px; display: flex; flex-direction: column;"><div class="sc-host" data-sc-name="Sidebar" data-dc-tpl="5"><nav data-dc-tpl="3" aria-label="Main navigation" style="--background: #F5F7FA; --foreground: #0E1B2C; --card: #FFFFFF; --card-foreground: #0E1B2C; --popover: #FFFFFF; --popover-foreground: #0E1B2C; --primary: #00579F; --primary-foreground: #FFFFFF; --secondary: #E9EFF6; --secondary-foreground: #0E2A4A; --muted: #EEF1F5; --muted-foreground: #556274; --accent: #FFF1DC; --accent-foreground: #8A4A00; --destructive: #C2302A; --destructive-foreground: #FFFFFF; --border: #DCE2EA; --input: #C9D2DE; --ring: #3584CF; --chart-1: #00579F; --chart-2: #F39314; --chart-3: #3AA0E4; --chart-4: #23A162; --chart-5: #8A96A8; --sidebar: #0A2342; --sidebar-foreground: #C6D3E3; --sidebar-primary: #F39314; --sidebar-primary-foreground: #1F1100; --sidebar-accent: #12345E; --sidebar-accent-foreground: #FFFFFF; --sidebar-border: #1A3B66; --sidebar-ring: #F39314; --brand: #F39314; --brand-ink: #A85A00; --status-occupied: #2A8BD6; --status-occupied-bg: #E5F1FC; --status-occupied-border: #8FC2EE; --status-occupied-fg: #0B4C85; --status-held: #DDA00F; --status-held-bg: #FCF1D2; --status-held-border: #E6BA4C; --status-held-fg: #694000; --status-vacant: #23A162; --status-vacant-bg: #E2F4EA; --status-vacant-border: #84CDA4; --status-vacant-fg: #0B5C33; --status-invalid: #8A94A3; --status-invalid-bg: #F1F3F6; --status-invalid-border: #AEB7C3; --status-invalid-fg: #66707D; --row-leave: #EBF7F0; --row-nobed: #FFEFDD; --row-exited: #F2F3F5; --warning: #D97A06; --warning-bg: #FFF3DE; --warning-border: #F1C16A; --warning-fg: #7A4400; --success: #1E8A52; --shadow-sm: 0 1px 2px rgba(14,27,44,.06),0 1px 3px rgba(14,27,44,.05); --shadow-md: 0 4px 12px rgba(14,27,44,.08),0 1px 3px rgba(14,27,44,.06); --shadow-lg: 0 24px 48px rgba(14,27,44,.18),0 4px 12px rgba(14,27,44,.08); --overlay: rgba(10,20,35,.48); color-scheme: light; width: 248px; height: 100%; min-height: 100vh; box-sizing: border-box; background: var(--sidebar); color: var(--sidebar-foreground); font-family: &quot;Plus Jakarta Sans&quot;, ui-sans-serif, system-ui, sans-serif; display: flex; flex-direction: column; gap: 22px; padding: 16px 14px; border-right: 1px solid var(--sidebar-border);">
+  <div data-dc-tpl="4" style="display: flex; flex-direction: column; gap: 10px;">
+    <div data-dc-tpl="5" style="width: 216px; height: 64px; overflow: hidden; background: rgb(255, 255, 255); border-radius: 10px;">
+      <img data-dc-tpl="6" src="xperts-logo.jpg" alt="Xperts Plus Recruitment Services" style="display: block; width: 214px; height: 214px; margin: -76px 0px 0px;">
+    </div>
+    <div data-dc-tpl="7" style="display: flex; align-items: center; justify-content: space-between; padding: 0px 4px;">
+      <div data-dc-tpl="8" style="display: flex; flex-direction: column;"><span data-dc-tpl="9" style="font-size: 15px; font-weight: 700; color: var(--sidebar-accent-foreground);">Xperts Camps</span><span data-dc-tpl="10" style="font-size: 11px; color: var(--sidebar-foreground); opacity: 0.8;">Accommodation · UAE</span></div>
+      <button data-dc-tpl="11" type="button" aria-label="Collapse sidebar" style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--sidebar-border); background: transparent; color: var(--sidebar-foreground); display: flex; align-items: center; justify-content: center; cursor: pointer;"><svg data-dc-tpl="12" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect data-dc-tpl="13" width="18" height="18" x="3" y="3" rx="2"></rect><path data-dc-tpl="14" d="M9 3v18"></path><path data-dc-tpl="15" d="m16 15-3-3 3-3"></path></svg></button>
+    </div>
+  </div>
+
+  <div data-dc-tpl="16" style="display: flex; flex-direction: column; gap: 2px;">
+    <div data-dc-tpl="17" style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; padding: 0px 10px 6px;">Main</div>
+    <a data-dc-tpl="18" href="Dashboard.html" style="position: relative; display: flex; align-items: center; gap: 12px; height: 40px; padding: 0px 10px 0px 14px; border-radius: 10px; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--sidebar-foreground); background: transparent; transition: background 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.2s;"><span data-dc-tpl="19" style="position: absolute; left: 0px; top: 10px; bottom: 10px; width: 3px; border-radius: 999px; background: var(--sidebar-primary); opacity: 0; transition: opacity 0.2s, transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);"></span><svg data-dc-tpl="20" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect data-dc-tpl="21" width="7" height="9" x="3" y="3" rx="1"></rect><rect data-dc-tpl="22" width="7" height="5" x="14" y="3" rx="1"></rect><rect data-dc-tpl="23" width="7" height="9" x="14" y="12" rx="1"></rect><rect data-dc-tpl="24" width="7" height="5" x="3" y="16" rx="1"></rect></svg><span data-dc-tpl="25" style="flex: 1 1 0%;">Dashboard</span></a>
+    <a data-dc-tpl="26" href="Workers.html" style="position: relative; display: flex; align-items: center; gap: 12px; height: 40px; padding: 0px 10px 0px 14px; border-radius: 10px; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--sidebar-foreground); background: transparent; transition: background 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.2s;"><span data-dc-tpl="27" style="position: absolute; left: 0px; top: 10px; bottom: 10px; width: 3px; border-radius: 999px; background: var(--sidebar-primary); opacity: 0; transition: opacity 0.2s, transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);"></span><svg data-dc-tpl="28" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="29" d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle data-dc-tpl="30" cx="9" cy="7" r="4"></circle><path data-dc-tpl="31" d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path data-dc-tpl="32" d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg><span data-dc-tpl="33" style="flex: 1 1 0%;">Workers</span><span data-dc-tpl="34" style="font-size: 11px; font-weight: 600; font-family: &quot;JetBrains Mono&quot;, ui-monospace, monospace; opacity: 0.75;">1,258</span></a>
+    <a data-dc-tpl="35" href="Camps.html" style="position: relative; display: flex; align-items: center; gap: 12px; height: 40px; padding: 0px 10px 0px 14px; border-radius: 10px; text-decoration: none; font-size: 14px; font-weight: 600; color: var(--sidebar-accent-foreground); background: var(--sidebar-accent); transition: background 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.2s;"><span data-dc-tpl="36" style="position: absolute; left: 0px; top: 10px; bottom: 10px; width: 3px; border-radius: 999px; background: var(--sidebar-primary); opacity: 1; transition: opacity 0.2s, transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);"></span><svg data-dc-tpl="37" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="38" d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path><path data-dc-tpl="39" d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path><path data-dc-tpl="40" d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path><path data-dc-tpl="41" d="M10 6h4"></path><path data-dc-tpl="42" d="M10 10h4"></path><path data-dc-tpl="43" d="M10 14h4"></path><path data-dc-tpl="44" d="M10 18h4"></path></svg><span data-dc-tpl="45" style="flex: 1 1 0%;">Camps</span><span data-dc-tpl="46" style="font-size: 11px; font-weight: 600; font-family: &quot;JetBrains Mono&quot;, ui-monospace, monospace; opacity: 0.75;">6</span></a>
+    
+      <a data-dc-tpl="48" href="Reports.html" style="position: relative; display: flex; align-items: center; gap: 12px; height: 40px; padding: 0px 10px 0px 14px; border-radius: 10px; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--sidebar-foreground); background: transparent; transition: background 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.2s;"><span data-dc-tpl="49" style="position: absolute; left: 0px; top: 10px; bottom: 10px; width: 3px; border-radius: 999px; background: var(--sidebar-primary); opacity: 0; transition: opacity 0.2s, transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);"></span><svg data-dc-tpl="50" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="51" d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path data-dc-tpl="52" d="M14 2v4a2 2 0 0 0 2 2h4"></path><path data-dc-tpl="53" d="M8 18v-2"></path><path data-dc-tpl="54" d="M12 18v-4"></path><path data-dc-tpl="55" d="M16 18v-6"></path></svg><span data-dc-tpl="56" style="flex: 1 1 0%;">Reports</span></a>
+    
+  </div>
+
+  
+    <div data-dc-tpl="58" style="display: flex; flex-direction: column; gap: 2px;">
+      <div data-dc-tpl="59" style="font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.6; padding: 0px 10px 6px;">Administration</div>
+      <a data-dc-tpl="60" href="Fields.html" style="position: relative; display: flex; align-items: center; gap: 12px; height: 40px; padding: 0px 10px 0px 14px; border-radius: 10px; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--sidebar-foreground); background: transparent; transition: background 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.2s;"><span data-dc-tpl="61" style="position: absolute; left: 0px; top: 10px; bottom: 10px; width: 3px; border-radius: 999px; background: var(--sidebar-primary); opacity: 0; transition: opacity 0.2s, transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);"></span><svg data-dc-tpl="62" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="63" d="M11 12H3"></path><path data-dc-tpl="64" d="M16 6H3"></path><path data-dc-tpl="65" d="M16 18H3"></path><path data-dc-tpl="66" d="M18 9v6"></path><path data-dc-tpl="67" d="M21 12h-6"></path></svg><span data-dc-tpl="68" style="flex: 1 1 0%;">Custom fields</span></a>
+      <a data-dc-tpl="69" href="Users.html" style="position: relative; display: flex; align-items: center; gap: 12px; height: 40px; padding: 0px 10px 0px 14px; border-radius: 10px; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--sidebar-foreground); background: transparent; transition: background 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.2s;"><span data-dc-tpl="70" style="position: absolute; left: 0px; top: 10px; bottom: 10px; width: 3px; border-radius: 999px; background: var(--sidebar-primary); opacity: 0; transition: opacity 0.2s, transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);"></span><svg data-dc-tpl="71" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle data-dc-tpl="72" cx="10" cy="7" r="4"></circle><path data-dc-tpl="73" d="M10.3 15H7a4 4 0 0 0-4 4v2"></path><circle data-dc-tpl="74" cx="17" cy="17" r="3"></circle><path data-dc-tpl="75" d="M17 12.5v1.5"></path><path data-dc-tpl="76" d="M17 20v1.5"></path><path data-dc-tpl="77" d="m20.9 14.8-1.3.7"></path><path data-dc-tpl="78" d="m14.4 18.5-1.3.7"></path><path data-dc-tpl="79" d="m20.9 19.2-1.3-.7"></path><path data-dc-tpl="80" d="m14.4 15.5-1.3-.7"></path></svg><span data-dc-tpl="81" style="flex: 1 1 0%;">Users</span></a>
+      <a data-dc-tpl="82" href="Roles.html" style="position: relative; display: flex; align-items: center; gap: 12px; height: 40px; padding: 0px 10px 0px 14px; border-radius: 10px; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--sidebar-foreground); background: transparent; transition: background 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.2s;"><span data-dc-tpl="83" style="position: absolute; left: 0px; top: 10px; bottom: 10px; width: 3px; border-radius: 999px; background: var(--sidebar-primary); opacity: 0; transition: opacity 0.2s, transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);"></span><svg data-dc-tpl="84" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="85" d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path data-dc-tpl="86" d="m9 12 2 2 4-4"></path></svg><span data-dc-tpl="87" style="flex: 1 1 0%;">Roles &amp; permissions</span></a>
+      <a data-dc-tpl="88" href="Audit.html" style="position: relative; display: flex; align-items: center; gap: 12px; height: 40px; padding: 0px 10px 0px 14px; border-radius: 10px; text-decoration: none; font-size: 14px; font-weight: 500; color: var(--sidebar-foreground); background: transparent; transition: background 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.2s;"><span data-dc-tpl="89" style="position: absolute; left: 0px; top: 10px; bottom: 10px; width: 3px; border-radius: 999px; background: var(--sidebar-primary); opacity: 0; transition: opacity 0.2s, transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);"></span><svg data-dc-tpl="90" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="91" d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path data-dc-tpl="92" d="M3 3v5h5"></path><path data-dc-tpl="93" d="M12 7v5l4 2"></path></svg><span data-dc-tpl="94" style="flex: 1 1 0%;">Audit log</span></a>
+    </div>
+  
+
+  <div data-dc-tpl="95" style="flex: 1 1 0%;"></div></nav></div></div>
+  <div data-dc-tpl="6" style="flex: 999 1 560px; min-width: 0px; display: flex; flex-direction: column;">
+    <div class="sc-host" data-sc-name="Topbar" data-dc-tpl="7"><header data-dc-tpl="3" style="--background: #F5F7FA; --foreground: #0E1B2C; --card: #FFFFFF; --card-foreground: #0E1B2C; --popover: #FFFFFF; --popover-foreground: #0E1B2C; --primary: #00579F; --primary-foreground: #FFFFFF; --secondary: #E9EFF6; --secondary-foreground: #0E2A4A; --muted: #EEF1F5; --muted-foreground: #556274; --accent: #FFF1DC; --accent-foreground: #8A4A00; --destructive: #C2302A; --destructive-foreground: #FFFFFF; --border: #DCE2EA; --input: #C9D2DE; --ring: #3584CF; --chart-1: #00579F; --chart-2: #F39314; --chart-3: #3AA0E4; --chart-4: #23A162; --chart-5: #8A96A8; --sidebar: #0A2342; --sidebar-foreground: #C6D3E3; --sidebar-primary: #F39314; --sidebar-primary-foreground: #1F1100; --sidebar-accent: #12345E; --sidebar-accent-foreground: #FFFFFF; --sidebar-border: #1A3B66; --sidebar-ring: #F39314; --brand: #F39314; --brand-ink: #A85A00; --status-occupied: #2A8BD6; --status-occupied-bg: #E5F1FC; --status-occupied-border: #8FC2EE; --status-occupied-fg: #0B4C85; --status-held: #DDA00F; --status-held-bg: #FCF1D2; --status-held-border: #E6BA4C; --status-held-fg: #694000; --status-vacant: #23A162; --status-vacant-bg: #E2F4EA; --status-vacant-border: #84CDA4; --status-vacant-fg: #0B5C33; --status-invalid: #8A94A3; --status-invalid-bg: #F1F3F6; --status-invalid-border: #AEB7C3; --status-invalid-fg: #66707D; --row-leave: #EBF7F0; --row-nobed: #FFEFDD; --row-exited: #F2F3F5; --warning: #D97A06; --warning-bg: #FFF3DE; --warning-border: #F1C16A; --warning-fg: #7A4400; --success: #1E8A52; --shadow-sm: 0 1px 2px rgba(14,27,44,.06),0 1px 3px rgba(14,27,44,.05); --shadow-md: 0 4px 12px rgba(14,27,44,.08),0 1px 3px rgba(14,27,44,.06); --shadow-lg: 0 24px 48px rgba(14,27,44,.18),0 4px 12px rgba(14,27,44,.08); --overlay: rgba(10,20,35,.48); color-scheme: light; box-sizing: border-box; min-height: 64px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 12px 24px; background: var(--card); color: var(--foreground); border-bottom: 1px solid var(--border); font-family: &quot;Plus Jakarta Sans&quot;, ui-sans-serif, system-ui, sans-serif;">
+  <nav data-dc-tpl="4" aria-label="Breadcrumb" style="display: flex; align-items: center; gap: 8px; flex: 1 1 260px; min-width: 0px; font-size: 14px;">
+    
+      <span data-dc-tpl="6" style="display: flex; align-items: center; gap: 8px; white-space: nowrap;">
+        
+        <span data-dc-tpl="10" style="color: var(--muted-foreground);"><span class="sc-interp">Camps</span></span>
+      </span>
+    
+      <span data-dc-tpl="6" style="display: flex; align-items: center; gap: 8px; white-space: nowrap;">
+        <svg data-dc-tpl="8" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--muted-foreground);"><path data-dc-tpl="9" d="m9 18 6-6-6-6"></path></svg>
+        <span data-dc-tpl="10" style="font-weight: 600; color: var(--foreground);"><span class="sc-interp">Al Quoz Camp 3</span></span>
+      </span>
+    
+  </nav>
+  <label data-dc-tpl="11" style="display: flex; align-items: center; gap: 8px; height: 38px; padding: 0px 10px 0px 12px; flex: 0 1 340px; min-width: 200px; border-radius: 8px; border: 1px solid var(--border); background: var(--background); color: var(--muted-foreground); font-size: 13px;">
+    <svg data-dc-tpl="12" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle data-dc-tpl="13" cx="11" cy="11" r="8"></circle><path data-dc-tpl="14" d="m21 21-4.3-4.3"></path></svg>
+    <input data-dc-tpl="15" type="search" placeholder="Search workers, rooms, beds…" aria-label="Global search (coming soon)" style="flex: 1 1 0%; min-width: 0px; border: 0px; outline: none; background: transparent; font: inherit; color: var(--foreground);">
+    <span data-dc-tpl="16" style="font-family: &quot;JetBrains Mono&quot;, ui-monospace, monospace; font-size: 11px; padding: 2px 6px; border-radius: 5px; border: 1px solid var(--border); background: var(--card);">⌘K</span>
+  </label>
+  <div data-dc-tpl="17" style="display: flex; align-items: center; gap: 12px;">
+    <div data-dc-tpl="18" style="display: flex; align-items: center; gap: 10px;">
+      <div data-dc-tpl="19" style="width: 34px; height: 34px; border-radius: 999px; background: var(--accent); color: var(--accent-foreground); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;"><span class="sc-interp">MA</span></div>
+      <div data-dc-tpl="20" style="display: flex; flex-direction: column; line-height: 1.2;"><span data-dc-tpl="21" style="font-size: 13px; font-weight: 600;"><span class="sc-interp">Mariam Al Hashimi</span></span><span data-dc-tpl="22" style="font-size: 12px; color: var(--muted-foreground);"><span class="sc-interp">Administrator</span></span></div>
+    </div>
+    <a data-dc-tpl="23" href="Login.html" style="display: flex; align-items: center; gap: 6px; height: 36px; padding: 0px 12px; border-radius: 8px; border: 1px solid var(--border); color: var(--foreground); text-decoration: none; font-size: 13px; font-weight: 500;"><svg data-dc-tpl="24" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="25" d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><path data-dc-tpl="26" d="m16 17 5-5-5-5"></path><path data-dc-tpl="27" d="M21 12H9"></path></svg>Sign out</a>
+  </div></header></div>
+    <main data-dc-tpl="8" style="box-sizing: border-box; width: 100%; max-width: 1600px; padding: 24px 32px 48px; display: flex; flex-direction: column; gap: 20px;">
+
+      <div data-dc-tpl="9" style="display: flex; flex-direction: column; gap: 10px;">
+        <a data-dc-tpl="10" href="Camps.html" style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--muted-foreground); text-decoration: none; width: max-content;"><svg data-dc-tpl="11" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="12" d="m12 19-7-7 7-7"></path><path data-dc-tpl="13" d="M19 12H5"></path></svg>All camps</a>
+        <div data-dc-tpl="14" style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px;">
+          <div data-dc-tpl="15" style="display: flex; flex-direction: column; gap: 4px;">
+            <h1 data-dc-tpl="16" style="margin: 0px; font-size: 26px; line-height: 34px; font-weight: 800; letter-spacing: -0.02em;">Al Quoz Camp 3</h1>
+            <p data-dc-tpl="17" style="margin: 0px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; font-size: 14px; color: var(--muted-foreground);">
+              <span data-dc-tpl="18" style="display: flex; align-items: center; gap: 6px;"><svg data-dc-tpl="19" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="20" d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle data-dc-tpl="21" cx="12" cy="10" r="3"></circle></svg>Dubai · Al Quoz Industrial Area 3, Street 17</span>
+              <span data-dc-tpl="22">3.7 m² per worker <span data-dc-tpl="23" style="opacity: 0.8;">(Dubai default)</span></span>
+            </p>
+          </div>
+          <div data-dc-tpl="24" style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button data-dc-tpl="25" type="button" style="display: flex; align-items: center; gap: 8px; height: 38px; padding: 0px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--foreground); font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 14px; font-weight: 600; cursor: pointer;"><svg data-dc-tpl="26" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="27" d="M21.17 6.81a1 1 0 0 0-3.99-3.99L3.84 16.17a2 2 0 0 0-.5.83l-1.32 4.35a.5.5 0 0 0 .62.62l4.35-1.32a2 2 0 0 0 .83-.5z"></path><path data-dc-tpl="28" d="m15 5 4 4"></path></svg>Edit camp</button>
+            <span data-dc-tpl="29" style="position: relative; display: flex;">
+              <button data-dc-tpl="30" type="button" disabled="" aria-describedby="inv-tip" style="display: flex; align-items: center; gap: 8px; height: 38px; padding: 0px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--destructive); font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 14px; font-weight: 600; opacity: 0.45; cursor: not-allowed;"><svg data-dc-tpl="31" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle data-dc-tpl="32" cx="12" cy="12" r="10"></circle><path data-dc-tpl="33" d="m4.9 4.9 14.2 14.2"></path></svg>Invalidate camp</button>
+              <span data-dc-tpl="34" id="inv-tip" role="tooltip" style="position: absolute; top: 46px; right: 0px; z-index: 5; width: 230px; padding: 8px 10px; border-radius: 8px; background: var(--foreground); color: var(--background); font-size: 12px; line-height: 17px; box-shadow: var(--shadow-md);">Invalidate all 38 active rooms first. A camp can only be invalidated when it has no rooms in use.</span>
+            </span>
+            <a data-dc-tpl="35" href="CampDialogs.html" style="display: flex; align-items: center; gap: 8px; height: 38px; padding: 0px 14px; border-radius: 8px; background: var(--primary); color: var(--primary-foreground); text-decoration: none; font-size: 14px; font-weight: 600;"><svg data-dc-tpl="36" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="37" d="M5 12h14"></path><path data-dc-tpl="38" d="M12 5v14"></path></svg>Add room</a>
+          </div>
+        </div>
+      </div>
+
+      <section data-dc-tpl="39" aria-label="Camp explorer" style="position: relative; height: 200px; border-radius: 16px; border: 1.5px dashed var(--border); background-color: var(--card); background-image: radial-gradient(var(--border) 1px, transparent 1px); background-size: 18px 18px; display: flex; align-items: center; justify-content: center;">
+        <div data-dc-tpl="40" style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 20px; border-radius: 12px; background: var(--card); text-align: center;">
+          <svg data-dc-tpl="41" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--primary);"><path data-dc-tpl="42" d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path><path data-dc-tpl="43" d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path><path data-dc-tpl="44" d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path><path data-dc-tpl="45" d="M10 6h4"></path><path data-dc-tpl="46" d="M10 10h4"></path><path data-dc-tpl="47" d="M10 14h4"></path><path data-dc-tpl="48" d="M10 18h4"></path></svg>
+          <strong data-dc-tpl="49" style="font-size: 14px;">Camp explorer</strong>
+          <span data-dc-tpl="50" style="font-size: 12px; color: var(--muted-foreground);">Reserved hero area · animated camp → rooms → beds view (spec to follow)</span>
+        </div>
+      </section>
+
+      <section data-dc-tpl="51" style="display: flex; flex-direction: column; gap: 14px; padding: 18px 20px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+        <div data-dc-tpl="52" style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px;">
+          <div data-dc-tpl="53" style="display: flex; align-items: baseline; gap: 10px;"><span data-dc-tpl="54" style="font-size: 26px; font-weight: 800; letter-spacing: -0.02em;">93.0%</span><span data-dc-tpl="55" style="font-size: 14px; color: var(--muted-foreground);">in use · 312 beds in 38 rooms</span></div>
+          <div data-dc-tpl="56" style="display: flex; flex-wrap: wrap; gap: 18px; font-size: 13px;">
+            <span data-dc-tpl="57" style="display: flex; align-items: center; gap: 6px;"><span data-dc-tpl="58" style="width: 10px; height: 10px; border-radius: 3px; background: var(--status-occupied);"></span><strong data-dc-tpl="59">268</strong> occupied</span>
+            <span data-dc-tpl="60" style="display: flex; align-items: center; gap: 6px;"><span data-dc-tpl="61" style="width: 10px; height: 10px; border-radius: 3px; background: var(--status-held);"></span><strong data-dc-tpl="62">22</strong> held</span>
+            <span data-dc-tpl="63" style="display: flex; align-items: center; gap: 6px;"><span data-dc-tpl="64" style="width: 10px; height: 10px; border-radius: 3px; background: var(--status-vacant);"></span><strong data-dc-tpl="65">22</strong> vacant</span>
+          </div>
+        </div>
+        <div data-dc-tpl="66" style="display: flex; height: 14px; border-radius: 999px; overflow: hidden; background: var(--muted); gap: 2px;">
+          <div data-dc-tpl="67" style="width: 85.9%; background: var(--status-occupied);"></div>
+          <div data-dc-tpl="68" style="width: 7.05%; background: var(--status-held);"></div>
+          <div data-dc-tpl="69" style="width: 7.05%; background: var(--status-vacant);"></div>
+        </div>
+      </section>
+
+      <div data-dc-tpl="70" style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px;">
+        <label data-dc-tpl="71" style="display: flex; align-items: center; gap: 8px; height: 38px; padding: 0px 12px; flex: 1 1 300px; max-width: 420px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--muted-foreground);">
+          <svg data-dc-tpl="72" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle data-dc-tpl="73" cx="11" cy="11" r="8"></circle><path data-dc-tpl="74" d="m21 21-4.3-4.3"></path></svg>
+          <input data-dc-tpl="75" type="search" placeholder="Room number, worker name or Emp No" aria-label="Search rooms" style="flex: 1 1 0%; min-width: 0px; border: 0px; outline: none; background: transparent; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 14px; color: var(--foreground);">
+        </label>
+        <div data-dc-tpl="76" role="list" aria-label="Bed status legend" style="display: flex; flex-wrap: wrap; gap: 8px; font-size: 12px; font-weight: 600;">
+          <span data-dc-tpl="77" role="listitem" style="display: flex; align-items: center; gap: 6px; height: 26px; padding: 0px 10px; border-radius: 999px; background: var(--status-occupied-bg); color: var(--status-occupied-fg); border: 1px solid var(--status-occupied-border);">Occupied</span>
+          <span data-dc-tpl="78" role="listitem" style="display: flex; align-items: center; gap: 6px; height: 26px; padding: 0px 10px; border-radius: 999px; background: var(--status-held-bg); color: var(--status-held-fg); border: 1px solid var(--status-held-border);">Held · on leave</span>
+          <span data-dc-tpl="79" role="listitem" style="display: flex; align-items: center; gap: 6px; height: 26px; padding: 0px 10px; border-radius: 999px; background: var(--status-vacant-bg); color: var(--status-vacant-fg); border: 1px solid var(--status-vacant-border);">Vacant</span>
+          <span data-dc-tpl="80" role="listitem" style="display: flex; align-items: center; gap: 6px; height: 26px; padding: 0px 10px; border-radius: 999px; background: var(--status-invalid-bg); color: var(--status-invalid-fg); border: 1px dashed var(--status-invalid-border); text-decoration: line-through;">Invalidated</span>
+        </div>
+        <label data-dc-tpl="81" style="display: flex; align-items: center; gap: 10px; margin-left: auto; font-size: 13px; font-weight: 500; cursor: pointer;">
+          <span data-dc-tpl="82" style="position: relative; width: 36px; height: 20px; border-radius: 999px; background: var(--primary);"><span data-dc-tpl="83" style="position: absolute; top: 2px; left: 18px; width: 16px; height: 16px; border-radius: 999px; background: rgb(255, 255, 255); box-shadow: var(--shadow-sm);"></span></span>
+          <input data-dc-tpl="84" type="checkbox" aria-label="Show invalidated rooms" checked="" style="position: absolute; opacity: 0; width: 1px; height: 1px;">
+          Invalidated rooms (2)
+        </label>
+      </div>
+
+      <div data-dc-tpl="85" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr)); gap: 16px; align-items: start;">
+        
+          <article data-dc-tpl="87" style="display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div data-dc-tpl="88" style="display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;">
+              <div data-dc-tpl="89" style="display: flex; flex-direction: column; gap: 2px; min-width: 0px;">
+                <div data-dc-tpl="90" style="display: flex; align-items: center; gap: 8px;"><h3 data-dc-tpl="91" style="margin: 0px; font-size: 15.5px; font-weight: 700;">Room <span class="sc-interp">101</span></h3></div>
+                <span data-dc-tpl="94" style="font-size: 12.5px; color: var(--muted-foreground);"><span class="sc-interp">7 occupied · 1 held · 1 vacant · 35 m²</span></span>
+              </div>
+              <div data-dc-tpl="95" style="position: relative;">
+                <button data-dc-tpl="96" type="button" aria-label="Room 101 actions" aria-haspopup="menu" style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--muted-foreground); display: flex; align-items: center; justify-content: center; cursor: pointer;"><svg data-dc-tpl="97" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle data-dc-tpl="98" cx="12" cy="12" r="1"></circle><circle data-dc-tpl="99" cx="19" cy="12" r="1"></circle><circle data-dc-tpl="100" cx="5" cy="12" r="1"></circle></svg></button>
+                
+              </div>
+            </div>
+            
+            
+            <div data-dc-tpl="135" style="display: grid; grid-template-columns: repeat(3, minmax(0px, 1fr)); gap: 6px;">
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B1, occupied by Ram Prasad A." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B1</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Lower</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Ram Prasad A.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B2, held for Ram Bahadur T." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-held-bg); border: 1px solid var(--status-held-border); color: var(--status-held-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B2</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Upper</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Ram Bahadur T.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B3, occupied by Mohan S." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B3</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Lower</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Mohan S.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B4, occupied by Dipak K." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B4</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Upper</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Dipak K.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B5, occupied by Hari B." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B5</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Lower</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Hari B.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B6, occupied by Nabin P." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B6</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Upper</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Nabin P.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B7, vacant" style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-vacant-bg); border: 1px solid var(--status-vacant-border); color: var(--status-vacant-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B7</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Lower</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Vacant</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B8, occupied by Sunil M." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B8</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Upper</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Sunil M.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B9, occupied by Krishna G." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B9</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Single</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Krishna G.</span></span>
+                </a>
+              
+            </div>
+          </article>
+        
+          <article data-dc-tpl="87" style="display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm); position: relative; z-index: 4;">
+            <div data-dc-tpl="88" style="display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;">
+              <div data-dc-tpl="89" style="display: flex; flex-direction: column; gap: 2px; min-width: 0px;">
+                <div data-dc-tpl="90" style="display: flex; align-items: center; gap: 8px;"><h3 data-dc-tpl="91" style="margin: 0px; font-size: 15.5px; font-weight: 700;">Room <span class="sc-interp">102</span></h3></div>
+                <span data-dc-tpl="94" style="font-size: 12.5px; color: var(--muted-foreground);"><span class="sc-interp">6 occupied · 1 held · 1 vacant · 28 m²</span></span>
+              </div>
+              <div data-dc-tpl="95" style="position: relative;">
+                <button data-dc-tpl="96" type="button" aria-label="Room 102 actions" aria-haspopup="menu" style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--ring); background: var(--card); color: var(--muted-foreground); display: flex; align-items: center; justify-content: center; cursor: pointer;"><svg data-dc-tpl="97" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle data-dc-tpl="98" cx="12" cy="12" r="1"></circle><circle data-dc-tpl="99" cx="19" cy="12" r="1"></circle><circle data-dc-tpl="100" cx="5" cy="12" r="1"></circle></svg></button>
+                
+                  <div data-dc-tpl="102" role="menu" style="position: absolute; right: 0px; top: 38px; z-index: 6; width: 230px; padding: 6px; border-radius: 10px; background: var(--popover); color: var(--popover-foreground); border: 1px solid var(--border); box-shadow: var(--shadow-md); display: flex; flex-direction: column;">
+                    <a data-dc-tpl="103" role="menuitem" href="CampDialogs.html" style="display: flex; align-items: center; gap: 10px; height: 36px; padding: 0px 10px; border-radius: 6px; background: var(--muted); color: inherit; text-decoration: none; font-size: 13px; font-weight: 500;"><svg data-dc-tpl="104" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="105" d="M5 12h14"></path><path data-dc-tpl="106" d="M12 5v14"></path></svg>Add beds</a>
+                    <a data-dc-tpl="107" role="menuitem" href="CampDialogs.html" style="display: flex; align-items: center; gap: 10px; height: 36px; padding: 0px 10px; border-radius: 6px; color: inherit; text-decoration: none; font-size: 13px; font-weight: 500;"><svg data-dc-tpl="108" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="109" d="M21.17 6.81a1 1 0 0 0-3.99-3.99L3.84 16.17a2 2 0 0 0-.5.83l-1.32 4.35a.5.5 0 0 0 .62.62l4.35-1.32a2 2 0 0 0 .83-.5z"></path><path data-dc-tpl="110" d="m15 5 4 4"></path></svg>Edit room</a>
+                    <a data-dc-tpl="111" role="menuitem" href="CampDialogs.html" style="display: flex; align-items: center; gap: 10px; height: 36px; padding: 0px 10px; border-radius: 6px; color: inherit; text-decoration: none; font-size: 13px; font-weight: 500;"><svg data-dc-tpl="112" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle data-dc-tpl="113" cx="9" cy="5" r="1"></circle><circle data-dc-tpl="114" cx="9" cy="12" r="1"></circle><circle data-dc-tpl="115" cx="9" cy="19" r="1"></circle><circle data-dc-tpl="116" cx="15" cy="5" r="1"></circle><circle data-dc-tpl="117" cx="15" cy="12" r="1"></circle><circle data-dc-tpl="118" cx="15" cy="19" r="1"></circle></svg>Reorder beds</a>
+                    <div data-dc-tpl="119" style="height: 1px; margin: 4px 0px; background: var(--border);"></div>
+                    <button data-dc-tpl="120" type="button" role="menuitem" disabled="" style="display: flex; align-items: center; gap: 10px; min-height: 36px; padding: 6px 10px; border: 0px; border-radius: 6px; background: transparent; color: var(--destructive); font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 13px; font-weight: 500; text-align: left; opacity: 0.5; cursor: not-allowed;"><svg data-dc-tpl="121" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle data-dc-tpl="122" cx="12" cy="12" r="10"></circle><path data-dc-tpl="123" d="m4.9 4.9 14.2 14.2"></path></svg><span data-dc-tpl="124" style="display: flex; flex-direction: column;"><span data-dc-tpl="125">Invalidate room</span><span data-dc-tpl="126" style="font-size: 11px; color: var(--muted-foreground);">7 beds in use — move or exit first</span></span></button>
+                  </div>
+                
+              </div>
+            </div>
+            
+              <div data-dc-tpl="128" style="display: flex; align-items: center; gap: 8px; padding: 7px 10px; border-radius: 8px; background: var(--warning-bg); border: 1px solid var(--warning-border); color: var(--warning-fg); font-size: 12.5px; font-weight: 600;"><svg data-dc-tpl="129" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="130" d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path data-dc-tpl="131" d="M12 9v4"></path><path data-dc-tpl="132" d="M12 17h.01"></path></svg><span class="sc-interp">8 beds; area fits about 7</span></div>
+            
+            
+            <div data-dc-tpl="135" style="display: grid; grid-template-columns: repeat(4, minmax(0px, 1fr)); gap: 6px;">
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B1, occupied by Shamim A." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B1</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Lower</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Shamim A.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B2, occupied by Jamal U." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B2</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Upper</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Jamal U.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B3, occupied by Sohel R." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B3</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Lower</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Sohel R.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B4, occupied by Rafiqul I." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B4</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Upper</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Rafiqul I.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B5, occupied by Alamgir H." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B5</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Lower</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Alamgir H.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B6, vacant" style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-vacant-bg); border: 1px solid var(--status-vacant-border); color: var(--status-vacant-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B6</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Upper</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Vacant</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B7, occupied by Nurul A." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B7</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Lower</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Nurul A.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B8, held for Masud R." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-held-bg); border: 1px solid var(--status-held-border); color: var(--status-held-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B8</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Upper</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Masud R.</span></span>
+                </a>
+              
+            </div>
+          </article>
+        
+          <article data-dc-tpl="87" style="display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div data-dc-tpl="88" style="display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;">
+              <div data-dc-tpl="89" style="display: flex; flex-direction: column; gap: 2px; min-width: 0px;">
+                <div data-dc-tpl="90" style="display: flex; align-items: center; gap: 8px;"><h3 data-dc-tpl="91" style="margin: 0px; font-size: 15.5px; font-weight: 700;">Room <span class="sc-interp">103</span></h3></div>
+                <span data-dc-tpl="94" style="font-size: 12.5px; color: var(--muted-foreground);"><span class="sc-interp">4 occupied · 0 held · 2 vacant · 24 m²</span></span>
+              </div>
+              <div data-dc-tpl="95" style="position: relative;">
+                <button data-dc-tpl="96" type="button" aria-label="Room 103 actions" aria-haspopup="menu" style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--muted-foreground); display: flex; align-items: center; justify-content: center; cursor: pointer;"><svg data-dc-tpl="97" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle data-dc-tpl="98" cx="12" cy="12" r="1"></circle><circle data-dc-tpl="99" cx="19" cy="12" r="1"></circle><circle data-dc-tpl="100" cx="5" cy="12" r="1"></circle></svg></button>
+                
+              </div>
+            </div>
+            
+            
+            <div data-dc-tpl="135" style="display: grid; grid-template-columns: repeat(3, minmax(0px, 1fr)); gap: 6px;">
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B1, occupied by Vijay N." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B1</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Single</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Vijay N.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B2, occupied by Rakesh T." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B2</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Single</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Rakesh T.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B3, vacant" style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-vacant-bg); border: 1px solid var(--status-vacant-border); color: var(--status-vacant-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B3</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Single</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Vacant</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B4, vacant" style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-vacant-bg); border: 1px solid var(--status-vacant-border); color: var(--status-vacant-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B4</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Single</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Vacant</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B5, occupied by Deepak R." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B5</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Single</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Deepak R.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B6, occupied by Ajay M." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B6</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Single</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Ajay M.</span></span>
+                </a>
+              
+            </div>
+          </article>
+        
+          <article data-dc-tpl="87" style="display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div data-dc-tpl="88" style="display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;">
+              <div data-dc-tpl="89" style="display: flex; flex-direction: column; gap: 2px; min-width: 0px;">
+                <div data-dc-tpl="90" style="display: flex; align-items: center; gap: 8px;"><h3 data-dc-tpl="91" style="margin: 0px; font-size: 15.5px; font-weight: 700;">Room <span class="sc-interp">104</span></h3></div>
+                <span data-dc-tpl="94" style="font-size: 12.5px; color: var(--muted-foreground);"><span class="sc-interp">4 occupied · 1 held · 2 vacant · 30 m²</span></span>
+              </div>
+              <div data-dc-tpl="95" style="position: relative;">
+                <button data-dc-tpl="96" type="button" aria-label="Room 104 actions" aria-haspopup="menu" style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--muted-foreground); display: flex; align-items: center; justify-content: center; cursor: pointer;"><svg data-dc-tpl="97" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle data-dc-tpl="98" cx="12" cy="12" r="1"></circle><circle data-dc-tpl="99" cx="19" cy="12" r="1"></circle><circle data-dc-tpl="100" cx="5" cy="12" r="1"></circle></svg></button>
+                
+              </div>
+            </div>
+            
+            
+            <div data-dc-tpl="135" style="display: grid; grid-template-columns: repeat(4, minmax(0px, 1fr)); gap: 6px;">
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B1, occupied by Tek B." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B1</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Lower</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Tek B.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B2, occupied by Lal B." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B2</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Upper</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Lal B.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B3, occupied by Bishnu P." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B3</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Lower</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Bishnu P.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B4, invalidated" style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-invalid-bg); border: 1px dashed var(--status-invalid-border); color: var(--status-invalid-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800; text-decoration: line-through;"><span class="sc-interp">B4</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Upper</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Broken frame</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B5, vacant" style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-vacant-bg); border: 1px solid var(--status-vacant-border); color: var(--status-vacant-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B5</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Lower</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Vacant</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B6, vacant" style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-vacant-bg); border: 1px solid var(--status-vacant-border); color: var(--status-vacant-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B6</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Upper</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Vacant</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B7, occupied by Gopal S." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B7</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Lower</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Gopal S.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B8, held for Purna G." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-held-bg); border: 1px solid var(--status-held-border); color: var(--status-held-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B8</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Upper</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Purna G.</span></span>
+                </a>
+              
+            </div>
+          </article>
+        
+          <article data-dc-tpl="87" style="display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div data-dc-tpl="88" style="display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;">
+              <div data-dc-tpl="89" style="display: flex; flex-direction: column; gap: 2px; min-width: 0px;">
+                <div data-dc-tpl="90" style="display: flex; align-items: center; gap: 8px;"><h3 data-dc-tpl="91" style="margin: 0px; font-size: 15.5px; font-weight: 700;">Room <span class="sc-interp">201</span></h3></div>
+                <span data-dc-tpl="94" style="font-size: 12.5px; color: var(--muted-foreground);"><span class="sc-interp">2 occupied · 0 held · 6 vacant · 32 m²</span></span>
+              </div>
+              <div data-dc-tpl="95" style="position: relative;">
+                <button data-dc-tpl="96" type="button" aria-label="Room 201 actions" aria-haspopup="menu" style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--muted-foreground); display: flex; align-items: center; justify-content: center; cursor: pointer;"><svg data-dc-tpl="97" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle data-dc-tpl="98" cx="12" cy="12" r="1"></circle><circle data-dc-tpl="99" cx="19" cy="12" r="1"></circle><circle data-dc-tpl="100" cx="5" cy="12" r="1"></circle></svg></button>
+                
+              </div>
+            </div>
+            
+            
+            <div data-dc-tpl="135" style="display: grid; grid-template-columns: repeat(4, minmax(0px, 1fr)); gap: 6px;">
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B1, occupied by Rohit K." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B1</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Lower</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Rohit K.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B2, occupied by Amit S." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B2</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Upper</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Amit S.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B3, vacant" style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-vacant-bg); border: 1px solid var(--status-vacant-border); color: var(--status-vacant-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B3</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Lower</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Vacant</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B4, vacant" style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-vacant-bg); border: 1px solid var(--status-vacant-border); color: var(--status-vacant-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B4</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Upper</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Vacant</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B5, vacant" style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-vacant-bg); border: 1px solid var(--status-vacant-border); color: var(--status-vacant-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B5</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Lower</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Vacant</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B6, vacant" style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-vacant-bg); border: 1px solid var(--status-vacant-border); color: var(--status-vacant-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B6</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Upper</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Vacant</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B7, vacant" style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-vacant-bg); border: 1px solid var(--status-vacant-border); color: var(--status-vacant-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B7</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Lower</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Vacant</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B8, vacant" style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-vacant-bg); border: 1px solid var(--status-vacant-border); color: var(--status-vacant-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B8</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Upper</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Vacant</span></span>
+                </a>
+              
+            </div>
+          </article>
+        
+          <article data-dc-tpl="87" style="display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div data-dc-tpl="88" style="display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;">
+              <div data-dc-tpl="89" style="display: flex; flex-direction: column; gap: 2px; min-width: 0px;">
+                <div data-dc-tpl="90" style="display: flex; align-items: center; gap: 8px;"><h3 data-dc-tpl="91" style="margin: 0px; font-size: 15.5px; font-weight: 700;">Room <span class="sc-interp">301 Sup.</span></h3></div>
+                <span data-dc-tpl="94" style="font-size: 12.5px; color: var(--muted-foreground);"><span class="sc-interp">1 occupied · 0 held · 1 vacant · 14 m²</span></span>
+              </div>
+              <div data-dc-tpl="95" style="position: relative;">
+                <button data-dc-tpl="96" type="button" aria-label="Room 301 Sup. actions" aria-haspopup="menu" style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--muted-foreground); display: flex; align-items: center; justify-content: center; cursor: pointer;"><svg data-dc-tpl="97" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle data-dc-tpl="98" cx="12" cy="12" r="1"></circle><circle data-dc-tpl="99" cx="19" cy="12" r="1"></circle><circle data-dc-tpl="100" cx="5" cy="12" r="1"></circle></svg></button>
+                
+              </div>
+            </div>
+            
+            
+            <div data-dc-tpl="135" style="display: grid; grid-template-columns: repeat(2, minmax(0px, 1fr)); gap: 6px;">
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B1, occupied by Manoj P." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B1</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Single</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Manoj P.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B2, vacant" style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-vacant-bg); border: 1px solid var(--status-vacant-border); color: var(--status-vacant-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B2</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Single</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Vacant</span></span>
+                </a>
+              
+            </div>
+          </article>
+        
+          <article data-dc-tpl="87" style="display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div data-dc-tpl="88" style="display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;">
+              <div data-dc-tpl="89" style="display: flex; flex-direction: column; gap: 2px; min-width: 0px;">
+                <div data-dc-tpl="90" style="display: flex; align-items: center; gap: 8px;"><h3 data-dc-tpl="91" style="margin: 0px; font-size: 15.5px; font-weight: 700;">Room <span class="sc-interp">G-01</span></h3></div>
+                <span data-dc-tpl="94" style="font-size: 12.5px; color: var(--muted-foreground);"><span class="sc-interp">5 occupied · 0 held · 0 vacant · 20 m²</span></span>
+              </div>
+              <div data-dc-tpl="95" style="position: relative;">
+                <button data-dc-tpl="96" type="button" aria-label="Room G-01 actions" aria-haspopup="menu" style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--muted-foreground); display: flex; align-items: center; justify-content: center; cursor: pointer;"><svg data-dc-tpl="97" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle data-dc-tpl="98" cx="12" cy="12" r="1"></circle><circle data-dc-tpl="99" cx="19" cy="12" r="1"></circle><circle data-dc-tpl="100" cx="5" cy="12" r="1"></circle></svg></button>
+                
+              </div>
+            </div>
+            
+            
+            <div data-dc-tpl="135" style="display: grid; grid-template-columns: repeat(3, minmax(0px, 1fr)); gap: 6px;">
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B1, occupied by Hasan M." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B1</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp"></span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Hasan M.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B2, occupied by Tariq J." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B2</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp"></span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Tariq J.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B3, occupied by Zubair A." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B3</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp"></span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Zubair A.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B4, occupied by Kamran S." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B4</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp"></span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Kamran S.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B5, occupied by Asad R." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B5</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp"></span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Asad R.</span></span>
+                </a>
+              
+            </div>
+          </article>
+        
+          <article data-dc-tpl="87" style="display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 14px; background: var(--status-invalid-bg); border: 1px dashed var(--status-invalid-border); box-shadow: none; opacity: 0.8;">
+            <div data-dc-tpl="88" style="display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;">
+              <div data-dc-tpl="89" style="display: flex; flex-direction: column; gap: 2px; min-width: 0px;">
+                <div data-dc-tpl="90" style="display: flex; align-items: center; gap: 8px;"><h3 data-dc-tpl="91" style="margin: 0px; font-size: 15.5px; font-weight: 700; color: var(--status-invalid-fg); text-decoration: line-through;">Room <span class="sc-interp">G-04</span></h3><span data-dc-tpl="93" style="font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--status-invalid-bg); color: var(--status-invalid-fg); border: 1px dashed var(--status-invalid-border);">Invalidated</span></div>
+                <span data-dc-tpl="94" style="font-size: 12.5px; color: var(--muted-foreground);"><span class="sc-interp">6 beds · 22 m²</span></span>
+              </div>
+              <div data-dc-tpl="95" style="position: relative;">
+                <button data-dc-tpl="96" type="button" aria-label="Room G-04 actions" aria-haspopup="menu" style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--muted-foreground); display: flex; align-items: center; justify-content: center; cursor: pointer;"><svg data-dc-tpl="97" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle data-dc-tpl="98" cx="12" cy="12" r="1"></circle><circle data-dc-tpl="99" cx="19" cy="12" r="1"></circle><circle data-dc-tpl="100" cx="5" cy="12" r="1"></circle></svg></button>
+                
+              </div>
+            </div>
+            
+            
+              <div data-dc-tpl="134" style="font-size: 12px; color: var(--muted-foreground); line-height: 17px;"><span class="sc-interp">Invalidated 2 Oct 2026 by Aisha Noor · “Water damage, closed by facilities”</span></div>
+            
+            <div data-dc-tpl="135" style="display: grid; grid-template-columns: repeat(3, minmax(0px, 1fr)); gap: 6px;">
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B1, invalidated" style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-invalid-bg); border: 1px dashed var(--status-invalid-border); color: var(--status-invalid-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800; text-decoration: line-through;"><span class="sc-interp">B1</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Lower</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Invalidated</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B2, invalidated" style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-invalid-bg); border: 1px dashed var(--status-invalid-border); color: var(--status-invalid-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800; text-decoration: line-through;"><span class="sc-interp">B2</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Upper</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Invalidated</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B3, invalidated" style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-invalid-bg); border: 1px dashed var(--status-invalid-border); color: var(--status-invalid-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800; text-decoration: line-through;"><span class="sc-interp">B3</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Lower</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Invalidated</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B4, invalidated" style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-invalid-bg); border: 1px dashed var(--status-invalid-border); color: var(--status-invalid-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800; text-decoration: line-through;"><span class="sc-interp">B4</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Upper</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Invalidated</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B5, invalidated" style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-invalid-bg); border: 1px dashed var(--status-invalid-border); color: var(--status-invalid-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800; text-decoration: line-through;"><span class="sc-interp">B5</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Lower</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Invalidated</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B6, invalidated" style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-invalid-bg); border: 1px dashed var(--status-invalid-border); color: var(--status-invalid-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800; text-decoration: line-through;"><span class="sc-interp">B6</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Upper</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Invalidated</span></span>
+                </a>
+              
+            </div>
+          </article>
+        
+          <article data-dc-tpl="87" style="display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <div data-dc-tpl="88" style="display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;">
+              <div data-dc-tpl="89" style="display: flex; flex-direction: column; gap: 2px; min-width: 0px;">
+                <div data-dc-tpl="90" style="display: flex; align-items: center; gap: 8px;"><h3 data-dc-tpl="91" style="margin: 0px; font-size: 15.5px; font-weight: 700;">Room <span class="sc-interp">G-12</span></h3></div>
+                <span data-dc-tpl="94" style="font-size: 12.5px; color: var(--muted-foreground);"><span class="sc-interp">7 occupied · 1 held · 0 vacant · 22 m²</span></span>
+              </div>
+              <div data-dc-tpl="95" style="position: relative;">
+                <button data-dc-tpl="96" type="button" aria-label="Room G-12 actions" aria-haspopup="menu" style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--muted-foreground); display: flex; align-items: center; justify-content: center; cursor: pointer;"><svg data-dc-tpl="97" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle data-dc-tpl="98" cx="12" cy="12" r="1"></circle><circle data-dc-tpl="99" cx="19" cy="12" r="1"></circle><circle data-dc-tpl="100" cx="5" cy="12" r="1"></circle></svg></button>
+                
+              </div>
+            </div>
+            
+              <div data-dc-tpl="128" style="display: flex; align-items: center; gap: 8px; padding: 7px 10px; border-radius: 8px; background: var(--warning-bg); border: 1px solid var(--warning-border); color: var(--warning-fg); font-size: 12.5px; font-weight: 600;"><svg data-dc-tpl="129" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="130" d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path><path data-dc-tpl="131" d="M12 9v4"></path><path data-dc-tpl="132" d="M12 17h.01"></path></svg><span class="sc-interp">8 beds; area fits about 5</span></div>
+            
+            
+            <div data-dc-tpl="135" style="display: grid; grid-template-columns: repeat(4, minmax(0px, 1fr)); gap: 6px;">
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B1, occupied by Ramesh S." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B1</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Lower</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Ramesh S.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B2, occupied by Dil K." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B2</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Upper</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Dil K.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B3, occupied by Ganesh L." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B3</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Lower</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Ganesh L.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B4, occupied by Prem T." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B4</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Upper</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Prem T.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B5, occupied by Sagar B." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B5</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Lower</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Sagar B.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B6, held for Kiran R." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-held-bg); border: 1px solid var(--status-held-border); color: var(--status-held-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B6</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Upper</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Kiran R.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B7, occupied by Bijay K." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B7</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Lower</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Bijay K.</span></span>
+                </a>
+              
+                <a data-dc-tpl="137" href="BedDrawer.html" aria-label="B8, occupied by Raju S." style="display: flex; flex-direction: column; gap: 3px; min-width: 0px; padding: 7px 8px; border-radius: 8px; text-decoration: none; background: var(--status-occupied-bg); border: 1px solid var(--status-occupied-border); color: var(--status-occupied-fg);">
+                  <span data-dc-tpl="138" style="display: flex; justify-content: space-between; align-items: baseline; gap: 4px;"><span data-dc-tpl="139" style="font-size: 12.5px; font-weight: 800;"><span class="sc-interp">B8</span></span><span data-dc-tpl="140" style="font-size: 10px; font-weight: 600; opacity: 0.8;"><span class="sc-interp">Upper</span></span></span>
+                  <span data-dc-tpl="141" style="font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><span class="sc-interp">Raju S.</span></span>
+                </a>
+              
+            </div>
+          </article>
+        
+      </div>
+    </main>
+  </div></div></div></div>
+  <div data-dc-tpl="6" style="position: absolute; inset: 0px; background: var(--overlay);"></div>
+
+  <aside data-dc-tpl="7" role="dialog" aria-modal="true" aria-labelledby="bed-title" style="position: absolute; top: 0px; right: 0px; bottom: 0px; width: 480px; box-sizing: border-box; background: var(--card); border-left: 1px solid var(--border); box-shadow: var(--shadow-lg); display: flex; flex-direction: column;">
+    <div data-dc-tpl="8" style="padding: 20px 24px 16px; display: flex; flex-direction: column; gap: 10px; border-bottom: 1px solid var(--border);">
+      <div data-dc-tpl="9" style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;">
+        <div data-dc-tpl="10" style="display: flex; flex-direction: column; gap: 2px;">
+          <span data-dc-tpl="11" style="font-size: 12.5px; color: var(--muted-foreground); font-weight: 600;">Al Quoz Camp 3</span>
+          <h2 data-dc-tpl="12" id="bed-title" style="margin: 0px; font-size: 22px; line-height: 30px; font-weight: 800; letter-spacing: -0.015em;">Room 101 · <span class="sc-interp">B7</span></h2>
+        </div>
+        <button data-dc-tpl="13" type="button" aria-label="Close" style="width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--muted-foreground); display: flex; align-items: center; justify-content: center; cursor: pointer;"><svg data-dc-tpl="14" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="15" d="M18 6 6 18"></path><path data-dc-tpl="16" d="m6 6 12 12"></path></svg></button>
+      </div>
+      <div data-dc-tpl="17" style="display: flex; flex-wrap: wrap; gap: 6px;">
+        <span data-dc-tpl="18" style="display: inline-flex; align-items: center; height: 24px; padding: 0px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; background: var(--status-vacant-bg); color: var(--status-vacant-fg); border: 1px solid var(--status-vacant-border);"><span class="sc-interp">Vacant</span></span>
+        <span data-dc-tpl="19" style="display: inline-flex; align-items: center; height: 24px; padding: 0px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; background: var(--secondary); color: var(--secondary-foreground);"><span class="sc-interp">Bunk lower</span></span>
+      </div>
+    </div>
+
+    <div data-dc-tpl="20" style="flex: 1 1 0%; overflow: auto; padding: 20px 24px 28px; display: flex; flex-direction: column; gap: 22px;">
+      
+
+      
+        <section data-dc-tpl="43" style="display: flex; flex-direction: column; gap: 12px;">
+          <h3 data-dc-tpl="44" style="margin: 0px; font-size: 13px; font-weight: 700; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: 0.06em;">Put a worker in this bed</h3>
+          <label data-dc-tpl="45" style="display: flex; align-items: center; gap: 8px; height: 38px; padding: 0px 12px; border-radius: 8px; border: 1px solid var(--ring); box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 22%, transparent); background: var(--card); color: var(--muted-foreground);">
+            <svg data-dc-tpl="46" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle data-dc-tpl="47" cx="11" cy="11" r="8"></circle><path data-dc-tpl="48" d="m21 21-4.3-4.3"></path></svg>
+            <input data-dc-tpl="49" type="search" placeholder="Search name or Emp No" aria-label="Search workers" style="flex: 1 1 0%; min-width: 0px; border: 0px; outline: none; background: transparent; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 14px; color: var(--foreground);">
+          </label>
+          <div data-dc-tpl="50" role="radiogroup" aria-label="Candidates" style="display: flex; flex-direction: column; border-radius: 10px; border: 1px solid var(--border); overflow: hidden;">
+            <div data-dc-tpl="51" style="padding: 8px 12px; font-size: 11.5px; font-weight: 700; color: var(--muted-foreground); background: var(--muted); text-transform: uppercase; letter-spacing: 0.05em;">Without a bed · 41</div>
+            
+              <label data-dc-tpl="53" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-top: 1px solid var(--border); cursor: pointer; background: color-mix(in oklab, var(--primary) 9%, var(--card)); box-shadow: inset 0 0 0 1.5px var(--primary);">
+                <input data-dc-tpl="54" type="radio" name="cand" checked="" style="width: 16px; height: 16px; margin: 0px; accent-color: var(--primary);">
+                <span data-dc-tpl="55" style="flex: 1 1 0%; min-width: 0px; display: flex; flex-direction: column;"><span data-dc-tpl="56" style="font-size: 13.5px; font-weight: 600;"><span class="sc-interp">Anil Kumar</span></span><span data-dc-tpl="57" style="font-size: 12px; color: var(--muted-foreground);"><span data-dc-tpl="58" style="font-family: &quot;JetBrains Mono&quot;, ui-monospace, monospace;"><span class="sc-interp">XP-004021</span></span> · <span class="sc-interp">Plumber · Marina Build LLC</span></span></span>
+                <span data-dc-tpl="59" style="flex: 0 0 auto; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--warning-bg); color: var(--warning-fg);"><span class="sc-interp">No bed</span></span>
+              </label>
+            
+              <label data-dc-tpl="53" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-top: 1px solid var(--border); cursor: pointer; background: var(--card);">
+                <input data-dc-tpl="54" type="radio" name="cand" style="width: 16px; height: 16px; margin: 0px; accent-color: var(--primary);">
+                <span data-dc-tpl="55" style="flex: 1 1 0%; min-width: 0px; display: flex; flex-direction: column;"><span data-dc-tpl="56" style="font-size: 13.5px; font-weight: 600;"><span class="sc-interp">Shahid Mehmood</span></span><span data-dc-tpl="57" style="font-size: 12px; color: var(--muted-foreground);"><span data-dc-tpl="58" style="font-family: &quot;JetBrains Mono&quot;, ui-monospace, monospace;"><span class="sc-interp">XP-004290</span></span> · <span class="sc-interp">Forklift Operator · Desert Line</span></span></span>
+                <span data-dc-tpl="59" style="flex: 0 0 auto; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--warning-bg); color: var(--warning-fg);"><span class="sc-interp">No bed</span></span>
+              </label>
+            
+              <label data-dc-tpl="53" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-top: 1px solid var(--border); cursor: pointer; background: var(--card);">
+                <input data-dc-tpl="54" type="radio" name="cand" style="width: 16px; height: 16px; margin: 0px; accent-color: var(--primary);">
+                <span data-dc-tpl="55" style="flex: 1 1 0%; min-width: 0px; display: flex; flex-direction: column;"><span data-dc-tpl="56" style="font-size: 13.5px; font-weight: 600;"><span class="sc-interp">Dil Kumar Magar</span></span><span data-dc-tpl="57" style="font-size: 12px; color: var(--muted-foreground);"><span data-dc-tpl="58" style="font-family: &quot;JetBrains Mono&quot;, ui-monospace, monospace;"><span class="sc-interp">XP-005102</span></span> · <span class="sc-interp">Helper · Gulf Horizon</span></span></span>
+                <span data-dc-tpl="59" style="flex: 0 0 auto; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--warning-bg); color: var(--warning-fg);"><span class="sc-interp">Joined 1 Oct</span></span>
+              </label>
+            
+              <label data-dc-tpl="53" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-top: 1px solid var(--border); cursor: pointer; background: var(--card);">
+                <input data-dc-tpl="54" type="radio" name="cand" style="width: 16px; height: 16px; margin: 0px; accent-color: var(--primary);">
+                <span data-dc-tpl="55" style="flex: 1 1 0%; min-width: 0px; display: flex; flex-direction: column;"><span data-dc-tpl="56" style="font-size: 13.5px; font-weight: 600;"><span class="sc-interp">Bikash Tamang</span></span><span data-dc-tpl="57" style="font-size: 12px; color: var(--muted-foreground);"><span data-dc-tpl="58" style="font-family: &quot;JetBrains Mono&quot;, ui-monospace, monospace;"><span class="sc-interp">XP-004182</span></span> · <span class="sc-interp">Scaffolder · Marina Build LLC</span></span></span>
+                <span data-dc-tpl="59" style="flex: 0 0 auto; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--status-occupied-bg); color: var(--status-occupied-fg);"><span class="sc-interp">Now in Room 204 · B3</span></span>
+              </label>
+            
+          </div>
+          <div data-dc-tpl="60" style="display: grid; grid-template-columns: repeat(2, minmax(0px, 1fr)); gap: 12px; align-items: end;">
+            <div data-dc-tpl="61" style="display: flex; flex-direction: column; gap: 6px;"><label data-dc-tpl="62" for="from" style="font-size: 13px; font-weight: 600;">In this bed from</label><div data-dc-tpl="63" style="display: flex; align-items: center; gap: 8px; height: 38px; padding: 0px 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card);"><svg data-dc-tpl="64" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--muted-foreground);"><rect data-dc-tpl="65" width="18" height="18" x="3" y="4" rx="2"></rect><path data-dc-tpl="66" d="M16 2v4"></path><path data-dc-tpl="67" d="M8 2v4"></path><path data-dc-tpl="68" d="M3 10h18"></path></svg><input data-dc-tpl="69" id="from" value="3 Oct 2026" style="flex: 1 1 0%; min-width: 0px; border: 0px; outline: none; background: transparent; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 14px; color: var(--foreground);"></div></div>
+            <a data-dc-tpl="70" href="States.html" style="height: 38px; border-radius: 8px; background: var(--primary); color: var(--primary-foreground); display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; font-size: 14px; font-weight: 700;">Assign to B7</a>
+          </div>
+          <p data-dc-tpl="71" style="margin: 0px; font-size: 12.5px; color: var(--muted-foreground); line-height: 18px;">Choosing a worker who already has a bed turns this into a <strong data-dc-tpl="72" style="color: var(--foreground);">move</strong> — the button becomes “Move here” and their old bed is freed.</p>
+        </section>
+      
+
+      <section data-dc-tpl="73" style="display: flex; flex-direction: column; gap: 10px;">
+        <h3 data-dc-tpl="74" style="margin: 0px; font-size: 13px; font-weight: 700; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: 0.06em;">Bed details</h3>
+        <div data-dc-tpl="75" style="display: grid; grid-template-columns: 110px minmax(0px, 1fr) auto; gap: 10px; align-items: end;">
+          <div data-dc-tpl="76" style="display: flex; flex-direction: column; gap: 6px;"><label data-dc-tpl="77" for="lbl" style="font-size: 13px; font-weight: 600;">Label</label><input data-dc-tpl="78" id="lbl" value="B7" style="height: 38px; box-sizing: border-box; padding: 0px 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 14px;"></div>
+          <div data-dc-tpl="79" style="display: flex; flex-direction: column; gap: 6px;"><span data-dc-tpl="80" style="font-size: 13px; font-weight: 600;">Type</span><button data-dc-tpl="81" type="button" style="height: 38px; display: flex; align-items: center; justify-content: space-between; padding: 0px 12px; border-radius: 8px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 14px; cursor: pointer;"><span class="sc-interp">Bunk lower</span><svg data-dc-tpl="82" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-dc-tpl="83" d="m6 9 6 6 6-6"></path></svg></button></div>
+          <button data-dc-tpl="84" type="button" style="height: 38px; padding: 0px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--secondary); color: var(--secondary-foreground); font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 14px; font-weight: 600; cursor: pointer;">Save</button>
+        </div>
+        
+          <a data-dc-tpl="86" href="CampDialogs.html" style="display: flex; align-items: center; gap: 8px; width: max-content; height: 36px; padding: 0px 12px; border-radius: 8px; border: 1px solid color-mix(in oklab, var(--destructive) 40%, var(--border)); color: var(--destructive); text-decoration: none; font-size: 13.5px; font-weight: 600;"><svg data-dc-tpl="87" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle data-dc-tpl="88" cx="12" cy="12" r="10"></circle><path data-dc-tpl="89" d="m4.9 4.9 14.2 14.2"></path></svg>Invalidate bed…</a>
+        
+        
+      </section>
+
+      <section data-dc-tpl="97" style="display: flex; flex-direction: column; gap: 12px;">
+        <h3 data-dc-tpl="98" style="margin: 0px; font-size: 13px; font-weight: 700; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: 0.06em;">Everyone who stayed in this bed</h3>
+        <ol data-dc-tpl="99" style="list-style: none; margin: 0px; padding: 0px; display: flex; flex-direction: column;">
+          
+            <li data-dc-tpl="101" style="display: grid; grid-template-columns: 20px minmax(0px, 1fr); gap: 12px;">
+              <div data-dc-tpl="102" style="display: flex; flex-direction: column; align-items: center;"><span data-dc-tpl="103" style="width: 12px; height: 12px; margin-top: 4px; border-radius: 999px; box-sizing: border-box; background: var(--card); border: 2px solid var(--muted-foreground);"></span><span data-dc-tpl="104" style="flex: 1 1 0%; width: 2px; margin-top: 4px; background: var(--border);"></span></div>
+              <div data-dc-tpl="105" style="display: flex; flex-direction: column; gap: 3px; padding-bottom: 18px;">
+                <div data-dc-tpl="106" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;"><a data-dc-tpl="107" href="WorkerDetail.html" style="font-size: 14px; font-weight: 700; color: var(--foreground); text-decoration: none;"><span class="sc-interp">Kamal Hossain</span></a><span data-dc-tpl="108" style="font-family: &quot;JetBrains Mono&quot;, ui-monospace, monospace; font-size: 12px; color: var(--muted-foreground);"><span class="sc-interp">XP-002980</span></span></div>
+                <div data-dc-tpl="111" style="font-size: 13px;"><span data-dc-tpl="112" style="font-weight: 600;"><span class="sc-interp">9 Mar 2025</span> → <span class="sc-interp">29 Sep 2026</span></span><span data-dc-tpl="113" style="color: var(--muted-foreground);"> · <span class="sc-interp">exited · Resigned</span></span></div>
+                <div data-dc-tpl="114" style="font-size: 12px; color: var(--muted-foreground);"><span class="sc-interp">In by Rajesh Kumar · out by Mariam Al Hashimi</span></div>
+              </div>
+            </li>
+          
+            <li data-dc-tpl="101" style="display: grid; grid-template-columns: 20px minmax(0px, 1fr); gap: 12px;">
+              <div data-dc-tpl="102" style="display: flex; flex-direction: column; align-items: center;"><span data-dc-tpl="103" style="width: 12px; height: 12px; margin-top: 4px; border-radius: 999px; box-sizing: border-box; background: var(--card); border: 2px solid var(--muted-foreground);"></span><span data-dc-tpl="104" style="flex: 1 1 0%; width: 2px; margin-top: 4px; background: transparent;"></span></div>
+              <div data-dc-tpl="105" style="display: flex; flex-direction: column; gap: 3px; padding-bottom: 18px;">
+                <div data-dc-tpl="106" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;"><a data-dc-tpl="107" href="WorkerDetail.html" style="font-size: 14px; font-weight: 700; color: var(--foreground); text-decoration: none;"><span class="sc-interp">Hemant Joshi</span></a><span data-dc-tpl="108" style="font-family: &quot;JetBrains Mono&quot;, ui-monospace, monospace; font-size: 12px; color: var(--muted-foreground);"><span class="sc-interp">XP-002655</span></span></div>
+                <div data-dc-tpl="111" style="font-size: 13px;"><span data-dc-tpl="112" style="font-weight: 600;"><span class="sc-interp">14 Aug 2023</span> → <span class="sc-interp">20 Feb 2025</span></span><span data-dc-tpl="113" style="color: var(--muted-foreground);"> · <span class="sc-interp">moved to Room 302 · B1</span></span></div>
+                <div data-dc-tpl="114" style="font-size: 12px; color: var(--muted-foreground);"><span class="sc-interp">In by Aisha Noor · out by Rajesh Kumar</span></div>
+              </div>
+            </li>
+          
+        </ol>
+      </section>
+    </div>
+  </aside></div></div></div></div></div>
+
+
+
+</body></html>
