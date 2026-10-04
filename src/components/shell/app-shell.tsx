@@ -18,6 +18,7 @@ import { cn } from "@/lib/utils";
 import { AppSidebar, type NavCounts } from "./app-sidebar";
 import { BreadcrumbProvider, Breadcrumbs } from "./breadcrumbs";
 import { CommandPalette } from "./command-palette";
+import { SessionKeepAlive } from "./session-keep-alive";
 import { useAppRouter } from "@/lib/use-app-router";
 
 type Me = { name: string; roleName: string | null; access: AccessProfile };
@@ -114,6 +115,7 @@ export function AppShell({ me, counts, children }: { me: Me; counts: NavCounts; 
         </div>
       </div>
       <CommandPalette open={searchOpen} onOpenChange={setSearchOpen} access={me.access} />
+      <SessionKeepAlive />
     </BreadcrumbProvider>
   );
 }
