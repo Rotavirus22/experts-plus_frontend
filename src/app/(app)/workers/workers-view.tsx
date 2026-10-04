@@ -12,18 +12,17 @@ import {
   type WorkerRowDto,
   type WorkerSortField,
 } from "@xperts/shared";
-import { ArrowDown, ArrowUp, ArrowUpDown, ChevronLeft, ChevronRight, Download, Pencil, Plus, Search, Users } from "lucide-react";
+import { ArrowDown, ArrowUp, ArrowUpDown, ChevronLeft, ChevronRight, Pencil, Plus, Search, Users } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState, useTransition } from "react";
-import { toast } from "sonner";
 import { EmptyState, PageHeader } from "@/components/design/primitives";
+import { ExportButton } from "@/components/export-button";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { AccommodationBadge, accommodationRowClass, BedButton, ExitButton, LeaveToggle } from "@/components/workers/worker-actions";
-import { errorMessage } from "@/lib/api";
 import { formatDate } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { toSearchParams } from "@/lib/worker-query";
@@ -198,7 +197,7 @@ export function WorkersView({ data, meta, query, access }: Props) {
         actions={
           <>
             {hasPermission(access, "workers.export") && (
-              <ExportButton href={`/api/workers/export.xlsx${exportQs ? `?${exportQs}` : ""}`} />
+              <ExportButton href={`/api/workers/export.xlsx${exportQs ? `?${exportQs}` : ""}`} fallbackName="workers.xlsx" />
             )}
             {canManage && (
               <Link href="/workers/new" className={buttonVariants()}>
@@ -498,30 +497,3 @@ function FilterSelect({
   );
 }
 
-/** Downloads the Excel file via fetch so the button can show progress while the server builds it. */
-function ExportButton({ href }: { href: string }) {
-  const [busy, setBusy] = useState(false);
-  async function download() {
-    setBusy(true);
-    try {
-      const res = await fetch(href, { credentials: "same-origin" });
-      if (!res.ok) throw new Error((await res.json().catch(() => null))?.message ?? "Export failed");
-      const name = /filename="?([^";]+)"?/.exec(res.headers.get("content-disposition") ?? "")?.[1] ?? "workers.xlsx";
-      const url = URL.createObjectURL(await res.blob());
-      const a = Object.assign(document.createElement("a"), { href: url, download: name });
-      a.click();
-      URL.revokeObjectURL(url);
-      toast.success("Excel file downloaded");
-    } catch (error) {
-      toast.error(errorMessage(error));
-    } finally {
-      setBusy(false);
-    }
-  }
-  return (
-    <Button variant="outline" onClick={download} loading={busy}>
-      {!busy && <Download data-icon="inline-start" />}
-      {busy ? "Preparing…" : "Export to Excel"}
-    </Button>
-  );
-}
