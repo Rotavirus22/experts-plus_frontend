@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useFieldControlId } from "./field-control"
 import { Select as SelectPrimitive } from "@base-ui/react/select"
 import { cn } from "cn"
 import { ChevronDownIcon, CheckIcon, ChevronUpIcon } from "lucide-react"
@@ -31,12 +32,15 @@ function SelectTrigger({
   className,
   size = "default",
   children,
+  id,
   ...props
 }: SelectPrimitive.Trigger.Props & {
   size?: "sm" | "default"
 }) {
+  const controlId = useFieldControlId(id)
   return (
     <SelectPrimitive.Trigger
+      id={controlId}
       data-slot="select-trigger"
       data-size={size}
       className={cn(

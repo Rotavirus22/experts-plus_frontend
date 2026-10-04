@@ -25,6 +25,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { api, errorMessage } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import { useAppRouter } from "@/lib/use-app-router";
+import { FieldControl } from "@/components/ui/field-control";
 
 const NONE = "__none";
 
@@ -301,17 +302,21 @@ function Field({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-1.5">
-      <Label className="text-[13px]">
-        <span>
-          {label}
-          {required && <span className="text-destructive"> *</span>}
-          {hint && <span className="font-normal text-muted-foreground"> · {hint}</span>}
-        </span>
-      </Label>
-      {children}
-      {error && <p className="text-[13px] text-destructive">{error}</p>}
-    </div>
+    <FieldControl>
+      {(id) => (
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor={id} className="text-[13px]">
+            <span>
+              {label}
+              {required && <span className="text-destructive"> *</span>}
+              {hint && <span className="font-normal text-muted-foreground"> · {hint}</span>}
+            </span>
+          </Label>
+          {children}
+          {error && <p className="text-[13px] text-destructive">{error}</p>}
+        </div>
+      )}
+    </FieldControl>
   );
 }
 

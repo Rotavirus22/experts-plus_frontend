@@ -34,6 +34,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { api, errorMessage } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import { useAppRouter } from "@/lib/use-app-router";
+import { FieldControl } from "@/components/ui/field-control";
 
 type Props = { users: UserDto[]; roles: RoleDto[]; camps: CampOptionDto[]; currentUserId: string };
 
@@ -416,11 +417,15 @@ function PasswordDialog({ user, onClose }: { user: UserDto; onClose: () => void 
 
 function Field({ label, error, hint, children }: { label: string; error?: string; hint?: string; children: React.ReactNode }) {
   return (
-    <div className="flex flex-col gap-1.5">
-      <Label>{label}</Label>
-      {children}
-      {hint && !error && <p className="text-xs text-muted-foreground">{hint}</p>}
-      {error && <p className="text-[13px] text-destructive">{error}</p>}
-    </div>
+    <FieldControl>
+      {(id) => (
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor={id}>{label}</Label>
+          {children}
+          {hint && !error && <p className="text-xs text-muted-foreground">{hint}</p>}
+          {error && <p className="text-[13px] text-destructive">{error}</p>}
+        </div>
+      )}
+    </FieldControl>
   );
 }

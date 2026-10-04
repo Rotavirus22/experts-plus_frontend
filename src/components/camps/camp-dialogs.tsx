@@ -41,6 +41,7 @@ import { cn } from "@/lib/utils";
 import { BED_TYPE_SHORT } from "./bed-status";
 import { useAppRouter } from "@/lib/use-app-router";
 import { plural } from "@/lib/format";
+import { FieldControl } from "@/components/ui/field-control";
 
 function Field({
   label,
@@ -56,15 +57,19 @@ function Field({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-1.5">
-      <Label>
-        {label}
-        {required && <span className="text-destructive">*</span>}
-      </Label>
-      {children}
-      {hint && !error && <div className="text-xs text-muted-foreground">{hint}</div>}
-      {error && <p className="text-[13px] text-destructive">{error}</p>}
-    </div>
+    <FieldControl>
+      {(id) => (
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor={id}>
+            {label}
+            {required && <span className="text-destructive">*</span>}
+          </Label>
+          {children}
+          {hint && !error && <div className="text-xs text-muted-foreground">{hint}</div>}
+          {error && <p className="text-[13px] text-destructive">{error}</p>}
+        </div>
+      )}
+    </FieldControl>
   );
 }
 
