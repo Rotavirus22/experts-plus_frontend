@@ -7,6 +7,7 @@ import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { RoomCard } from "@/components/camps/bed-map";
 import { BedLegend } from "@/components/camps/bed-status";
+import { CampExplorer } from "@/components/camps/camp-explorer";
 import { CampDialog, RoomDialog } from "@/components/camps/camp-dialogs";
 import { ConfirmDialog } from "@/components/confirm-dialog";
 import { EmptyState, FadeIn, OccupancyBar, PageHeader, percentInUse, Pill } from "@/components/design/primitives";
@@ -96,6 +97,8 @@ export function CampDetail({ camp, access }: { camp: CampDetailDto; access: Acce
           )
         }
       />
+
+      <CampExplorer camp={camp} access={access} canManage={canManage} />
 
       <div className="flex flex-col gap-4 rounded-2xl border bg-card p-5 shadow-sm">
         <div className="flex flex-wrap items-end justify-between gap-3">
