@@ -288,13 +288,13 @@ function FieldDialog({ field, onClose, onSaved }: { field: CustomFieldDto | null
               )}
             </div>
             <div className="flex flex-col gap-1.5">
-              <Label>Type</Label>
+              <Label htmlFor="field-type">Type</Label>
               <Controller
                 control={control}
                 name="type"
                 render={({ field: f }) => (
                   <Select items={FIELD_TYPES.map((t) => ({ value: t, label: FIELD_TYPE_LABELS[t] }))} value={f.value} onValueChange={(v) => v && f.onChange(v)} disabled={!!field}>
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger id="field-type" className="w-full">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>

@@ -387,13 +387,13 @@ function EditPanel({ data, onSaved }: { data: BedHistoryDto; onSaved: () => Prom
           <Input id="bed-label" value={label} onChange={(e) => setLabel(e.target.value)} maxLength={20} />
         </div>
         <div className="flex flex-1 flex-col gap-1.5">
-          <Label>Type</Label>
+          <Label htmlFor="bed-type">Type</Label>
           <Select
             items={[{ value: NONE, label: "Not set" }, ...BED_TYPES.map((t) => ({ value: t, label: BED_TYPE_LABELS[t] }))]}
             value={type ?? NONE}
             onValueChange={(v) => setType(!v || v === NONE ? null : (v as BedType))}
           >
-            <SelectTrigger className="w-full">
+            <SelectTrigger id="bed-type" className="w-full">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>

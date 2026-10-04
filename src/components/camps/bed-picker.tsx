@@ -116,9 +116,9 @@ export function BedPickerDialog({
 
         <div className="grid items-end gap-3 sm:grid-cols-[1fr_1fr_auto]">
           <div className="flex flex-col gap-1.5">
-            <Label>Camp</Label>
+            <Label htmlFor="picker-camp">Camp</Label>
             <Select items={(camps ?? []).map((c) => ({ value: c.id, label: campLabel(c) }))} value={campId} onValueChange={(v) => v && setCampId(v)}>
-              <SelectTrigger className="w-full">
+              <SelectTrigger id="picker-camp" className="w-full">
                 <SelectValue placeholder={camps ? "Choose a camp" : "Loading…"} />
               </SelectTrigger>
               <SelectContent>

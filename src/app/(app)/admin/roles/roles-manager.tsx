@@ -216,12 +216,14 @@ function RoleDialog({ role, onClose, onSaved }: { role: RoleDto | null; onClose:
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label>Camp access</Label>
+            <span id="role-camp-access" className="text-sm leading-none font-medium">
+              Camp access
+            </span>
             <Controller
               control={control}
               name="campScope"
               render={({ field }) => (
-                <div role="radiogroup" className="grid gap-3 sm:grid-cols-2">
+                <div role="radiogroup" aria-labelledby="role-camp-access" className="grid gap-3 sm:grid-cols-2">
                   {(
                     [
                       ["ALL", "All camps", "Every current and future camp"],
@@ -266,12 +268,14 @@ function RoleDialog({ role, onClose, onSaved }: { role: RoleDto | null; onClose:
               return (
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center justify-between">
-                    <Label>Permissions</Label>
+                    <span id="role-permissions" className="text-sm leading-none font-medium">
+                      Permissions
+                    </span>
                     <span className="text-[13px] text-muted-foreground">
                       <span className="font-bold text-foreground">{selected.size}</span> of {TOTAL} selected
                     </span>
                   </div>
-                  <div className="grid gap-3 sm:grid-cols-2">
+                  <div role="group" aria-labelledby="role-permissions" className="grid gap-3 sm:grid-cols-2">
                     {GROUPS.map(([group, keys]) => {
                       const all = keys.every((k) => selected.has(k));
                       return (

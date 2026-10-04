@@ -242,7 +242,7 @@ export function ExitButton({
           </DialogHeader>
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="flex flex-col gap-1.5">
-              <Label>
+              <Label htmlFor="exit-reason">
                 Reason <span className="text-destructive">*</span>
               </Label>
               <Select
@@ -250,7 +250,7 @@ export function ExitButton({
                 value={status}
                 onValueChange={(v) => v && setStatus(v as ExitStatus)}
               >
-                <SelectTrigger className="w-full">
+                <SelectTrigger id="exit-reason" className="w-full">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
