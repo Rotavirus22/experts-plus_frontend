@@ -12,6 +12,7 @@ const SECTION_LABELS: Record<string, string> = {
   workers: "Workers",
   camps: "Camps",
   reports: "Reports",
+  account: "My account",
   "admin/fields": "Custom fields",
   "admin/organisation": "Sponsors & clients",
   "admin/users": "Users",

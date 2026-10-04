@@ -3,6 +3,7 @@
 import type { AccessProfile } from "@xperts/shared";
 import { LogOut, Menu, Monitor, Moon, Search, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import Link from "next/link";
 import { useEffect, useState, useSyncExternalStore, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -134,13 +135,13 @@ function UserBlock({ me }: { me: Me }) {
   const [pending, startTransition] = useTransition();
   return (
     <div className="flex items-center gap-3">
-      <div className="flex items-center gap-2.5">
+      <Link href="/account" title="My account" className="flex items-center gap-2.5 rounded-lg p-1 pr-2 transition hover:bg-muted">
         <span className="flex size-[34px] items-center justify-center rounded-full bg-accent text-xs font-bold text-accent-foreground">{initials(me.name)}</span>
         <span className="hidden flex-col leading-tight sm:flex">
           <span className="text-[13px] font-semibold">{me.name}</span>
           <span className="text-xs text-muted-foreground">{me.roleName ?? "No role"}</span>
         </span>
-      </div>
+      </Link>
       <Button
         variant="outline"
         size="sm"

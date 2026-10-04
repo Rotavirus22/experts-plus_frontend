@@ -19,8 +19,8 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: { default: "Xperts Camps", template: "%s · Xperts Camps" },
-  description: "Internal camp, room and bed management for Xperts Recruitment",
+  title: { default: "Camps Management", template: "%s · Camps Management" },
+  description: "Internal camp, room and bed management",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

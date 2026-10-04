@@ -1,9 +1,14 @@
-import { ComingSoon } from "@/components/coming-soon";
+import type { AuditMetaDto, AuditPageDto } from "@xperts/shared";
+import { requirePagePermission, serverApi } from "@/lib/server-api";
+import { defaultAuditFilters } from "./audit-filters";
+import { AuditView } from "./audit-view";
 
-export default function Page() {
-  return (
-    <ComingSoon title="Audit log" phase={8} permission="audit.view">
-      {"Who changed what, with before/after values."}
-    </ComingSoon>
-  );
+export const metadata = { title: "Audit log" };
+
+export default async function AuditPage() {
+  await requirePagePermission("audit.view");
+  const meta = await serverApi<AuditMetaDto>("/audit/meta");
+  const filters = defaultAuditFilters(meta.today);
+  const first = await serverApi<AuditPageDto>(`/audit?from=${filters.from}&to=${filters.to}`);
+  return <AuditView meta={meta} initial={first} />;
 }

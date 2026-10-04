@@ -20,7 +20,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NAV_ITEMS, type NavItem } from "@/lib/nav";
 import { cn } from "@/lib/utils";
-import { XpertsLogo } from "./logo";
+import { AppLogo, LogoMark } from "./logo";
 
 const ICONS: Record<NavItem["icon"], LucideIcon> = {
   dashboard: LayoutDashboard,
@@ -66,14 +66,8 @@ export function AppSidebar({
   return (
     <div className="flex h-full flex-col gap-6 bg-sidebar px-4 py-4 text-sidebar-foreground">
       <div className="flex flex-col gap-2.5">
-        {!collapsed && <XpertsLogo />}
-        <div className={cn("flex items-center gap-2 px-1", collapsed ? "justify-center" : "justify-between")}>
-          {!collapsed && (
-            <div className="flex min-w-0 flex-col">
-              <span className="text-[15px] font-bold text-sidebar-accent-foreground">Xperts Camps</span>
-              <span className="text-[11px] opacity-80">Accommodation · UAE</span>
-            </div>
-          )}
+        <div className={cn("flex items-center gap-2 px-1", collapsed ? "flex-col justify-center" : "justify-between")}>
+          {collapsed ? <LogoMark /> : <AppLogo tone="light" />}
           {onToggleCollapsed && (
             <button
               type="button"

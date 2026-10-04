@@ -17,3 +17,5 @@ export * from './assignments.js';
 export * from './dashboard.js';
 export * from './organisation.js';
 export * from './reports.js';
+export * from './audit.js';
+export * from './account.js';

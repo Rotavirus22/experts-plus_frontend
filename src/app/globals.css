@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Xperts Camps design tokens (docs/design/globals.tokens.css). Always use these tokens, never raw hex.
+ * Camps Management design tokens (docs/design/globals.tokens.css). Always use these tokens, never raw hex.
  * Orange (--brand) is only for the logo, the sidebar active marker and small highlights, never for statuses.
  */
 @theme inline {

@@ -1,6 +1,6 @@
-# Xperts Camps — frontend
+# Camps Management — frontend
 
-Web UI for Xperts Camps, the internal camp, room and bed management app for Xperts Recruitment (UAE).
+Web UI for Camps Management, an internal camp, room and bed management app.
 Next.js 16 (App Router) · Tailwind v4 · shadcn/ui (Base UI) · TanStack Table · React Hook Form + Zod · motion.
 
 The API lives in [experts-plus_backend](https://github.com/Rotavirus22/experts-plus_backend).
