@@ -20,5 +20,6 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|robots.txt).*)"],
+  // Skip API calls, Next internals and public files (logo, icons) so signed-out pages can load them.
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|robots.txt|.*\.(?:jpg|jpeg|png|svg|webp|gif|ico|txt)$).*)"],
 };
