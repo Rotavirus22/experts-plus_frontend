@@ -12,7 +12,7 @@ import {
   type WorkerRowDto,
   type WorkerSortField,
 } from "@xperts/shared";
-import { ArrowDown, ArrowUp, ArrowUpDown, ChevronLeft, ChevronRight, Pencil, Plus, Search, Users } from "lucide-react";
+import { ArrowDown, ArrowUp, ArrowUpDown, ChevronLeft, ChevronRight, FileUp, Pencil, Plus, Search, Users } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState, useTransition } from "react";
@@ -198,6 +198,11 @@ export function WorkersView({ data, meta, query, access }: Props) {
           <>
             {hasPermission(access, "workers.export") && (
               <ExportButton href={`/api/workers/export.xlsx${exportQs ? `?${exportQs}` : ""}`} fallbackName="workers.xlsx" />
+            )}
+            {canManage && (
+              <Link href="/workers/import" className={buttonVariants({ variant: "outline" })}>
+                <FileUp data-icon="inline-start" /> Import from Excel
+              </Link>
             )}
             {canManage && (
               <Link href="/workers/new" className={buttonVariants()}>

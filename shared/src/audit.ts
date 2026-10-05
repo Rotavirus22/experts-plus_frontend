@@ -15,6 +15,7 @@ export const AUDIT_ACTIONS = [
   'LEAVE_START',
   'LEAVE_RETURN',
   'PASSWORD_CHANGE',
+  'IMPORT',
 ] as const;
 export type AuditAction = (typeof AUDIT_ACTIONS)[number];
 
@@ -31,6 +32,7 @@ export const AUDIT_ACTION_LABELS: Record<AuditAction, string> = {
   LEAVE_START: 'Leave started',
   LEAVE_RETURN: 'Returned',
   PASSWORD_CHANGE: 'Password changed',
+  IMPORT: 'Imported',
 };
 
 /** Entity types as stored, with the label shown in filters. */
@@ -47,6 +49,7 @@ export const AUDIT_ENTITY_LABELS: Record<string, string> = {
   SponsorEntity: 'Sponsor',
   ClientCompany: 'Client',
   Department: 'Division',
+  Import: 'Excel import',
 };
 
 const isoDate = z.string().refine(isIsoDate, 'Use a valid date (YYYY-MM-DD)');

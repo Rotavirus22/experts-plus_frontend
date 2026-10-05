@@ -44,10 +44,12 @@ export async function api<T = unknown>(path: string, init: { method?: string; bo
 }
 
 async function request<T>(path: string, init: { method?: string; body?: unknown }): Promise<T> {
+  // FormData (file uploads) is sent as multipart; the browser sets the boundary header.
+  const form = init.body instanceof FormData;
   const res = await fetch(`/api${path}`, {
     method: init.method ?? (init.body === undefined ? "GET" : "POST"),
-    headers: init.body === undefined ? undefined : { "content-type": "application/json" },
-    body: init.body === undefined ? undefined : JSON.stringify(init.body),
+    headers: init.body === undefined || form ? undefined : { "content-type": "application/json" },
+    body: init.body === undefined ? undefined : form ? (init.body as FormData) : JSON.stringify(init.body),
     credentials: "same-origin",
   });
   if (res.status === 401) {
