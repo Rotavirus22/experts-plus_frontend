@@ -16,12 +16,13 @@ Heroku config vars (`heroku config -a xperts-camps-api`):
 |---|---|
 | `DATABASE_URL` | Atlas connection string (`…/xperts?retryWrites=true&w=majority`) |
 | `BETTER_AUTH_SECRET` | Long random string. Changing it signs everyone out. |
-| `BETTER_AUTH_URL`, `FRONTEND_ORIGIN` | `https://experts-plus-frontend.vercel.app` (the public URL users open) |
+| `BETTER_AUTH_URL` | `https://camps.rohanpokhrel.com.np` (the public URL users open) |
+| `FRONTEND_ORIGIN` | Comma-separated addresses allowed to sign in: `https://camps.rohanpokhrel.com.np,https://experts-plus-frontend.vercel.app` |
 | `NODE_ENV` | `production` (turns on sign-in rate limiting) |
 
 Vercel: `BACKEND_URL=https://xperts-camps-api-ed786a496638.herokuapp.com` (Production and Preview).
 
-If you add a custom domain, set it in Vercel, then update `BETTER_AUTH_URL` and `FRONTEND_ORIGIN` on Heroku.
+If the domain changes, set it in Vercel, then update `BETTER_AUTH_URL` and add it to `FRONTEND_ORIGIN` on Heroku (otherwise sign-in fails with "Invalid origin").
 
 ## Deploying
 
