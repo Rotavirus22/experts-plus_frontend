@@ -241,8 +241,11 @@ const importRowSchema = z.object({
 export type ImportRow = z.output<typeof importRowSchema>;
 
 export const IMPORT_MAX_ROWS = 5000;
-/** Rows per commit request: keeps each request far below the hosting timeout. */
-export const IMPORT_CHUNK_SIZE = 25;
+/**
+ * Rows per commit request. Each row is its own transaction with several database round trips, and the rows of a
+ * chunk are saved in parallel, so a chunk stays far below the hosting timeout (Heroku: 30 s) even with a remote DB.
+ */
+export const IMPORT_CHUNK_SIZE = 10;
 
 export const importValidateSchema = z.object({
   options: importOptionsSchema,
