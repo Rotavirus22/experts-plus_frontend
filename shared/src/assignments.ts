@@ -65,3 +65,15 @@ export interface BedHistoryDto {
   /** Newest first. Includes the current stay. */
   stays: BedStayHistoryDto[];
 }
+
+/** Everyone who ever stayed in a room (any of its beds, including invalidated ones), newest first. */
+export interface RoomStayHistoryDto extends BedStayHistoryDto {
+  bedId: string;
+  bedLabel: string;
+}
+
+export interface RoomHistoryDto {
+  room: { id: string; number: string; isActive: boolean };
+  camp: { id: string; name: string };
+  stays: RoomStayHistoryDto[];
+}

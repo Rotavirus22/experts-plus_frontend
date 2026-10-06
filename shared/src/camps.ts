@@ -23,18 +23,20 @@ export type CampInput = z.input<typeof campInputSchema>;
 export const roomInputSchema = z.object({
   number: z.string().trim().min(1, 'Room number is required').max(20),
   areaSqm: optionalNumber(1, 10_000, 'Area'),
+  /** No longer shown in the UI: the bed map lays itself out (see bedGridColumns). Kept for old clients. */
   layoutColumns: z.coerce.number().int().min(1).max(12).default(4),
   notes: z.string().trim().max(300).optional().default(''),
 });
 export type RoomInput = z.input<typeof roomInputSchema>;
 
-/** Add several beds at once. Labels continue from the room's highest "<prefix><number>". */
+/** Add beds to a room: just a count. Labels continue from the room's highest "Bed <n>" (Bed 1, Bed 2, …). */
 export const BED_LAYOUTS = ['SINGLE', 'BUNK_PAIRS', 'UNSPECIFIED'] as const;
 export const bedsAddSchema = z.object({
   count: z.coerce.number().int().min(1, 'At least 1 bed').max(40, 'At most 40 beds at a time'),
   // Not trimmed at the end: "Bed " gives "Bed 1", "B" gives "B1".
-  prefix: z.string().max(10).transform((v) => v.trimStart()).default('B'),
-  layout: z.enum(BED_LAYOUTS).default('SINGLE'),
+  prefix: z.string().max(10).transform((v) => v.trimStart()).default('Bed '),
+  /** Bed types are not used any more; kept so older requests still validate. */
+  layout: z.enum(BED_LAYOUTS).default('UNSPECIFIED'),
 });
 export type BedsAddInput = z.input<typeof bedsAddSchema>;
 

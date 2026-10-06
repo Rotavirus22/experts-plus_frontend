@@ -9,7 +9,6 @@ import {
 } from "@xperts/shared";
 import { ArrowLeft, Lock, Pencil } from "lucide-react";
 import Link from "next/link";
-import { BED_TYPE_SHORT } from "@/components/camps/bed-status";
 import { Pill, SectionLabel } from "@/components/design/primitives";
 import { SetBreadcrumb } from "@/components/shell/breadcrumbs";
 import { buttonVariants } from "@/components/ui/button";
@@ -154,9 +153,8 @@ export default async function WorkerPage({ params }: { params: Promise<{ id: str
                   worker.leave ? "border-status-held-border bg-status-held-bg" : "border-status-occupied-border bg-status-occupied-bg",
                 )}
               >
-                <span className="flex size-[52px] shrink-0 flex-col items-center justify-center rounded-lg bg-card shadow-sm">
-                  <span className="text-base font-bold">{h.bedLabel}</span>
-                  {h.bedType && <span className="text-[10px] font-medium text-muted-foreground">{BED_TYPE_SHORT[h.bedType]}</span>}
+                <span className="flex h-[52px] min-w-[52px] shrink-0 items-center justify-center rounded-lg bg-card px-2.5 shadow-sm">
+                  <span className="text-base font-bold whitespace-nowrap">{h.bedLabel}</span>
                 </span>
                 <div className={cn("flex flex-col text-sm", worker.leave ? "text-status-held-fg" : "text-status-occupied-fg")}>
                   <span className="text-[15px] font-bold text-foreground">

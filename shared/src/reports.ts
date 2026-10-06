@@ -33,7 +33,6 @@ export const REPORT_EXTRA_COLUMNS: Record<ReportType, { key: string; label: stri
     { key: 'camp', label: 'Camp' },
     { key: 'room_no', label: 'Room No' },
     { key: 'bed', label: 'Bed' },
-    { key: 'bed_type', label: 'Bed type' },
     { key: 'vacant_since', label: 'Vacant since' },
   ],
 };
@@ -44,7 +43,7 @@ export const REPORT_DEFAULT_COLUMNS: Record<ReportType, string[]> = {
   workers_by_client: ['employee_code', 'full_name', 'designation', 'department', 'camp', 'room_no', 'bed', 'accommodation_status'],
   on_leave: ['employee_code', 'full_name', 'client_company', 'camp', 'room_no', 'bed', 'leave_since', 'days_away'],
   exits: ['employee_code', 'full_name', 'client_company', 'status', 'exit_date', 'exit_reason', 'last_bed'],
-  vacancy: ['camp', 'room_no', 'bed', 'bed_type', 'vacant_since'],
+  vacancy: ['camp', 'room_no', 'bed', 'vacant_since'],
 };
 
 const isoDate = z.string().refine(isIsoDate, 'Use a valid date (YYYY-MM-DD)');

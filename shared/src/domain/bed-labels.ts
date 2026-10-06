@@ -26,3 +26,9 @@ export function bedTypesFor(layout: 'SINGLE' | 'BUNK_PAIRS' | 'UNSPECIFIED', cou
     return i % 2 === 0 ? 'BUNK_LOWER' : 'BUNK_UPPER';
   });
 }
+
+/** Columns for drawing a room's beds: a near-square grid, at most 6 wide (2 beds: 2, 6: 3, 12: 4, 30: 6). */
+export function bedGridColumns(beds: number): number {
+  if (beds <= 2) return Math.max(1, beds);
+  return Math.min(6, Math.ceil(Math.sqrt(beds * 1.4)));
+}

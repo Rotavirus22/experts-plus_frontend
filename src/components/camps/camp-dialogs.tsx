@@ -2,9 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  BED_LAYOUTS,
   bedsAddSchema,
-  bedTypesFor,
   campInputSchema,
   defaultSqmPerWorker,
   EMIRATE_LABELS,
@@ -19,10 +17,9 @@ import {
   type RoomDto,
   type RoomInput,
 } from "@xperts/shared";
-import { AlertTriangle, Info, Minus, Plus } from "lucide-react";
+import { AlertTriangle, Info } from "lucide-react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
-import { Pill } from "@/components/design/primitives";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -37,8 +34,6 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { api, errorMessage } from "@/lib/api";
-import { cn } from "@/lib/utils";
-import { BED_TYPE_SHORT } from "./bed-status";
 import { useAppRouter } from "@/lib/use-app-router";
 import { plural } from "@/lib/format";
 import { FieldControl } from "@/components/ui/field-control";
@@ -219,7 +214,6 @@ export function RoomDialog({
     defaultValues: {
       number: room?.number ?? "",
       areaSqm: room?.areaSqm ?? "",
-      layoutColumns: room?.layoutColumns ?? 4,
       notes: room?.notes ?? "",
     },
   });
@@ -247,56 +241,22 @@ export function RoomDialog({
       onClose={onClose}
       onSubmit={submit}
     >
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Field label="Room number" required error={errors.number?.message} hint="Any text: 101, 2B, G-12, 301 Sup.">
-          <Input {...register("number")} aria-invalid={!!errors.number} autoFocus />
-        </Field>
-        <Field label="Bed map columns" error={errors.layoutColumns?.message}>
-          <Controller
-            control={control}
-            name="layoutColumns"
-            render={({ field }) => {
-              const value = Number(field.value) || 1;
-              return (
-                <div className="flex h-9.5 items-stretch overflow-hidden rounded-lg border border-input bg-card">
-                  <button
-                    type="button"
-                    className="flex w-10 items-center justify-center border-r text-muted-foreground hover:bg-muted disabled:opacity-40"
-                    onClick={() => field.onChange(Math.max(1, value - 1))}
-                    disabled={value <= 1}
-                    aria-label="Fewer columns"
-                  >
-                    <Minus className="size-4" />
-                  </button>
-                  <span className="flex flex-1 items-center justify-center text-sm font-bold tabular-nums">{value}</span>
-                  <button
-                    type="button"
-                    className="flex w-10 items-center justify-center border-l text-muted-foreground hover:bg-muted disabled:opacity-40"
-                    onClick={() => field.onChange(Math.min(12, value + 1))}
-                    disabled={value >= 12}
-                    aria-label="More columns"
-                  >
-                    <Plus className="size-4" />
-                  </button>
-                </div>
-              );
-            }}
-          />
-        </Field>
-      </div>
+      <Field label="Room number" required error={errors.number?.message} hint="Any text: 101, 2B, G-12, 301 Sup. Add beds after saving.">
+        <Input {...register("number")} aria-invalid={!!errors.number} autoFocus />
+      </Field>
       <Field
         label="Area (m²)"
         error={errors.areaSqm?.message}
         hint={
           fits === null ? (
-            "Optional. Used to warn about crowded rooms."
+            "Optional. Only used to warn when a room has more beds than its floor area allows."
           ) : room && activeBeds > fits ? (
             <span className="font-semibold text-warning-fg">
-              Fits about {fits} beds — this room has {activeBeds}
+              This room has {plural(activeBeds, "bed")}; its area allows at most {fits} ({sqmPerWorker} m² per worker)
             </span>
           ) : (
             <span className="flex items-center gap-1.5 font-semibold text-primary">
-              <Info className="size-3.5" /> Fits about {fits} beds at {sqmPerWorker} m² per worker
+              <Info className="size-3.5" /> Area allows at most {plural(fits, "bed")} ({sqmPerWorker} m² per worker)
             </span>
           )
         }
@@ -312,12 +272,7 @@ export function RoomDialog({
 
 // ───────── Add beds ─────────
 
-const LAYOUT_OPTIONS: Record<(typeof BED_LAYOUTS)[number], { title: string; hint?: string }> = {
-  SINGLE: { title: "Single beds" },
-  BUNK_PAIRS: { title: "Bunk pairs", hint: "lower + upper" },
-  UNSPECIFIED: { title: "Unspecified" },
-};
-
+/** Adds beds to a room: just a count. Beds are labelled Bed 1, Bed 2, … continuing after the existing ones. */
 export function AddBedsDialog({ room, sqmPerWorker, onClose }: { room: RoomDto; sqmPerWorker: number; onClose: () => void }) {
   const router = useAppRouter();
   const {
@@ -327,20 +282,18 @@ export function AddBedsDialog({ room, sqmPerWorker, onClose }: { room: RoomDto; 
     formState: { errors, isSubmitting },
   } = useForm<BedsAddInput>({
     resolver: zodResolver(bedsAddSchema),
-    defaultValues: { count: 2, prefix: "B", layout: "BUNK_PAIRS" },
+    defaultValues: { count: 1 },
   });
-  const [count, prefix, layout] = useWatch({ control, name: ["count", "prefix", "layout"] });
+  const count = useWatch({ control, name: "count" });
   const n = Math.max(0, Math.min(40, Number(count) || 0));
-  const labels = n > 0 ? nextBedLabels(room.beds.map((b) => b.label), String(prefix ?? "B").trimStart(), n) : [];
-  const types = n > 0 ? bedTypesFor((layout ?? "SINGLE") as (typeof BED_LAYOUTS)[number], n) : [];
+  const labels = n > 0 ? nextBedLabels(room.beds.map((b) => b.label), "Bed ", n) : [];
   const activeBeds = room.beds.filter((b) => b.isActive).length;
   const warning = roomCapacityWarning(room.areaSqm, activeBeds + n, sqmPerWorker);
-  const fits = room.areaSqm ? Math.floor(room.areaSqm / sqmPerWorker) : null;
 
   const submit = handleSubmit(async (values) => {
     try {
-      const res = await api<{ labels: string[] }>(`/rooms/${room.id}/beds`, { body: values });
-      toast.success(`Added ${res.labels.join(", ")}`);
+      const res = await api<{ labels: string[] }>(`/rooms/${room.id}/beds`, { body: { count: values.count } });
+      toast.success(`Room ${room.number} now has ${plural(activeBeds + res.labels.length, "bed")}`);
       await router.refresh();
       onClose();
     } catch (error) {
@@ -351,68 +304,25 @@ export function AddBedsDialog({ room, sqmPerWorker, onClose }: { room: RoomDto; 
   return (
     <FormDialog
       title={`Add beds to Room ${room.number}`}
-      description={`Room has ${plural(activeBeds, "bed")}${room.areaSqm ? ` · ${room.areaSqm} m² · fits about ${fits}` : ""}`}
+      description={`Room ${room.number} has ${plural(activeBeds, "bed")} now.`}
       submitLabel={n === 1 ? "Add 1 bed" : `Add ${n || ""} beds`}
       busy={isSubmitting}
       onClose={onClose}
       onSubmit={submit}
     >
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Field label="How many" error={errors.count?.message}>
-          <Input type="number" min={1} max={40} {...register("count")} autoFocus />
-        </Field>
-        <Field label="Label prefix" error={errors.prefix?.message}>
-          <Input {...register("prefix")} />
-        </Field>
-      </div>
-      <Field label="Type">
-        <Controller
-          control={control}
-          name="layout"
-          render={({ field }) => (
-            <div role="radiogroup" className="flex flex-col gap-2">
-              {BED_LAYOUTS.map((l) => {
-                const selected = field.value === l;
-                return (
-                  <button
-                    key={l}
-                    type="button"
-                    role="radio"
-                    aria-checked={selected}
-                    onClick={() => field.onChange(l)}
-                    className={cn(
-                      "flex h-10 items-center gap-3 rounded-lg border px-3.5 text-left text-sm transition",
-                      selected ? "border-primary bg-status-occupied-bg font-semibold" : "hover:bg-muted/60",
-                    )}
-                  >
-                    <span className={cn("flex size-4 items-center justify-center rounded-full border-2", selected ? "border-primary" : "border-input")}>
-                      {selected && <span className="size-1.5 rounded-full bg-primary" />}
-                    </span>
-                    {LAYOUT_OPTIONS[l].title}
-                    {LAYOUT_OPTIONS[l].hint && <span className="font-normal text-muted-foreground">· {LAYOUT_OPTIONS[l].hint}</span>}
-                  </button>
-                );
-              })}
-            </div>
-          )}
-        />
+      <Field label="How many beds to add" error={errors.count?.message}>
+        <Input type="number" min={1} max={40} {...register("count")} autoFocus />
       </Field>
       {labels.length > 0 && (
-        <div className="flex flex-wrap items-center gap-2 text-[13px] text-muted-foreground">
-          Adds
-          {labels.slice(0, 12).map((label, i) => (
-            <Pill key={label} tone="success">
-              {label}
-              {types[i] ? ` · ${BED_TYPE_SHORT[types[i]!]}` : ""}
-            </Pill>
-          ))}
-          {labels.length > 12 && <span>+{labels.length - 12} more</span>}
-        </div>
+        <p className="text-[13px] text-muted-foreground">
+          The room will have <span className="font-bold text-foreground">{plural(activeBeds + n, "bed")}</span>. New:{" "}
+          {labels.length > 3 ? `${labels[0]} to ${labels[labels.length - 1]}` : labels.join(", ")}.
+        </p>
       )}
       {warning && (
         <p className="flex items-center gap-2 rounded-lg border border-warning-border bg-warning-bg px-3 py-2 text-[13px] font-semibold text-warning-fg">
           <AlertTriangle className="size-4 shrink-0" />
-          {warning.activeBeds} beds; area fits about {warning.maxBeds}
+          {plural(warning.activeBeds, "bed")} is more than the room&apos;s area allows ({warning.maxBeds})
         </p>
       )}
     </FormDialog>

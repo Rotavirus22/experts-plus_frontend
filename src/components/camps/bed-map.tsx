@@ -1,7 +1,7 @@
 "use client";
 
-import { BED_STATUS_LABELS, type AccessProfile, type BedDto, type RoomDto } from "@xperts/shared";
-import { AlertTriangle, Ban, GripVertical, MoreHorizontal, Pencil, Plus } from "lucide-react";
+import { BED_STATUS_LABELS, bedGridColumns, type AccessProfile, type BedDto, type RoomDto } from "@xperts/shared";
+import { AlertTriangle, Ban, GripVertical, History, MoreHorizontal, Pencil, Plus } from "lucide-react";
 import { Reorder } from "motion/react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -27,15 +27,16 @@ import { api, errorMessage } from "@/lib/api";
 import { formatDate, plural } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { BedDrawer } from "./bed-drawer";
-import { BED_STATUS_STYLES, BED_TYPE_LABELS, BED_TYPE_SHORT } from "./bed-status";
+import { BED_STATUS_STYLES } from "./bed-status";
 import { AddBedsDialog, RoomDialog } from "./camp-dialogs";
+import { RoomHistoryDialog } from "./room-history";
 import { useAppRouter } from "@/lib/use-app-router";
 
 type RoomCardProps = { campId: string; room: RoomDto; access: AccessProfile; canManage: boolean; sqmPerWorker: number };
 
 export function RoomCard({ campId, room, access, canManage, sqmPerWorker }: RoomCardProps) {
   const router = useAppRouter();
-  const [dialog, setDialog] = useState<"edit" | "beds" | "order" | "invalidate" | null>(null);
+  const [dialog, setDialog] = useState<"edit" | "beds" | "order" | "invalidate" | "history" | null>(null);
   const [bedId, setBedId] = useState<string | null>(null);
   const manage = canManage && room.isActive;
   const inUse = room.occupancy.occupied + room.occupancy.held;
@@ -50,12 +51,21 @@ export function RoomCard({ campId, room, access, canManage, sqmPerWorker }: Room
             {!room.isActive && <Pill>Invalidated</Pill>}
           </h3>
           <p className="text-xs text-muted-foreground">
-            {room.isActive
-              ? `${room.occupancy.occupied} occupied · ${room.occupancy.held} held · ${room.occupancy.vacant} vacant`
-              : plural(room.beds.length, "bed")}
+            {room.isActive ? (
+              <>
+                <span className="font-semibold text-foreground">{plural(activeBeds, "bed")}</span> · {room.occupancy.occupied} occupied
+                {room.occupancy.held ? ` · ${room.occupancy.held} held` : ""} · {room.occupancy.vacant} vacant
+              </>
+            ) : (
+              plural(room.beds.length, "bed")
+            )}
             {room.areaSqm ? ` · ${room.areaSqm} m²` : ""}
           </p>
         </div>
+        <div className="flex shrink-0 items-center gap-1.5">
+        <Button variant="outline" size="sm" onClick={() => setDialog("history")} aria-label={`History of room ${room.number}`}>
+          <History data-icon="inline-start" /> History
+        </Button>
         {manage && (
           <DropdownMenu>
             <DropdownMenuTrigger render={<Button variant="outline" size="icon-sm" aria-label={`Room ${room.number} actions`} />}>
@@ -82,6 +92,7 @@ export function RoomCard({ campId, room, access, canManage, sqmPerWorker }: Room
             </DropdownMenuContent>
           </DropdownMenu>
         )}
+        </div>
       </div>
 
       {room.invalidation && (
@@ -95,7 +106,7 @@ export function RoomCard({ campId, room, access, canManage, sqmPerWorker }: Room
       {room.capacityWarning && (
         <p className="flex items-center gap-2 rounded-lg border border-warning-border bg-warning-bg px-3 py-1.5 text-[13px] font-semibold text-warning-fg">
           <AlertTriangle className="size-4 shrink-0" />
-          {room.capacityWarning.activeBeds} beds; area fits about {room.capacityWarning.maxBeds}
+          {plural(room.capacityWarning.activeBeds, "bed")} is more than the room&apos;s area allows ({room.capacityWarning.maxBeds})
         </p>
       )}
 
@@ -109,10 +120,10 @@ export function RoomCard({ campId, room, access, canManage, sqmPerWorker }: Room
           )}
         </div>
       ) : (
-        // Phones: as many readable tiles as fit; wider screens: the room's configured layout.
+        // Phones: as many readable tiles as fit; wider screens: a near-square grid for the number of beds.
         <div
           className="grid grid-cols-[repeat(auto-fill,minmax(5.5rem,1fr))] gap-2 sm:grid-cols-[repeat(var(--cols),minmax(0,1fr))]"
-          style={{ "--cols": room.layoutColumns } as React.CSSProperties}
+          style={{ "--cols": Math.min(4, bedGridColumns(room.beds.length)) } as React.CSSProperties}
         >
           {room.beds.map((b) => (
             <BedTile key={b.id} bed={b} onClick={() => setBedId(b.id)} />
@@ -123,6 +134,7 @@ export function RoomCard({ campId, room, access, canManage, sqmPerWorker }: Room
       {dialog === "edit" && <RoomDialog campId={campId} room={room} sqmPerWorker={sqmPerWorker} onClose={() => setDialog(null)} />}
       {dialog === "beds" && <AddBedsDialog room={room} sqmPerWorker={sqmPerWorker} onClose={() => setDialog(null)} />}
       {dialog === "order" && <ReorderDialog room={room} onClose={() => setDialog(null)} />}
+      {dialog === "history" && <RoomHistoryDialog room={room} onClose={() => setDialog(null)} />}
       <ConfirmDialog
         open={dialog === "invalidate"}
         onOpenChange={(o) => !o && setDialog(null)}
@@ -152,7 +164,7 @@ export function shortName(fullName: string): string {
   return `${parts[0]} ${parts[parts.length - 1][0]}.`;
 }
 
-/** The whole tile is the button: label + type, then occupant (or status). Min 72×56. */
+/** The whole tile is the button: bed label, then occupant (or status). Min 72×56. */
 function BedTile({ bed, onClick }: { bed: BedDto; onClick: () => void }) {
   const label = bed.occupant
     ? shortName(bed.occupant.fullName)
@@ -170,8 +182,7 @@ function BedTile({ bed, onClick }: { bed: BedDto; onClick: () => void }) {
       title={`${bed.label} – ${BED_STATUS_LABELS[bed.status]}${bed.occupant ? ` – ${bed.occupant.fullName}` : ""}`}
     >
       <span className="flex w-full items-baseline justify-between gap-1">
-        <span className={cn("text-[13px] font-bold", !bed.isActive && "line-through")}>{bed.label}</span>
-        {bed.type && <span className="text-[10.5px] font-medium opacity-80">{BED_TYPE_SHORT[bed.type]}</span>}
+        <span className={cn("truncate text-[13px] font-bold whitespace-nowrap", !bed.isActive && "line-through")}>{bed.label}</span>
       </span>
       <span className="w-full truncate text-xs font-medium">
         {label}
@@ -218,7 +229,6 @@ function ReorderDialog({ room, onClose }: { room: RoomDto; onClose: () => void }
               <GripVertical className="size-4 text-muted-foreground" />
               <span className="w-6 text-xs text-muted-foreground">{i + 1}</span>
               <span className="font-medium">{b.label}</span>
-              {b.type && <span className="text-xs text-muted-foreground">{BED_TYPE_LABELS[b.type]}</span>}
               <span className="ml-auto truncate text-xs text-muted-foreground">{b.occupant?.fullName ?? BED_STATUS_LABELS[b.status]}</span>
             </Reorder.Item>
           ))}

@@ -1,13 +1,11 @@
 "use client";
 
 import {
-  BED_TYPES,
   hasPermission,
   todayDubai,
   type AccessProfile,
   type BedCandidateDto,
   type BedHistoryDto,
-  type BedType,
 } from "@xperts/shared";
 import { ArrowRightLeft, Ban, Calendar, Plane, Search } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
@@ -20,13 +18,12 @@ import { EASE, Pill, SectionLabel } from "@/components/design/primitives";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { api, errorMessage } from "@/lib/api";
 import { formatDate } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { BedPickerDialog } from "./bed-picker";
-import { BED_TYPE_LABELS, BedStatusBadge } from "./bed-status";
+import { BedStatusBadge } from "./bed-status";
 import { useAppRouter } from "@/lib/use-app-router";
 
 export function initials(name: string) {
@@ -91,7 +88,6 @@ export function BedDrawer({
             {data && (
               <>
                 <BedStatusBadge status={data.bed.status} />
-                {data.bed.type && <Pill tone="info">{BED_TYPE_LABELS[data.bed.type]}</Pill>}
               </>
             )}
           </SheetDescription>
@@ -359,16 +355,14 @@ function AssignPanel({ bedId, bedLabel, onAssigned }: { bedId: string; bedLabel:
 
 function EditPanel({ data, onSaved }: { data: BedHistoryDto; onSaved: () => Promise<void> }) {
   const [label, setLabel] = useState(data.bed.label);
-  const [type, setType] = useState<BedType | null>(data.bed.type);
   const [busy, setBusy] = useState(false);
   const [invalidating, setInvalidating] = useState(false);
-  const NONE = "__none";
   const vacant = data.bed.status === "VACANT";
 
   async function save() {
     setBusy(true);
     try {
-      await api(`/beds/${data.bed.id}`, { method: "PATCH", body: { label, type } });
+      await api(`/beds/${data.bed.id}`, { method: "PATCH", body: { label, type: data.bed.type } });
       toast.success("Bed updated");
       await onSaved();
     } catch (error) {
@@ -382,31 +376,11 @@ function EditPanel({ data, onSaved }: { data: BedHistoryDto; onSaved: () => Prom
     <section className="flex flex-col gap-3">
       <SectionLabel>Bed details</SectionLabel>
       <div className="flex items-end gap-2">
-        <div className="flex w-28 flex-col gap-1.5">
+        <div className="flex w-40 flex-col gap-1.5">
           <Label htmlFor="bed-label">Label</Label>
           <Input id="bed-label" value={label} onChange={(e) => setLabel(e.target.value)} maxLength={20} />
         </div>
-        <div className="flex flex-1 flex-col gap-1.5">
-          <Label htmlFor="bed-type">Type</Label>
-          <Select
-            items={[{ value: NONE, label: "Not set" }, ...BED_TYPES.map((t) => ({ value: t, label: BED_TYPE_LABELS[t] }))]}
-            value={type ?? NONE}
-            onValueChange={(v) => setType(!v || v === NONE ? null : (v as BedType))}
-          >
-            <SelectTrigger id="bed-type" className="w-full">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value={NONE}>Not set</SelectItem>
-              {BED_TYPES.map((t) => (
-                <SelectItem key={t} value={t}>
-                  {BED_TYPE_LABELS[t]}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <Button variant="secondary" onClick={save} disabled={busy || !label.trim() || (label === data.bed.label && type === data.bed.type)} loading={busy}>
+        <Button variant="secondary" onClick={save} disabled={busy || !label.trim() || label === data.bed.label} loading={busy}>
           {busy ? "Saving…" : "Save"}
         </Button>
       </div>

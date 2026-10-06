@@ -1,6 +1,6 @@
 "use client";
 
-import type { AccessProfile, BedDto, BedStatus, CampDetailDto, RoomDto } from "@xperts/shared";
+import { bedGridColumns, type AccessProfile, type BedDto, type BedStatus, type CampDetailDto, type RoomDto } from "@xperts/shared";
 import { ArrowLeft, Maximize2, Minimize2, Search } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
@@ -364,7 +364,7 @@ function RoomBox({
   onBed: (bedId: string) => void;
 }) {
   const inUse = room.occupancy.occupied + room.occupancy.held;
-  const columns = Math.min(Math.max(room.layoutColumns, 1), 8);
+  const columns = bedGridColumns(room.beds.length);
   return (
     // Zoomed out the whole room is one button; zoomed in it becomes a group so each bed is its own button.
     <div

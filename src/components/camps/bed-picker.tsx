@@ -20,7 +20,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { api, errorMessage } from "@/lib/api";
 import { formatDate } from "@/lib/format";
 import { cn } from "@/lib/utils";
-import { BED_STATUS_STYLES, BED_TYPE_LABELS } from "./bed-status";
+import { BED_STATUS_STYLES } from "./bed-status";
 import { useAppRouter } from "@/lib/use-app-router";
 
 type Target = { campId: string; bedId: string; label: string; type: BedType | null; roomNumber: string; campName: string };
@@ -218,7 +218,6 @@ export function BedPickerDialog({
                 <span className="font-bold">
                   Room {target.roomNumber} · {target.label}
                 </span>
-                {target.type && ` (${BED_TYPE_LABELS[target.type].toLowerCase()})`}
                 <br />
                 <span className="text-muted-foreground">from {formatDate(date)}</span>
               </span>

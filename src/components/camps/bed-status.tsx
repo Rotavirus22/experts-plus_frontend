@@ -1,4 +1,4 @@
-import type { BedStatus, BedType } from "@xperts/shared";
+import type { BedStatus } from "@xperts/shared";
 import { cn } from "@/lib/utils";
 
 /** Tile / chip colours per bed status (design tokens, light + dark). Invalidated = dashed + struck label. */
@@ -23,8 +23,6 @@ export const BED_STATUS_TEXT: Record<BedStatus, string> = {
   INVALIDATED: "Invalidated",
 };
 
-export const BED_TYPE_SHORT: Record<BedType, string> = { SINGLE: "Single", BUNK_LOWER: "Lower", BUNK_UPPER: "Upper" };
-export const BED_TYPE_LABELS: Record<BedType, string> = { SINGLE: "Single", BUNK_LOWER: "Bunk lower", BUNK_UPPER: "Bunk upper" };
 
 export function BedStatusBadge({ status, className }: { status: BedStatus; className?: string }) {
   return (
